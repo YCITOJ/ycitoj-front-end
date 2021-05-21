@@ -2,12 +2,7 @@
   <div class="login_container">
     <div class="login_box">
       <ul class="menu-tab">
-        <li
-          v-for="item in menuTab"
-          :key="item.id"
-          :class="{ current: item.current }"
-          @click="toggleMneu(item)"
-        >
+        <li v-for="item in menuTab" :key="item.id" :class="{ current: item.current }" @click="toggleMneu(item)">
           {{ item.txt }}
         </li>
       </ul>
@@ -28,10 +23,10 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="loginForm.password" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="email" v-show="model === 'register'">
+        <el-form-item label="邮箱" prop="email" v-show="model === 'register'">
           <el-input v-model="loginForm.email" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="mobil" v-show="model === 'register'">
+        <el-form-item label="手机" prop="mobil" v-show="model === 'register'">
           <el-input v-model="loginForm.mobile" type="password"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
@@ -105,6 +100,7 @@ export default {
         this.$refs.loginFormRef.validate(async (valid) => {
           if (!valid) return;
           const { data: res } = await this.$http.post("login", this.loginForm);
+          console.log(res)
           if (res.meta.status !== 200) return this.$message.error("登录失败！");
           this.$message.success("登录成功");
           // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
@@ -120,6 +116,7 @@ export default {
         if (!valid) return
         // 可以发起添加用户的网络请求
         const { data: res } = await this.$http.post('users', this.loginForm)
+        console.log(res)
         if (res.meta.status !== 201) {
           this.$message.error('添加用户失败！')
           return;
@@ -134,14 +131,17 @@ export default {
 </script>
 <style scoped>
 .login_container {
-  background-color: #2b4b6b;
+  /* background-color: #2b4b6b; */
+  background-image: url(../assets/img/th.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%;
   height: 100%;
 }
 
 .login_box {
   width: 450px;
   height: 400px;
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 3px;
   position: absolute;
   left: 50%;
@@ -162,12 +162,13 @@ li {
 }
 .current {
   background-color: rgba(0, 0, 0, 0.1);
+  color: #fff;
 }
 
 .login_form {
   position: absolute;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
