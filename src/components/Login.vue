@@ -28,11 +28,11 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="loginForm.password" type="password"></el-input>
         </el-form-item>
-        <el-form-item
-          label="确认密码"
-          prop="password"
-          v-show="model === 'register'">
-          <el-input v-model="loginForm.chickpassword" type="password"></el-input>
+        <el-form-item label="确认密码" prop="email" v-show="model === 'register'">
+          <el-input v-model="loginForm.email" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="mobil" v-show="model === 'register'">
+          <el-input v-model="loginForm.mobile" type="password"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -53,6 +53,8 @@ export default {
       loginForm: {
         username: "admin",
         password: "123456",
+        email: '',
+        mobile: ''
       },
       menuTab: [
         { txt: "登录", current: true, type: "login" },
@@ -81,6 +83,12 @@ export default {
             trigger: "blur",
           },
         ],
+        email: [
+          {  message: "请输入登录密码", trigger: "blur" },
+        ],
+        mobile:[
+          {  message: "请输入登录密码", trigger: "blur" },
+        ]
       },
     };
   },
@@ -107,23 +115,19 @@ export default {
           this.$router.push("/home");
         });
       }
-      /* else if(this.model === "register") {
-        this.$refs.addFormRef.validate(async valid => {
+      else if(this.model === "register") {
+        this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
         // 可以发起添加用户的网络请求
-        const { data: res } = await this.$http.post('users', this.addForm)
-
+        const { data: res } = await this.$http.post('users', this.loginForm)
         if (res.meta.status !== 201) {
           this.$message.error('添加用户失败！')
+          return;
         }
 
         this.$message.success('添加用户成功！')
-        // 隐藏添加用户的对话框
-        this.addDialogVisible = false
-        // 重新获取用户列表数据
-        this.getUserList()
       })
-      } */
+      }
     },
   },
 };
@@ -136,7 +140,7 @@ export default {
 
 .login_box {
   width: 450px;
-  height: 300px;
+  height: 400px;
   background-color: #fff;
   border-radius: 3px;
   position: absolute;
