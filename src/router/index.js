@@ -5,6 +5,8 @@ import Home from '../components/Home/Home.vue'
 import Race from '../components/Race/Race.vue'
 import Topic from '../components/Topic/Topic.vue'
 import Login from '../components/Login.vue'
+import Addproblems from '../components/Topic/Addproblems.vue'
+import Addcontent from '../components/Topic/Addcontent.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,9 +16,11 @@ const routes = [
     component: NavigtionBar,
     children: [
       { path: '/', redirect: '/home' },
-      { path: '/home', component: Home },
-      { path: '/race', component: Race },
-      { path: '/topic', component: Topic }
+      { path: '/home', name: 'home',component: Home },
+      { path: '/race', name: 'race', component: Race },
+      { path: '/topic', name: 'topic', component: Topic },
+      { path: '/addproblems', name: 'addproblems', component: Addproblems },
+      { path: '/addcontent', name: 'addcontent', component: Addcontent }
     ]
   },
   

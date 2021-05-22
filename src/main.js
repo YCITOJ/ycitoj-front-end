@@ -8,6 +8,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 // 引入css
 import './assets/css/global.css'
 
+// 引入mavonEditor
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditor)
 
 Vue.use(ElementUI);
 
