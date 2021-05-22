@@ -13,7 +13,7 @@ Vue.use(ElementUI);
 
 import axios from 'axios'
 // 配置请求的跟路径
-axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://192.168.2.1:4001/'
 axios.interceptors.request.use(config => {
   // console.log(config)
   config.headers.Authorization = window.sessionStorage.getItem('token')

@@ -99,8 +99,7 @@ export default {
       if (this.model === "login") {
         this.$refs.loginFormRef.validate(async (valid) => {
           if (!valid) return;
-          const { data: res } = await this.$http.post("login", this.loginForm);
-          console.log(res)
+          const { data: res } = await this.$http.post("signin/login", this.loginForm);
           if (res.meta.status !== 200) return this.$message.error("登录失败！");
           this.$message.success("登录成功");
           // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
@@ -132,7 +131,7 @@ export default {
 <style scoped>
 .login_container {
   /* background-color: #2b4b6b; */
-  background-image: url(../assets/img/th.jpg);
+  background-image: url(../assets/img/1.png);
   background-repeat: no-repeat;
   background-size: 100%;
   height: 100%;
