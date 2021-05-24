@@ -1,6 +1,6 @@
 <template>
     <div>
-      <mavon-editor v-model="form.data" :toolbars="markdownOption" @save="save"/>
+      <mavon-editor v-model="vlaue" :toolbars="markdownOption" @save="save" />
     </div>
 </template>
 <script>
@@ -9,8 +9,9 @@ export default {
         return {
             form: {
                num: '',
-               data: '$1+1$=3',
+               data: '',
             },
+            vlaue: '',
          markdownOption: {
                bold: true, // 粗体
                italic: true, // 斜体
@@ -49,17 +50,22 @@ export default {
         }
     },
     methods: {
-    async save() {
-      console.log(this.$route.query.id)
-      this.form.num = this.$route.query.id
-      const { data: res } = await this.$http.post('problems/write_problem', this.form)
-      console.log(res)
-      if (res.meta.status !== 200) {
-        return this.$message.error('添加失败！')
-      }
-      this.$message.success("添加成功");
-    },
-    }
+        change(value, render) {
+          this.form.data = render;
+        },
+         async save() {
+           this.form.num = this.$route.query.id
+           this.form.data = this.vlaue
+           console.log(this.form)
+           const { data: res } = await this.$http.post('problems/write_problem', this.form)
+           console.log(res)
+           if (res.meta.status !== 200) {
+             return this.$message.error('添加失败！')
+           }
+           this.$message.success("添加成功");
+           },
+           
+         }
 }
 </script>
 <style scoped>

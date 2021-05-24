@@ -7,6 +7,7 @@ import Topic from '../components/Topic/Topic.vue'
 import Login from '../components/Login.vue'
 import Addproblems from '../components/Topic/Addproblems.vue'
 import Addcontent from '../components/Topic/Addcontent.vue'
+import Submit from '../components/Topic/Submit.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,7 +21,8 @@ const routes = [
       { path: '/race', name: 'race', component: Race },
       { path: '/topic', name: 'topic', component: Topic },
       { path: '/addproblems', name: 'addproblems', component: Addproblems },
-      { path: '/addcontent', name: 'addcontent', component: Addcontent }
+      { path: '/addcontent', name: 'addcontent', component: Addcontent },
+      { path: '/submit', name: 'submit', component: Submit }
     ]
   },
   

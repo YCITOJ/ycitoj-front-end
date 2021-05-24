@@ -34,7 +34,7 @@
             <!-- 修改按钮 -->
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
             <!-- 删除按钮 -->
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.num)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,6 +60,9 @@ export default {
       },
       problemslist: [],
       total: 0,
+      form: {
+        num: '',
+      }
     }
   },
   created() {
@@ -126,13 +129,13 @@ export default {
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
-
-      const { data: res } = await this.$http.delete('users/' + id)
-
+      this.form.num = id
+      console.log(this.form.num)
+      const { data: res } = await this.$http.post('problems/del_problem', this.form)
+      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error('删除用户失败！')
       }
-
       this.$message.success('删除用户成功！')
       this.getUserList()
     },
