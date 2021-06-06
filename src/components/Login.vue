@@ -100,6 +100,7 @@ export default {
         this.$refs.loginFormRef.validate(async (valid) => {
           if (!valid) return;
           const { data: res } = await this.$http.post("signin/login", this.loginForm);
+          console.log(res)
           if (res.meta.status !== 200) return this.$message.error("登录失败！");
           this.$message.success("登录成功");
           // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
@@ -114,9 +115,9 @@ export default {
         this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
         // 可以发起添加用户的网络请求
-        const { data: res } = await this.$http.post('users', this.loginForm)
+        const { data: res } = await this.$http.post('signup/register', this.loginForm)
         console.log(res)
-        if (res.meta.status !== 201) {
+        if (res.meta.status !== 200) {
           this.$message.error('添加用户失败！')
           return;
         }

@@ -10,3 +10,10 @@ body,
 li {
   list-style: none
 }
+.el-header,
+.el-main,
+submittijiao {
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+}

@@ -15,7 +15,9 @@
   <el-menu-item index="home">首页</el-menu-item>
   <el-menu-item index="topic">题库</el-menu-item>
   <el-menu-item index="race">比赛</el-menu-item>
-  <el-menu-item class="signin" index="login" >登录/注册</el-menu-item>
+  <el-menu-item index="race">提交记录</el-menu-item>
+  <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
+  <el-menu-item class="signin" index="user" v-show="loginname === 'out'"><i class="el-icon-user-solid"></i></el-menu-item>
 </el-menu>
   </el-header>
   <el-main>
@@ -28,20 +30,28 @@
 export default {
     data() {
       return {
+        loginname:''
       };
     },
+    created() {
+      this.pdlogin()
+    },
     methods: {
+      pdlogin() {
+        console.log(window.sessionStorage.getItem("token") === null)
+        if (window.sessionStorage.getItem("token"))
+        {
+          this.loginname = 'out';
+          return;
+        }
+         this.loginname = 'in';
+      },
     }
 }
 </script>
 <style scoped>
 .el-menu--horizontal>.el-menu-item.signin {
   float: right;
-}
-.el-header,
-.el-main {
-  padding-left: 0;
-  padding-right: 0;
 }
 .log {
   padding-right: 100px;

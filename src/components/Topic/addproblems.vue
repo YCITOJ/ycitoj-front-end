@@ -34,6 +34,7 @@ export default {
     methods: {
      async addpb() {
       const { data: res } = await this.$http.post('problems/create_problem' , this.form)
+      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error('添加失败！')
       }
