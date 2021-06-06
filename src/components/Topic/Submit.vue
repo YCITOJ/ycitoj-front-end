@@ -118,8 +118,8 @@ export default {
   },
   data() {
     return {
-      value: "根据输入的正整数$n$<br>米字形由一个$(2n-1)*(2n-1)$的矩阵组成，矩阵包含从大写$A$开始的$n$个字母例如:$n$=3时，包含$A,B,C；n=4$时，包含$A,B,C,D$。矩阵的正中间为$n$个字母中字典序最大的那个，从这个字母开始，沿着西北、正北、东北、正西、正东、西南、正南、东南八个方向各有一条由大写字母组成的直线。并且直线上的字母按字典序依次减小，直到大写字母$A$。矩阵的其它位置用英文句号．填充。<br>```样例输入一3样例输出<br>Ａ．Ａ．Ａ．ＢＢＢ．ＡＢＣＢＡ．ＢＢＢ．Ａ．Ａ．Ａ```",
-      num: "1.x和y的差",
+      value: "",
+      num: "",
       ans: "#include<iostrea>",
       item: {
         content: "#include<iostream> int b;",
@@ -155,16 +155,17 @@ export default {
       displaylanguage: '请选择编辑语言',
     };
   },
+   created() {
+      this.readproblem()
+    },
   methods: {
     // 获取题目
-    async getproblem() {
-      const { data: res } = await this.$http.get("problems/list?page_no=" + this.queryInfo.pagenum);
-      if (res.meta.status !== 200) {
-        return this.$message.error("获取用户列表失败！");
-      }
-      this.problemslist = res.data;
-      // console.log(res)
-    },
+     async readproblem() {
+          this.num = this.$route.query.id
+          const { data: res } = await this.$http.get('problems/read_problem?num='+this.num);
+          console.log(res);
+          this.value = res.data
+        },
     // 返回主页
     gotohome() {
       this.$router.push("/topic")

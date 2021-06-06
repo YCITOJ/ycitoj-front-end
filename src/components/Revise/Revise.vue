@@ -12,7 +12,7 @@ export default {
                data: '',
             },
             vlaue: '',
-         markdownOption: {
+          markdownOption: {
                bold: true, // 粗体
                italic: true, // 斜体
                header: true, // 标题
@@ -49,11 +49,20 @@ export default {
             }          
         }
     },
+    created() {
+      this.readproblem()
+    },
     methods: {
         change(value, render) {
           this.form.data = render;
         },
-         async save() {
+        async readproblem() {
+          this.form.num = this.$route.query.id
+          const { data: res } = await this.$http.get('problems/read_problem?num='+this.form.num);
+          console.log(res);
+          this.vlaue = res.data;
+        },
+        async save() {
            this.form.num = this.$route.query.id
            this.form.data = this.vlaue
            console.log(this.form)

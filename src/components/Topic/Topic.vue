@@ -9,12 +9,11 @@
             placeholder="请输入内容"
             v-model="queryInfo.query"
             clearable
-            @clear="getUserList"
-          >
+            @clear="getUserList">
             <el-button
               slot="append"
               icon="el-icon-search"
-              @click="getUserList"
+              @click="getproblemList"
             ></el-button>
           </el-input>
         </el-col>
@@ -166,12 +165,22 @@ export default {
       this.queryInfo.pagenum = newPage;
       this.getUserList();
     },
+
+    // 搜索题目
+    async getproblemList() {
+      console.log(this.queryInfo.query)
+      const { data: res } = await this.$http.get('problems/find_problems', this.queryInfo.query)
+      if (res.meta.status !== 200) {
+        return this.$message.error("搜索题目失败！");
+      }
+      this.problemslist = res.data
+    },
     // 进入题目
     gotosubmit(row) {
       // console.log(row.num)
      this.$router.push({path: '/submit', query: {id: row.num}});
     },
-
+    
     // 监听 switch 开关状态的改变
     /* async userStateChanged(userinfo) {
       console.log(userinfo)
@@ -221,8 +230,6 @@ export default {
       this.getUserList();
       this.getPageinfo();
     },
-    // 修改
-
     // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
