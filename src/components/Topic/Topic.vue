@@ -24,9 +24,9 @@
           >
         </el-col>
       </el-row>
-
+<!-- @row-dblclick="gotosubmit(handle)" -->
       <!-- 题目列表区域 -->
-      <el-table :data="problemslist" stripe @row-click="handleEdit" @row-dblclick="gotosubmit(handle)" >
+      <el-table :data="problemslist" stripe @row-dblclick="gotosubmit">
         <el-table-column label="提交状态" width="100vh"></el-table-column>
         <el-table-column
           label="编号"
@@ -168,12 +168,12 @@ export default {
     },
     // 进入题目
     gotosubmit(row) {
-      console.log(row)
-     /* this.$router.push({path: '/submit', query: {id: thisg});
-     this.$router.push({path: '/addcontent', query: {id: this.form.num}}) */
+      // console.log(row.num)
+     this.$router.push({path: '/submit', query: {id: row.num}});
     },
-    /* // 监听 switch 开关状态的改变
-    async userStateChanged(userinfo) {
+
+    // 监听 switch 开关状态的改变
+    /* async userStateChanged(userinfo) {
       console.log(userinfo)
       const { data: res } = await this.$http.put(
         `users/${userinfo.id}/state/${userinfo.mg_state}`
