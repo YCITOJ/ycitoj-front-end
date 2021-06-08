@@ -23,7 +23,6 @@
           >
         </el-col>
       </el-row>
-<!-- @row-dblclick="gotosubmit(handle)" -->
       <!-- 题目列表区域 -->
       <el-table :data="problemslist" stripe @row-dblclick="gotosubmit">
         <el-table-column label="提交状态" width="100vh"></el-table-column>
@@ -168,8 +167,9 @@ export default {
 
     // 搜索题目
     async getproblemList() {
-      console.log(this.queryInfo.query)
-      const { data: res } = await this.$http.get('problems/find_problems', this.queryInfo.query)
+      //console.log(this.queryInfo.query)
+      const { data: res } = await this.$http.get('problems/find_problems/?query='+this.queryInfo.query)
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
@@ -233,7 +233,7 @@ export default {
     // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
-      console.log(this.uploadfile);
+      //console.log(this.uploadfile);
     },
   async uploadsubmit(event) {
       event.preventDefault(); //取消默认行为
@@ -242,9 +242,9 @@ export default {
       // 向 formData 对象中添加文件
       formData.set('num',this.uploadnum)
       formData.append('file',this.uploadfile);
-      console.log(formData)
+      //console.log(formData)
       const { data: res } = await this.$http.post('problems/upload_cases', formData);
-      console.log(res)
+      //console.log(res)
     },
     upload(id) {
       this.uploadnum = id

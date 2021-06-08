@@ -116,7 +116,7 @@ export default {
         if (!valid) return
         // 可以发起添加用户的网络请求
         const { data: res } = await this.$http.post('signup/register', this.loginForm)
-        console.log(res)
+        //console.log(res)
         if (res.meta.status !== 200) {
           this.$message.error('添加用户失败！')
           return;

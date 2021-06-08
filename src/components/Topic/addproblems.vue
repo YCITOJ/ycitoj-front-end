@@ -24,10 +24,10 @@ export default {
     data() {
         return {
             form: {
-              num: 'ss12',
-              title: '234',
-              uploader: '34',
-              difficulty: '3' 
+              num: '',
+              title: '',
+              uploader: '',
+              difficulty: '' 
             }
         }
     },

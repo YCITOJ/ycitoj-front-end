@@ -38,7 +38,7 @@ export default {
     },
     methods: {
       pdlogin() {
-        console.log(window.sessionStorage.getItem("token") === null)
+        //console.log(window.sessionStorage.getItem("token") === null)
         if (window.sessionStorage.getItem("token"))
         {
           this.loginname = 'out';
