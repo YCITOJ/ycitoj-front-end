@@ -9,7 +9,8 @@ import Addproblems from '../components/Topic/Addproblems.vue'
 import Addcontent from '../components/Topic/Addcontent.vue'
 import Submit from '../components/Topic/Submit.vue'
 import User from '../components/User/User.vue'
-import Revise from '../components/Revise/Revise.vue'
+import Revise from '../components/Topic/Revise.vue'
+import UserSubmit from '../components/UserSubmit/UserSubmit.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,12 +22,17 @@ const routes = [
     component: NavigtionBar,
     children: [
       { path: '/', redirect: '/home' },
+      // 主页
       { path: '/home', name: 'home',component: Home },
+      // 比赛页面
       { path: '/race', name: 'race', component: Race },
+      // 题库页面
       { path: '/topic', name: 'topic', component: Topic },
       { path: '/addproblems', name: 'addproblems', component: Addproblems },
       { path: '/addcontent', name: 'addcontent', component: Addcontent },
-      { path: '/revise', name: 'revise', component: Revise }
+      { path: '/revise', name: 'revise', component: Revise },
+      // 提交记录页面
+      { path: '/usersubmit', name: 'usersubmit', component: UserSubmit }
     ]
   },
   

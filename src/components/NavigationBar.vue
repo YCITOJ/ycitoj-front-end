@@ -15,7 +15,7 @@
   <el-menu-item index="home">首页</el-menu-item>
   <el-menu-item index="topic">题库</el-menu-item>
   <el-menu-item index="race">比赛</el-menu-item>
-  <el-menu-item index="race">提交记录</el-menu-item>
+  <el-menu-item index="usersubmit">提交记录</el-menu-item>
   <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
   <el-menu-item class="signin" index="user" v-show="loginname === 'out'"><i class="el-icon-user-solid"></i></el-menu-item>
 </el-menu>
