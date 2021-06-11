@@ -119,8 +119,11 @@ export default {
   data() {
     return {
       value: "",
+      // 题目编号
       num: "",
-      ans: "#include<iostrea>",
+      // 题目名称
+      title: "",
+      ans: "",
       item: {
         content: "#include<iostream> int b;",
       },
@@ -162,8 +165,9 @@ export default {
     // 获取题目
      async readproblem() {
           this.num = this.$route.query.id
+          this.title = this.$route.query.title
           const { data: res } = await this.$http.get('problems/read_problem?num='+this.num);
-          console.log(res);
+          // console.log(res);
           this.value = res.data
         },
     // 返回主页

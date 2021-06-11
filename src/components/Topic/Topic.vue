@@ -24,7 +24,7 @@
         </el-col>
       </el-row>
       <!-- 题目列表区域 -->
-      <el-table :data="problemslist" stripe @row-dblclick="gotosubmit">
+      <el-table :data="problemslist" stripe class="problemlist" @row-dblclick="gotosubmit">
         <el-table-column label="提交状态" width="100vh"></el-table-column>
         <el-table-column
           label="编号"
@@ -177,7 +177,7 @@ export default {
     },
     // 进入题目
     gotosubmit(row) {
-      // console.log(row.num)
+       console.log(1)
      this.$router.push({path: '/submit', query: {id: row.num}});
     },
     
@@ -201,7 +201,7 @@ export default {
     async removeUserById(id) {
       // 弹框询问用户是否删除数据
       const confirmResult = await this.$confirm(
-        "此操作将永久删除该用户, 是否继续?",
+        "此操作将永久删除该题目, 是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
@@ -259,4 +259,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped></style>
+<style scoped>
+.problemlist {
+  margin-top: 40px;
+}
+</style>
