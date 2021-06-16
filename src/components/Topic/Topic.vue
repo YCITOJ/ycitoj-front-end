@@ -116,7 +116,7 @@ export default {
         // 当前每页显示多少条数据
         pagesize: 2,
       },
-      problemslist: '',
+      problemslist: [],
       total: 0,
       form: {
         num: "",
@@ -125,8 +125,8 @@ export default {
       dialogVisible: false,
       // 上传附加数据
       uploadfile: '',
-      uploadnum: ''
-    };
+      uploadnum: '',
+    }
   },
   created() {
     this.getUserList();
