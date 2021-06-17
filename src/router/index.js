@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import NavigtionBar from '../components/NavigationBar.vue'
 import Home from '../components/Home/Home.vue'
 import Race from '../components/Race/Race.vue'
+import Racehome from '../components/Race/Racehome.vue'
 import Topic from '../components/Topic/Topic.vue'
 import Login from '../components/Login.vue'
 import Addproblems from '../components/Topic/Addproblems.vue'
@@ -26,6 +27,7 @@ const routes = [
       { path: '/home', name: 'home',component: Home },
       // 比赛页面
       { path: '/race', name: 'race', component: Race },
+      { path: '/racehome', name: 'racehome', component: Racehome },
       // 题库页面
       { path: '/topic', name: 'topic', component: Topic },
       { path: '/addproblems', name: 'addproblems', component: Addproblems },

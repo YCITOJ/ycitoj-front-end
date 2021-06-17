@@ -177,7 +177,7 @@ export default {
     },
     // 进入题目
     gotosubmit(row) {
-       console.log(1)
+       //console.log(1)
      this.$router.push({path: '/submit', query: {id: row.num}});
     },
     
