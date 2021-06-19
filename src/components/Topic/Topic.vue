@@ -167,9 +167,9 @@ export default {
 
     // 搜索题目
     async getproblemList() {
-      //console.log(this.queryInfo.query)
-      const { data: res } = await this.$http.get('problems/find_problems/?query='+this.queryInfo.query)
-      //console.log(res);
+      console.log(this.queryInfo.query)
+      const { data: res } = await this.$http.get('problems/find_problems/?title_or_num='+this.queryInfo.query)
+      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
