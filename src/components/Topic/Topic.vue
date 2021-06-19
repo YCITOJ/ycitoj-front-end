@@ -23,8 +23,8 @@
           >
         </el-col>
       </el-row>
-      <!-- 题目列表区域 -->
-      <el-table :data="problemslist" stripe class="problemlist" @row-dblclick="gotosubmit">
+      <!-- 题目列表区域 --><!-- @row-dblclick="gotosubmit" -->
+      <el-table :data="problemslist" stripe class="problemlist" @row-click="gotosubmit">
         <el-table-column label="提交状态" width="100vh"></el-table-column>
         <el-table-column
           label="编号"
@@ -52,7 +52,7 @@
           prop="role_name"
           width="100vh"
         ></el-table-column>
-        <el-table-column label="状态" width="100vh">
+        <el-table-column label="状态" width="100vh" v-if="userlevel==1">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.mg_state"
@@ -61,24 +61,24 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="400px">
+        <el-table-column label="操作" width="400px" v-if="userlevel==1">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button
               type="primary"
               icon="el-icon-edit"
               size="mini"
-              @click="showEditDialog(scope.row.num)"
+              @click.native.stop="showEditDialog(scope.row.num)"
             ></el-button>
             <!-- 删除按钮 -->
             <el-button
               type="danger"
               icon="el-icon-delete"
               size="mini"
-              @click="removeUserById(scope.row.num)"
+              @click.native.stop="removeUserById(scope.row.num)"
             ></el-button>
             <!-- 上传按钮 -->
-            <el-button type="primary" size="mini" @click="upload(scope.row.num)"
+            <el-button type="primary" size="mini" @click.native.stop="upload(scope.row.num)"
               >上传<i class="el-icon-upload el-icon--right"></i
             ></el-button>
           </template>
@@ -126,11 +126,14 @@ export default {
       // 上传附加数据
       uploadfile: '',
       uploadnum: '',
+      // 用户等级
+      userlevel: '0'
     }
   },
   created() {
     this.getUserList();
     this.getPageinfo();
+    this.getuserlevel();
   },
   methods: {
     async getUserList() {
@@ -164,7 +167,11 @@ export default {
       this.queryInfo.pagenum = newPage;
       this.getUserList();
     },
-
+    // 获取用户等级
+    getuserlevel() {
+      if(window.sessionStorage.getItem("token")!='')
+        this.userlevel=1;
+    },
     // 搜索题目
     async getproblemList() {
       console.log(this.queryInfo.query)
