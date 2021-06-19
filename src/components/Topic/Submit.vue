@@ -8,15 +8,17 @@
           @select="handleSelect"
           background-color="#545c64"
           text-color="#fff"
-          active-text-color="#ffd04b"
-        >
-          <el-menu-item index="2" class="el-icon-house" @click="gotohome"></el-menu-item>
-          <el-menu-item index="1">{{ num }}</el-menu-item>
+          active-text-color="#ffd04b">
+          <el-menu-item index="1" class="el-icon-house" @click="gotohome"></el-menu-item>
+          <el-menu-item index="2">提交记录</el-menu-item>
+          <el-menu-item index="3">讨论</el-menu-item>
+          <el-menu-item index="4">上传文件</el-menu-item>
         </el-menu>
       </el-header>
       <div class="heng"></div>
       <el-container>
-        <el-aside width="50%">
+        <el-aside width="800px">
+          <!-- <P class="container_title">{{num}}</P> -->
           <div class="submitjshao">
             时间限制： C/C++1秒,其他语言2秒 空间限制： C/C++ 64M,其他语言128M
           </div>
@@ -28,8 +30,8 @@
             :toolbarsFlag="false"
             :editable="false"
             :scrollStyle="true"
-            :ishljs="true"
-        /></el-aside>
+            :ishljs="true"/>
+        </el-aside>
         <div class="line"></div>
         <el-main>
           <div class="box3box">
@@ -62,8 +64,6 @@
               </el-main>
               <el-footer class="submittijiao">
                 <el-button type="primary">提交代码</el-button>
-                <p>运行结果：</p>
-                <div class="result_area"></div>
               </el-footer>
             </el-container>
           </div>
@@ -209,8 +209,11 @@ export default {
   margin-left: 40px;
   margin-right: 40px;
 }
+.container_title {
+  padding-left: 20px;
+}
+
 .submitjshao {
-  width: 95%;
   background-color: #ebebeb;
   height: 60px;
   margin-left: 20px;
@@ -221,8 +224,6 @@ export default {
 }
 .md {
   margin-top: 20px;
-  width: 100%;
-  height: 100%;
 }
 .heng {
   width: 100%;
@@ -230,8 +231,8 @@ export default {
   background-color: #f4f5f6;
 }
 .line {
-  width: 5px;
-  height: 100vh;
+  width: 4px;
+  height: 100%;
 }
 .box3box {
   padding-top: 0;

@@ -1,14 +1,16 @@
 <template>
   <div class="box">
     <el-container>
+      <!-- 头部 -->
       <el-header class="header_title">{{ headertitle }}</el-header>
+      <!-- 主题 -->
       <el-main>
+        <!-- 比赛介绍 -->
         <div>{{ mianintroduce }}</div>
+        <!-- 比赛内容 -->
         <div>
-          <div class="one"></div>
-          <el-progress :percentage="50" status="success"></el-progress>
+          <el-button type="primary">报名</el-button>
         </div>
-        <div>题目</div>
       </el-main>
     </el-container>
   </div>

@@ -56,8 +56,7 @@
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.mg_state"
-              @change="userStateChanged(scope.row)"
-            >
+              @change="userStateChanged(scope.row)">
             </el-switch>
           </template>
         </el-table-column>
@@ -169,7 +168,7 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if(window.sessionStorage.getItem("token")!='')
+      if(window.sessionStorage.getItem("token"))
         this.userlevel=1;
     },
     // 搜索题目
