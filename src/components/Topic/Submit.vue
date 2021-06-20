@@ -1,76 +1,80 @@
 <template>
-  <div>
+  <el-container>
+    <el-header>
+      <el-menu
+        class="el-menu-demo1"
+        mode="horizontal"
+        @select="handleSelect"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b">
+        <el-menu-item
+          index="1"
+          class="el-icon-house"
+          @click="gotohome"
+        ></el-menu-item>
+        <el-menu-item index="2">提交记录</el-menu-item>
+        <el-menu-item index="3">讨论</el-menu-item>
+        <el-menu-item index="4">上传文件</el-menu-item>
+      </el-menu>
+    </el-header>
+    <div class="heng"></div>
     <el-container>
-      <el-header>
-        <el-menu
-          class="el-menu-demo"
-          mode="horizontal"
-          @select="handleSelect"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b">
-          <el-menu-item index="1" class="el-icon-house" @click="gotohome"></el-menu-item>
-          <el-menu-item index="2">提交记录</el-menu-item>
-          <el-menu-item index="3">讨论</el-menu-item>
-          <el-menu-item index="4">上传文件</el-menu-item>
-        </el-menu>
-      </el-header>
-      <div class="heng"></div>
-      <el-container>
-        <el-aside width="800px">
-          <!-- <P class="container_title">{{num}}</P> -->
-          <div class="submitjshao">
-            时间限制： C/C++1秒,其他语言2秒 空间限制： C/C++ 64M,其他语言128M
-          </div>
-          <mavon-editor
-            class="md"
-            v-model="value"
-            :subfield="false"
-            :defaultOpen="'preview'"
-            :toolbarsFlag="false"
-            :editable="false"
-            :scrollStyle="true"
-            :ishljs="true"/>
-        </el-aside>
-        <div class="line"></div>
-        <el-main>
-          <div class="box3box">
-            <el-container>
-              <el-header height="60px">
-                <el-menu
-                  class="el-menu-demo"
-                  mode="horizontal"
-                  @select="handleSelect"
-                  background-color="#545c64"
-                  text-color="#fff"
-                  active-text-color="#ffd04b">
-                  <el-submenu index="1">
-                    <template slot="title">{{displaylanguage}}</template>
-                    <el-menu-item index="CPP">CPP</el-menu-item>
-                    <el-menu-item index="C">C</el-menu-item>
-                    <el-menu-item index="JAVA">JAVA</el-menu-item>
-                    <el-menu-item index="PHP">PHP</el-menu-item>
-                  </el-submenu>
-                </el-menu>
-              </el-header>
-              <el-main>
-                <codemirror
-                  v-model="item.content"
-                  :options="cmOption"
-                  class="code-mirror"
-                  @ready="onCmReady3"
-                  ref="myCmGenerate"
-                ></codemirror>
-              </el-main>
-              <el-footer class="submittijiao">
-                <el-button type="primary">提交代码</el-button>
-              </el-footer>
-            </el-container>
-          </div>
-        </el-main>
-      </el-container>
+      <el-aside width="800px" class="el-aside1">
+        <!-- <P class="container_title">{{num}}</P> -->
+        <div class="submitjshao">
+          时间限制： C/C++1秒,其他语言2秒 空间限制： C/C++ 64M,其他语言128M
+        </div>
+        <mavon-editor
+          class="md"
+          v-model="value"
+          :subfield="false"
+          :defaultOpen="'preview'"
+          :toolbarsFlag="false"
+          :editable="false"
+          :scrollStyle="true"
+          :ishljs="true"
+        />
+      </el-aside>
+      <div class="line"></div>
+      <el-main class="el-main1">
+        <div class="box3box">
+          <el-container>
+            <el-header height="60px">
+              <el-menu
+                class="el-menu-demo"
+                mode="horizontal"
+                @select="handleSelect"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b"
+              >
+                <el-submenu index="1">
+                  <template slot="title">{{ displaylanguage }}</template>
+                  <el-menu-item index="CPP">CPP</el-menu-item>
+                  <el-menu-item index="C">C</el-menu-item>
+                  <el-menu-item index="JAVA">JAVA</el-menu-item>
+                  <el-menu-item index="PHP">PHP</el-menu-item>
+                </el-submenu>
+              </el-menu>
+            </el-header>
+            <el-main>
+              <codemirror
+                v-model="item.content"
+                :options="cmOption"
+                class="code-mirror"
+                @ready="onCmReady3"
+                ref="myCmGenerate"
+              ></codemirror>
+            </el-main>
+            <el-footer class="submittijiao">
+              <el-button type="primary">提交代码</el-button>
+            </el-footer>
+          </el-container>
+        </div>
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
 <script>
 // 引入codemirror
@@ -155,52 +159,49 @@ export default {
         extraKeys: { Ctrl: "autocomplete" }, // 可以用于为编辑器指定额外的键绑定，以及keyMap定义的键绑定
       },
       // 显示选择了什么语言
-      displaylanguage: '请选择编辑语言',
+      displaylanguage: "请选择编辑语言",
     };
   },
-   created() {
-      this.readproblem()
-    },
+  created() {
+    this.readproblem();
+  },
   methods: {
     // 获取题目
-     async readproblem() {
-          this.num = this.$route.query.id
-          this.title = this.$route.query.title
-          const { data: res } = await this.$http.get('problems/read_problem?num='+this.num);
-          // console.log(res);
-          this.value = res.data
-        },
+    async readproblem() {
+      this.num = this.$route.query.id;
+      this.title = this.$route.query.title;
+      const { data: res } = await this.$http.get(
+        "problems/read_problem?num=" + this.num
+      );
+      // console.log(res);
+      this.value = res.data;
+    },
     // 返回主页
     gotohome() {
-      this.$router.push("/topic")
+      this.$router.push("/topic");
     },
     onCmReady3() {
       this.$refs.myCmGenerate.codemirror.setSize("100%", "500px");
     },
     // 选择菜单的复制
     handleSelect(key, keyPath) {
-       if(key === 'CPP')
-        {
-          this.displaylanguage = 'CPP';
-          return;
-        }
-        if(key === 'C')
-        {
-          this.displaylanguage = 'C';
-          return;
-        }
-        if(key === 'JAVA')
-        {
-          this.displaylanguage = 'JAVA';
-          return;
-        }
-        if(key === 'PHP')
-        {
-          this.displaylanguage = 'PHP';
-          return;
-        }
-      },
-    
+      if (key === "CPP") {
+        this.displaylanguage = "CPP";
+        return;
+      }
+      if (key === "C") {
+        this.displaylanguage = "C";
+        return;
+      }
+      if (key === "JAVA") {
+        this.displaylanguage = "JAVA";
+        return;
+      }
+      if (key === "PHP") {
+        this.displaylanguage = "PHP";
+        return;
+      }
+    },
   },
 };
 </script>
@@ -208,6 +209,26 @@ export default {
 .box {
   margin-left: 40px;
   margin-right: 40px;
+}
+.el-menu-demo1 {
+  position: relative;
+  width: 100%;
+  height: 60px;
+}
+.el-aside1 {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 70px;
+  bottom: 0;
+}
+.el-main1 {
+  position: absolute;
+  left: 820px;
+  right: 0;
+  top: 80px;
+  bottom: 0;
+  overflow-y: scroll;
 }
 .container_title {
   padding-left: 20px;

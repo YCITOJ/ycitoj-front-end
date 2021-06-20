@@ -18,9 +18,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="addDialogVisible"
-            >添加题目</el-button
-          >
+          <el-button type="primary" @click="addDialogVisible"  v-if="userlevel==1">添加题目</el-button>
         </el-col>
       </el-row>
       <!-- 题目列表区域 --><!-- @row-dblclick="gotosubmit" -->
