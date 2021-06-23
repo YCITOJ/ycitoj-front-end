@@ -54,20 +54,6 @@ export default {
 };
 </script>
 <style scoped>
-/* 导航栏固定 */
-.el-header {
-  position: relative;
-  width: 100%;
-}
-.el-main {
-  position: absolute;
-  left: 0px;
-  right: 0;
-  top: 60px;
-  bottom: 0;
-  overflow-y: scroll;
-}
-
 .el-menu--horizontal > .el-menu-item.signin {
   float: right;
 }
