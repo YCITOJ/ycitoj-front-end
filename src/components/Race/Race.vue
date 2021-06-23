@@ -61,7 +61,7 @@ export default {
           name: "盐工程序设计大赛DVI2",
           starttime: "2021-10-9 4:00",
           lasttime: "2021-10-9 5:00",
-          description: "开心就好！",
+          description: "本场比赛是测试样例，看布局形态的空间的开发了解到了房间了开放的开发了解到了房间了开放的开发了解到了房间了开放地方开心就好！",
           fff: "3",
         },
         {
@@ -116,7 +116,7 @@ export default {
 </script>
 <style scoped>
 .box {
-  margin-top: 20px;
+  margin-top: 40px;
   margin-left: 10%;
   margin-right: 10%;
 }
