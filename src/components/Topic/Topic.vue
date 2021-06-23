@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <!-- 卡片视图区域 -->
-    <el-card>
+  <div class="topicbox">
       <!-- 搜索与添加区域 -->
       <el-row :gutter="20">
         <el-col :span="8">
@@ -23,34 +21,34 @@
       </el-row>
       <!-- 题目列表区域 --><!-- @row-dblclick="gotosubmit" -->
       <el-table :data="problemslist" stripe class="problemlist" @row-click="gotosubmit">
-        <el-table-column label="提交状态" width="100vh"></el-table-column>
+        <el-table-column label="提交状态" width="100"></el-table-column>
         <el-table-column
           label="编号"
           prop="num"
-          width="100vh"
+          width="100"
         ></el-table-column>
         <el-table-column label="题目" prop="title"></el-table-column>
         <el-table-column
           label="难度"
           prop="difficulty"
-          width="100vh"
+          width="50"
         ></el-table-column>
         <el-table-column
           label="通过"
           prop="email"
-          width="100vh"
+          width="50"
         ></el-table-column>
         <el-table-column
           label="提交"
           prop="mobile"
-          width="100vh"
+          width="50"
         ></el-table-column>
         <el-table-column
           label="通过率"
           prop="role_name"
-          width="100vh"
+          width="70"
         ></el-table-column>
-        <el-table-column label="状态" width="100vh" v-if="userlevel==1">
+        <el-table-column label="状态" width="100" v-if="userlevel==1">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.mg_state"
@@ -58,7 +56,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="400px" v-if="userlevel==1">
+        <el-table-column label="操作" width="400" v-if="userlevel==1">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button
@@ -92,7 +90,6 @@
         :total="total"
       >
       </el-pagination>
-    </el-card>
     <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
       <input type="file" @change="getFile($event)">
       <button @click="uploadsubmit($event)">提交</button>
@@ -264,6 +261,12 @@ export default {
 </script>
 
 <style scoped>
+.topicbox{
+  width: 80%;
+  margin-top: 40px;
+  margin-left: 160px;
+
+}
 .problemlist {
   margin-top: 40px;
 }

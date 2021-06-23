@@ -31,8 +31,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login" class="block"
-            >提交</el-button
+          <el-button type="primary" @click="login" class="block">提交</el-button
           >
         </el-form-item>
       </el-form>

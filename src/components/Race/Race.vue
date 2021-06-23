@@ -1,6 +1,5 @@
 <template>
   <div class="box">
-    <el-card>
     <el-table :data="tableData" style="width: 100%" @row-click="gotoracehome">
       <el-table-column prop="name" label="比赛名称" width="300">
         <template slot-scope="scope">
@@ -27,7 +26,6 @@
         :total="total"
       >
       </el-pagination>
-    </el-card>
   </div>
 </template>
 
