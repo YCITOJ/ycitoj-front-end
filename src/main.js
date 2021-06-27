@@ -17,7 +17,7 @@ Vue.use(ElementUI);
 
 import axios from 'axios'
 // 配置请求的跟路径
-axios.defaults.baseURL = 'http://muffin.39nat.com/'
+axios.defaults.baseURL = 'http://net.htto.online:4001/'
 axios.interceptors.request.use(config => {
   // console.log(config)
   config.headers.Authorization = window.sessionStorage.getItem('token')

@@ -17,6 +17,12 @@
           <el-menu-item index="topic">题库</el-menu-item>
           <el-menu-item index="race">比赛</el-menu-item>
           <el-menu-item index="usersubmit">提交记录</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">班级</template>
+            <el-menu-item index="2-1">作业</el-menu-item>
+            <el-menu-item index="2-2">考试</el-menu-item>
+            <el-menu-item index="2-2">成绩</el-menu-item>
+          </el-submenu>
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'"
             >登录|注册</el-menu-item
           >

@@ -7,7 +7,8 @@
         @select="handleSelect"
         background-color="#545c64"
         text-color="#fff"
-        active-text-color="#ffd04b">
+        active-text-color="#ffd04b"
+      >
         <el-menu-item
           index="1"
           class="el-icon-house"
@@ -68,7 +69,12 @@
               ></codemirror>
             </el-main>
             <el-footer class="submittijiao">
-              <el-button type="primary">提交代码</el-button>
+              <el-button type="primary" @click="submitcode()"
+                >提交代码</el-button
+              >
+              <el-card class="sumitcard">
+                <div>{{ ans }}</div>
+              </el-card>
             </el-footer>
           </el-container>
         </div>
@@ -127,9 +133,14 @@ export default {
       num: "",
       // 题目名称
       title: "",
-      ans: "",
+      ans: "保存提交后，这里会显示代码提交结果",
       item: {
-        content: "#include<iostream> int b;",
+        content: "",
+      },
+      submitstring: {
+        num: "",
+        lang: "",
+        data: "",
       },
       // 编辑器的设置
       cmOption: {
@@ -160,6 +171,8 @@ export default {
       },
       // 显示选择了什么语言
       displaylanguage: "请选择编辑语言",
+      // 查询提交结果
+      submission_id: "",
     };
   },
   created() {
@@ -186,7 +199,7 @@ export default {
     // 选择菜单的复制
     handleSelect(key, keyPath) {
       if (key === "CPP") {
-        this.displaylanguage = "CPP";
+        this.displaylanguage = "cpp";
         return;
       }
       if (key === "C") {
@@ -200,6 +213,63 @@ export default {
       if (key === "PHP") {
         this.displaylanguage = "PHP";
         return;
+      }
+    },
+    // 提交代码c
+    async sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+    async submitcode() {
+      this.submitstring.num = this.num;
+      this.submitstring.lang = this.displaylanguage;
+      this.submitstring.data = this.item.content;
+      const { data: res } = await this.$http.post(
+        "submit/submit_code/",
+        this.submitstring
+      );
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error("提交题目失败");
+      }
+      this.submission_id = res.data;
+      for(var i=0;i<=20;i++)
+      {
+        await this.sleep(1000);
+        await this.outcome();
+        if(this.ans !== "Judging")
+          break;
+      }
+    },
+    async outcome() {
+      console.log(this.submission_id);
+      const { data: res } = await this.$http.get("submit/submission_result?submission_id=" + this.submission_id);
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error("提交反馈失败");
+      }
+      if (res.verdict === 0) {
+        return (this.ans = "Judging");
+      }
+      if (res.verdict === 1) {
+        return (this.ans = "TLE");
+      }
+      if (res.verdict === 2) {
+        return (this.ans = "MLE");
+      }
+      if (res.verdict === 3) {
+        return (this.ans = "RE");
+      }
+      if (res.verdict === 4) {
+        return (this.ans = "UKE");
+      }
+      if (res.verdict === 5) {
+        return (this.ans = "CE");
+      }
+      if (res.verdict === 6) {
+        return (this.ans = "AC");
+      }
+      if (res.verdict === 7) {
+        return (this.ans = "WA");
       }
     },
   },
@@ -280,5 +350,9 @@ export default {
   text-align: left;
   width: 100%;
   height: 100%;
+}
+
+.sumitcard {
+  margin-top: 20px;
 }
 </style>
