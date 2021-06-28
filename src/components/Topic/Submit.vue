@@ -232,6 +232,7 @@ export default {
         return this.$message.error("提交题目失败");
       }
       this.submission_id = res.data;
+      this.ans = "评测中..."
       for(var i=0;i<=20;i++)
       {
         await this.sleep(1000);

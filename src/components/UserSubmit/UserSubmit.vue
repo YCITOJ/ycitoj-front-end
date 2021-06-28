@@ -32,33 +32,34 @@
       style="width: 100%">
       <el-table-column
         label="编号"
-        width="100vh">
+        width="100">
       </el-table-column>
       <el-table-column
         label="题目">
       </el-table-column>
       <el-table-column
-        label="状态">
+        label="状态"
+        width="100">
       </el-table-column>
       <el-table-column
         label="分数"
-        width="100vh">
+        width="100">
       </el-table-column>
       <el-table-column
         label="总时间"
-        width="100vh">
+        width="100">
       </el-table-column>
       <el-table-column
         label="内存"
-        width="100vh">
+        width="100">
       </el-table-column>
       <el-table-column
         label="提交者"
-        width="100vh">
+        width="100">
       </el-table-column>
       <el-table-column
         label="提交时间"
-        width="100vh">
+        width="100">
       </el-table-column>
     </el-table>
      <!-- 分页区域 -->
