@@ -220,6 +220,9 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
     async submitcode() {
+      if(this.displaylanguage === "请选择编辑语言") {
+        return this.$message.error("请选择语言！");
+      }
       this.submitstring.num = this.num;
       this.submitstring.lang = this.displaylanguage;
       this.submitstring.data = this.item.content;
