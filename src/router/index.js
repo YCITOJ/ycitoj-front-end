@@ -17,7 +17,6 @@ Vue.use(VueRouter)
 const routes = [
   { path: '/', redirect: '/navigtionbar' },
   { path: '/login', component: Login },
-  { path: '/user', component: User },
   { path: '/submit', name: 'submit', component: Submit },
   { path: '/navigtionbar',
     component: NavigtionBar,
@@ -34,7 +33,9 @@ const routes = [
       { path: '/addcontent', name: 'addcontent', component: Addcontent },
       { path: '/revise', name: 'revise', component: Revise },
       // 提交记录页面
-      { path: '/usersubmit', name: 'usersubmit', component: UserSubmit }
+      { path: '/usersubmit', name: 'usersubmit', component: UserSubmit },
+      // 用户界面
+      { path: '/user', component: User }
     ]
   },
   
