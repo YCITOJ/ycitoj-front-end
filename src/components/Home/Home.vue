@@ -41,7 +41,7 @@
           <div class="box">
             <a href="https://www.luogu.com.cn/">
               <div class="img">
-                <img src="../../assets/img/3.png" />
+                <img src="../../assets/img/logosingle.png" />
               </div>
             </a>
             <p>落谷</p>
