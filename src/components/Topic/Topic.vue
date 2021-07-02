@@ -198,7 +198,7 @@ export default {
     showEditDialog(num) {
       this.$router.push({path: '/revise', query: {id: num}})
     },
-    // 根据Id删除对应的用户信息
+    // 根据Id删除对应的题目
     async removeUserById(id) {
       // 弹框询问用户是否删除数据
       const confirmResult = await this.$confirm(
@@ -225,9 +225,9 @@ export default {
       );
       // console.log(res);
       if (res.meta.status !== 200) {
-        return this.$message.error("删除用户失败！");
+        return this.$message.error("删除题目失败！");
       }
-      this.$message.success("删除用户成功！");
+      this.$message.success("删除题目成功！");
       this.getUserList();
       this.getPageinfo();
     },

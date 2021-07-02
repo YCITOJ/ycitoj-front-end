@@ -56,10 +56,13 @@
                   <el-menu-item index="C">C</el-menu-item>
                   <el-menu-item index="JAVA">JAVA</el-menu-item>
                   <el-menu-item index="PHP">PHP</el-menu-item>
+                  <el-menu-item index="PHP">Python</el-menu-item>
+                  <el-menu-item index="PHP">Node</el-menu-item>
+                  <el-menu-item index="PHP">Merdog</el-menu-item>
                 </el-submenu>
               </el-menu>
             </el-header>
-            <el-main>
+            <el-main class="edit">
               <codemirror
                 v-model="item.content"
                 :options="cmOption"
@@ -69,9 +72,7 @@
               ></codemirror>
             </el-main>
             <el-footer class="submittijiao">
-              <el-button type="primary" @click="submitcode()"
-                >提交代码</el-button
-              >
+              <el-button type="primary" @click="submitcode()" v-if="submittijiaoflag=='true'" class="submittijiao_button">提交代码</el-button>
               <el-card class="sumitcard">
                 <div>{{ ans }}</div>
               </el-card>
@@ -173,6 +174,8 @@ export default {
       displaylanguage: "请选择编辑语言",
       // 查询提交结果
       submission_id: "",
+      // 提交按钮是否可以点击
+      submittijiaoflag: "true",
     };
   },
   created() {
@@ -214,6 +217,18 @@ export default {
         this.displaylanguage = "PHP";
         return;
       }
+      if(key === "Python") {
+        this.displaylanguage = "python";
+        return;
+      }
+      if(key === "Node") {
+        this.displaylanguage = "node";
+        return;
+      }
+      if(key === "Merdog") {
+        this.displaylanguage = "merdog";7455
+        return;
+      }
     },
     // 提交代码c
     async sleep(ms) {
@@ -226,22 +241,28 @@ export default {
       this.submitstring.num = this.num;
       this.submitstring.lang = this.displaylanguage;
       this.submitstring.data = this.item.content;
+      console.log(1);
       const { data: res } = await this.$http.post(
         "submit/submit_code/",
         this.submitstring
       );
+      console.log(2);
       console.log(res);
       if (res.meta.status !== 200) {
-        return this.$message.error("提交题目失败");
+        return this.$message.error("提交题目失败,请登录！");
       }
       this.submission_id = res.data;
+      this.submittijiaoflag='false';
       this.ans = "评测中..."
       for(var i=0;i<=20;i++)
       {
         await this.sleep(1000);
         await this.outcome();
         if(this.ans !== "Judging")
+        {
+          this.submittijiaoflag='true';
           break;
+        }  
       }
     },
     async outcome() {
@@ -270,7 +291,8 @@ export default {
         return (this.ans = "CE");
       }
       if (res.verdict === 6) {
-        return (this.ans = "AC");
+        this.$message.success("提交反馈失败");
+        return (this.ans = "恭喜你，通过了！");
       }
       if (res.verdict === 7) {
         return (this.ans = "WA");
@@ -337,6 +359,7 @@ export default {
   height: 100%;
   background-color: #000;
 }
+
 /* codemirror */
 .CodeMirror-scroll {
   overflow: scroll !important;
@@ -348,15 +371,16 @@ export default {
   position: relative;
   border: 1px solid #dddddd;
 }
-.code-mirror {
+.code-mirror {            
   font-size: 20px;
   line-height: 150%;
   text-align: left;
   width: 100%;
-  height: 100%;
+  height: 100%5;
 }
 
 .sumitcard {
   margin-top: 20px;
 }
+
 </style>

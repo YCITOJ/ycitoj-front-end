@@ -7,15 +7,15 @@
         </div>
         <div class="main"></div>
       </div>
-      <div class="card1-2 border_style">
+      <!-- <div class="card1-2 border_style">
         <div class="border_style_header">
           <h4>排名</h4>
         </div>
         <div class="main"></div>
-      </div>
+      </div> -->
     </div>
     <div class="card2">
-      <div class="card2-1 border_style">
+      <!-- <div class="card2-1 border_style">
         <div class="border_style_header">
           <h4>通知</h4>
         </div>
@@ -26,12 +26,12 @@
           <h4>近期通知</h4>
         </div>
         <div class="main"></div>
-      </div>
+      </div> -->
       <div class="card2-3 border_style">
         <div class="border_style_header">
           <h4>友情链接</h4>
           <div class="box">
-            <a href="#">
+            <a href="https://codeforces.com/">
               <div class="img">
                 <img src="../../assets/img/codeforces.png" />
               </div>
@@ -39,9 +39,9 @@
             <p>codeforces</p>
           </div>
           <div class="box">
-            <a href="#">
+            <a href="https://www.luogu.com.cn/">
               <div class="img">
-                <img src="../../assets/img/logo-single.png" />
+                <img src="../../assets/img/3.png" />
               </div>
             </a>
             <p>落谷</p>
