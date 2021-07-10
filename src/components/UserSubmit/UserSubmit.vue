@@ -39,12 +39,14 @@
         </el-table>
         <!-- 分页区域 -->
         <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page="queryInfo.pagenum"
-          :page-size="queryInfo.pagesize"
-          layout="total, prev, pager, next, jumper"
-          :total="total">
-        </el-pagination>
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-size="queryInfo.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
       </el-card>
     </el-main>
   </el-container>
@@ -61,7 +63,7 @@ export default {
       },
       // 获取用户列表的参数对象
       queryInfo: {
-        query: "10",
+        query: "",
         // 当前的页数
         pagenum: 1,
         // 当前每页显示多少条数据
@@ -71,27 +73,28 @@ export default {
       total: 1,
       // 获取提交页面的请求数据
       condition_group1:{
-        condition: 'prob_id=1 and who=3'
+        condition: 'prob_id=1 and who=1'
       },
       condition_group2:{
-        page_no: '1',
+        page_no: 1,
         condition: 'who=1'
       }
     };
   },
   created(){
     this.getPageinfo(),
-    this.getshow_per_page()
+    this.getshow_per_page(),
     this.getresultslist()
   },
   methods: { 
     // 获取提交列表
     async getresultslist() {
+      this.condition_group2.page_no = this.queryInfo.pagenum 
       const { data: res } = await this.$http.get("submit/get_submissions?page_no="+this.condition_group2.page_no+"&condition="+this.condition_group2.condition);
       /* if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表表失败！");
       } */
-      console.log(res)
+      //console.log(res)
       this.resultslist= res.data;
     },
     // 提交页数以及提交数量
@@ -101,7 +104,7 @@ export default {
         return this.$message.error("获取提交表数量失败！");
       }
       console.log(res)
-      this.total = res.sub_cnt;
+      this.total = res.data.sub_cnt;
     },
     // 提交每一页的题目数量
     async getshow_per_page() {
@@ -109,14 +112,20 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取提交表题目失败！");
       }
-      console.log(res);
+      //console.log(res);
       this.queryInfo.pagesize = res.data;
+    },
+    // 监听 pagesize 改变的事件
+    handleSizeChange(newSize) {
+      // console.log(newSize)
+      //this.queryInfo.pagesize = newSize;
+      //this.getUserList();
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       // console.log(newPage);
       this.queryInfo.pagenum = newPage;
-      this.getUserList();
+      this.getresultslist();
     },
     onSubmit() {
       console.log(this.region);
