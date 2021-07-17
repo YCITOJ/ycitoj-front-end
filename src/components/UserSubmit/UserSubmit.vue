@@ -3,19 +3,35 @@
     <el-header>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="题目编号:">
-          <el-input size="small" style="width: 100px" v-model="formInline.problem" ></el-input>
+          <el-input
+            size="small"
+            style="width: 100px"
+            v-model="formInline.problem"
+          ></el-input>
         </el-form-item>
         <el-form-item label="提交者:">
-          <el-input size="small" style="width: 140px" v-model="formInline.user" ></el-input>
+          <el-input
+            size="small"
+            style="width: 140px"
+            v-model="formInline.user"
+          ></el-input>
         </el-form-item>
         <el-form-item label="语言:">
-          <el-select size="small" style="width: 80px" v-model="formInline.region" >
+          <el-select
+            size="small"
+            style="width: 80px"
+            v-model="formInline.region"
+          >
             <el-option label="CPP" value="shanghai"></el-option>
             <el-option label="JAVA" value="beijing"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="状态:">
-          <el-select  size="small" style="width: 80px" v-model="formInline.state">
+          <el-select
+            size="small"
+            style="width: 80px"
+            v-model="formInline.state"
+          >
             <el-option label="wo" value="shanghai"></el-option>
             <el-option label="ac" value="beijing"></el-option>
           </el-select>
@@ -59,16 +75,16 @@
       </el-card>
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
-        <mavon-editor
-          class="md"
-          v-model="value"
-          :subfield="false"
-          :defaultOpen="'preview'"
-          :toolbarsFlag="false"
-          :editable="false"
-          :scrollStyle="true"
-          :ishljs="true"
-        />
+      <mavon-editor
+        class="md"
+        v-model="value"
+        :subfield="false"
+        :defaultOpen="'preview'"
+        :toolbarsFlag="false"
+        :editable="false"
+        :scrollStyle="true"
+        :ishljs="true"
+      />
     </el-dialog>
   </el-container>
 </template>
@@ -98,7 +114,7 @@ export default {
       },
       condition_group2: {
         page_no: 1,
-        condition: "who=1",
+        condition: "who=",
       },
       //代码的显示
       displayedcode: false,
@@ -107,9 +123,17 @@ export default {
     };
   },
   created() {
-    this.getPageinfo(), this.getshow_per_page(), this.getresultslist();
+    this.getuserid()
   },
   methods: {
+    getuserid() {
+      console.log(window.sessionStorage.getItem('userid'));
+      this.condition_group2.condition = this.condition_group2.condition+window.sessionStorage.getItem('userid').toString();
+      console.log(this.condition_group2.condition);
+      this.getPageinfo()
+      this.getshow_per_page()
+      this.getshow_per_page()
+    },
     // 获取提交列表
     async getresultslist() {
       this.condition_group2.page_no = this.queryInfo.pagenum;
@@ -178,5 +202,4 @@ export default {
   padding-left: 15%;
   padding-right: 15%;
 }
-
 </style>
