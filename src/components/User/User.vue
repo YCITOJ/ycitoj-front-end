@@ -65,7 +65,7 @@
 export default {
   data() {
     return {
-      username: "无敌李丽丽",
+      username: "李丽丽",
     };
   },
   methods: {
