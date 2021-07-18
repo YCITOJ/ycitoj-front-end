@@ -220,7 +220,7 @@ export default {
         return;
       }
     },
-    // 提交代码c
+    // 提交代码
     async sleep(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
@@ -232,7 +232,6 @@ export default {
         "submit/submit_code/",
         this.submitstring
       );
-      console.log(1);
       console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交题目失败,请登录！");
@@ -277,7 +276,7 @@ export default {
         return (this.ans = "CE");
       }
       if (res.verdict === 6) {
-        this.$message.success("提交反馈失败");
+        this.$message.success("恭喜你，通过了！");
         return (this.ans = "恭喜你，通过了！");
       }
       if (res.verdict === 7) {
