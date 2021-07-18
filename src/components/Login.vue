@@ -104,13 +104,15 @@ export default {
             "signin/login",
             this.loginForm
           );
-          //console.log(res);
+          console.log(res);
           if (res.meta.status !== 200) return this.$message.error("登录失败！");
           this.$message.success("登录成功");
           this.userid = res.data.id;
           // 保存token 和 id
-          window.sessionStorage.setItem("token", res.data.token);
-          window.sessionStorage.setItem("userid", res.data.id);
+          /* window.sessionStorage.setItem("token", res.data.token); */
+          window.localStorage.setItem("token", res.data.token);
+          window.localStorage.setItem("userid", res.data.id);
+          window.localStorage.setItem("username",res.data.username);
           //路由地址是 /home
           this.$router.push("/home");
         });

@@ -163,7 +163,7 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if(window.sessionStorage.getItem("token"))
+      if(window.localStorage.getItem("token"))
         this.userlevel=1;
     },
     // 搜索题目

@@ -9,13 +9,6 @@
             v-model="formInline.problem"
           ></el-input>
         </el-form-item>
-        <el-form-item label="提交者:">
-          <el-input
-            size="small"
-            style="width: 140px"
-            v-model="formInline.user"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="语言:">
           <el-select
             size="small"
@@ -42,24 +35,22 @@
       </el-form>
     </el-header>
     <el-main>
-      <el-card>
         <el-table
           :data="resultslist"
           style="width: 100%"
-          @row-click="dialogcode"
-        >
-          <el-table-column label="编号" width="100" prop="id">
+          border
+          fit>
+          <el-table-column label="编号" width="60" prop="id" align="center">
+            <template slot-scope="scope">
+              <el-link type="primary" @click="dialogcode(scope.row)">{{scope.row.id}}</el-link>
+            </template>
           </el-table-column>
           <el-table-column label="题目"> </el-table-column>
-          <el-table-column label="状态" width="100" prop="verdict">
+          <el-table-column label="状态" width="150" prop="verdict">
           </el-table-column>
-          <el-table-column label="分数" width="100"> </el-table-column>
-          <el-table-column label="总时间" width="100" prop="cpu_time">
+          <el-table-column label="总时间" width="150" prop="cpu_time">
           </el-table-column>
-          <el-table-column label="内存" width="100" prop="memory">
-          </el-table-column>
-          <el-table-column label="提交者" width="100"> </el-table-column>
-          <el-table-column label="提交时间" width="100" prop="create_time">
+          <el-table-column label="提交时间" width="200" prop="create_time">
           </el-table-column>
         </el-table>
         <!-- 分页区域 -->
@@ -72,7 +63,6 @@
           :total="total"
         >
         </el-pagination>
-      </el-card>
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
       <mavon-editor
@@ -127,12 +117,12 @@ export default {
   },
   methods: {
     getuserid() {
-      console.log(window.sessionStorage.getItem('userid'));
-      this.condition_group2.condition = this.condition_group2.condition+window.sessionStorage.getItem('userid').toString();
+      //console.log(window.localStorage.getItem('userid'));
+      this.condition_group2.condition = this.condition_group2.condition+window.localStorage.getItem('userid').toString();
       console.log(this.condition_group2.condition);
       this.getPageinfo()
-      this.getshow_per_page()
-      this.getshow_per_page()
+      this.getshow_per_page();
+      this.getresultslist();
     },
     // 获取提交列表
     async getresultslist() {

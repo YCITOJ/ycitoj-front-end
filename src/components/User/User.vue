@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     out() {
-      window.sessionStorage.setItem("token", "");
+      window.localStorage.setItem("token", "");
       this.$router.push("/home");
     },
   },

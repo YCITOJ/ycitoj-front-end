@@ -13,7 +13,7 @@
             <el-button type="primary" v-if="false">报名</el-button>
             <el-button type="primary" >排行榜</el-button>
             <el-button type="success" class="el_button_success">提交记录</el-button>
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%" >
               <el-table-column prop="date" label="状态" width="80">
               </el-table-column>
               <el-table-column prop="name" label="题目" width="800">

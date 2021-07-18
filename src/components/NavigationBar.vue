@@ -26,9 +26,10 @@
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'"
             >登录|注册</el-menu-item
           >
-          <el-menu-item class="signin" index="user" v-show="loginname === 'out'"
-            ><i class="el-icon-user-solid"></i
-          ></el-menu-item>
+          <el-menu-item class="signin" index="user" v-show="loginname === 'out'">
+            <i class="el-icon-user-solid"></i>
+            {{username}}
+          </el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
@@ -42,6 +43,7 @@ export default {
   data() {
     return {
       loginname: "",
+      username: "",
     };
   },
   created() {
@@ -49,8 +51,9 @@ export default {
   },
   methods: {
     pdlogin() {
-      //console.log(window.sessionStorage.getItem("token") === null)
-      if (window.sessionStorage.getItem("token")) {
+      this.username=window.localStorage.getItem("username")
+      //console.log(window.localStorage.getItem("token") === null)
+      if (window.localStorage.getItem("token")) {
         this.loginname = "out";
         return;
       }

@@ -20,7 +20,7 @@ import axios from 'axios'
 axios.defaults.baseURL = 'http://net.htto.online:4001/'
 axios.interceptors.request.use(config => {
   // console.log(config)
-  config.headers.Authorization = window.sessionStorage.getItem('token')
+  config.headers.Authorization = window.localStorage.getItem('token')
   // 在最后必须 return config
   return config
 })
