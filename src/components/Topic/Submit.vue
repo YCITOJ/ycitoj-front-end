@@ -277,7 +277,7 @@ export default {
       }
       if (res.verdict === 6) {
         this.$message.success("恭喜你，通过了！");
-        return (this.ans = "恭喜你，通过了！");
+        return (this.ans = "AC");
       }
       if (res.verdict === 7) {
         return (this.ans = "WA");
