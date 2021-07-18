@@ -35,34 +35,37 @@
       </el-form>
     </el-header>
     <el-main>
-        <el-table
-          :data="resultslist"
-          style="width: 100%"
-          border
-          fit>
-          <el-table-column label="编号" width="60" prop="id" align="center">
-            <template slot-scope="scope">
-              <el-link type="primary" @click="dialogcode(scope.row)">{{scope.row.id}}</el-link>
-            </template>
-          </el-table-column>
-          <el-table-column label="题目"> </el-table-column>
-          <el-table-column label="状态" width="150" prop="verdict">
-          </el-table-column>
-          <el-table-column label="总时间" width="150" prop="cpu_time">
-          </el-table-column>
-          <el-table-column label="提交时间" width="200" prop="create_time">
-          </el-table-column>
-        </el-table>
-        <!-- 分页区域 -->
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="queryInfo.pagenum"
-          :page-size="queryInfo.pagesize"
-          layout="total, prev, pager, next, jumper"
-          :total="total"
-        >
-        </el-pagination>
+      <el-table :data="resultslist" style="width: 100%" border fit>
+        <el-table-column label="编号" width="60" prop="id" align="center">
+          <template slot-scope="scope">
+            <el-link type="primary" @click="dialogcode(scope.row)">{{
+              scope.row.id
+            }}</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column label="题目"></el-table-column>
+        <el-table-column label="状态" width="120" prop="verdict" align="center">
+          <template slot-scope="scope">
+            <el-link type="success" underline v-if="scope.row.verdict=='AC'">{{ scope.row.verdict }}</el-link>
+            <el-link type="danger" underline  v-if="scope.row.verdict=='WA'">{{ scope.row.verdict }}</el-link>
+            <el-link type="warning" underline v-if="scope.row.verdict!='AC'&scope.row.verdict!='WA'">{{ scope.row.verdict }}</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column label="总时间" width="150" prop="cpu_time">
+        </el-table-column>
+        <el-table-column label="提交时间" width="200" prop="create_time">
+        </el-table-column>
+      </el-table>
+      <!-- 分页区域 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-size="queryInfo.pagesize"
+        layout="total, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
       <mavon-editor
@@ -109,18 +112,20 @@ export default {
       //代码的显示
       displayedcode: false,
       //代码内容
-      value:"",
+      value: "",
     };
   },
   created() {
-    this.getuserid()
+    this.getuserid();
   },
   methods: {
     getuserid() {
       //console.log(window.localStorage.getItem('userid'));
-      this.condition_group2.condition = this.condition_group2.condition+window.localStorage.getItem('userid').toString();
+      this.condition_group2.condition =
+        this.condition_group2.condition +
+        window.localStorage.getItem("userid").toString();
       console.log(this.condition_group2.condition);
-      this.getPageinfo()
+      this.getPageinfo();
       this.getshow_per_page();
       this.getresultslist();
     },
@@ -177,7 +182,7 @@ export default {
     // 显示提交的代码
     dialogcode(row) {
       this.displayedcode = true;
-      this.value=row.code;
+      this.value = row.code;
     },
     onSubmit() {
       console.log(this.region);
