@@ -25,8 +25,9 @@
             style="width: 80px"
             v-model="formInline.state"
           >
-            <el-option label="wo" value="shanghai"></el-option>
-            <el-option label="ac" value="beijing"></el-option>
+            <el-option label="AC" value="shanghai"></el-option>
+            <el-option label="WA" value="beijing"></el-option>
+            <el-option label="CE" value="beijing"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -43,21 +44,40 @@
             }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column label="题目" prop="prob_id" align="center">
+        <el-table-column label="题目编号" prop="prob_id" align="center" width="150">
           <template slot-scope="scope">
-            <el-link type="info" @click="gotosubmit(scope.row)">{{ scope.row.prob_id }}</el-link>
+            <el-link type="info" @click="gotosubmit(scope.row)">{{
+              scope.row.prob_id
+            }}</el-link>
           </template>
         </el-table-column>
         <el-table-column label="状态" width="120" prop="verdict" align="center">
           <template slot-scope="scope">
-            <el-link type="success" :underline="false" v-if="scope.row.verdict=='AC'">{{ scope.row.verdict }}</el-link>
-            <el-link type="danger"  :underline="false" v-if="scope.row.verdict=='WA'">{{ scope.row.verdict }}</el-link>
-            <el-link type="warning" :underline="false" v-if="scope.row.verdict!='AC'&scope.row.verdict!='WA'">{{ scope.row.verdict }}</el-link>
+            <el-link
+              type="success"
+              :underline="false"
+              v-if="scope.row.verdict == 'AC'"
+              >{{ scope.row.verdict }}</el-link
+            >
+            <el-link
+              type="danger"
+              :underline="false"
+              v-if="scope.row.verdict == 'WA'"
+              >{{ scope.row.verdict }}</el-link
+            >
+            <el-link
+              type="warning"
+              :underline="false"
+              v-if="(scope.row.verdict != 'AC') & (scope.row.verdict != 'WA')"
+              >{{ scope.row.verdict }}</el-link
+            >
           </template>
         </el-table-column>
-        <el-table-column label="总时间" width="150" prop="cpu_time">
+        <el-table-column label="总时间" width="150" prop="cpu_time" align="center">
         </el-table-column>
-        <el-table-column label="提交时间" width="200" prop="create_time">
+        <el-table-column label="语言" width="80" prop="lang" align="center">
+        </el-table-column>
+        <el-table-column label="提交时间" prop="create_time" align="center">
         </el-table-column>
       </el-table>
       <!-- 分页区域 -->
@@ -72,16 +92,18 @@
       </el-pagination>
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
-      <mavon-editor
-        class="md"
-        v-model="value"
-        :subfield="false"
-        :defaultOpen="'preview'"
-        :toolbarsFlag="false"
-        :editable="false"
-        :scrollStyle="true"
-        :ishljs="true"
-      />
+      <div>
+        <mavon-editor
+          class="md"
+          v-model="value"
+          :subfield="false"
+          :defaultOpen="'preview'"
+          :toolbarsFlag="false"
+          :editable="false"
+          :scrollStyle="true"
+          :ishljs="true"
+        />
+      </div>
     </el-dialog>
   </el-container>
 </template>
@@ -145,7 +167,7 @@ export default {
       if (res.meta.status !== 200) {
         return console.log("获取题目列表表失败！");
       }
-      //console.log(res)
+      console.log(res)
       this.resultslist = res.data;
     },
     // 提交页数以及提交数量
@@ -185,14 +207,14 @@ export default {
     },
     // 显示提交的代码
     dialogcode(row) {
-      console.log(row);
+      //console.log(row);
       this.displayedcode = true;
-      this.value = row.code;
+      this.value = "```cpp\n" + row.code + "```";
     },
     // 进去题目
     gotosubmit(row) {
-      console.log(row)
-     this.$router.push({path: '/submit', query: {id: row.prob_id}});
+      // console.log(row)
+      this.$router.push({ path: "/submit", query: { id: row.prob_id } });
     },
     onSubmit() {
       console.log(this.region);
