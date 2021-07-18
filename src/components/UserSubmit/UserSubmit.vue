@@ -43,12 +43,16 @@
             }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column label="题目"></el-table-column>
+        <el-table-column label="题目" prop="prob_id" align="center">
+          <template slot-scope="scope">
+            <el-link type="info" @click="gotosubmit(scope.row)">{{ scope.row.prob_id }}</el-link>
+          </template>
+        </el-table-column>
         <el-table-column label="状态" width="120" prop="verdict" align="center">
           <template slot-scope="scope">
-            <el-link type="success" underline v-if="scope.row.verdict=='AC'">{{ scope.row.verdict }}</el-link>
-            <el-link type="danger" underline  v-if="scope.row.verdict=='WA'">{{ scope.row.verdict }}</el-link>
-            <el-link type="warning" underline v-if="scope.row.verdict!='AC'&scope.row.verdict!='WA'">{{ scope.row.verdict }}</el-link>
+            <el-link type="success" :underline="false" v-if="scope.row.verdict=='AC'">{{ scope.row.verdict }}</el-link>
+            <el-link type="danger"  :underline="false" v-if="scope.row.verdict=='WA'">{{ scope.row.verdict }}</el-link>
+            <el-link type="warning" :underline="false" v-if="scope.row.verdict!='AC'&scope.row.verdict!='WA'">{{ scope.row.verdict }}</el-link>
           </template>
         </el-table-column>
         <el-table-column label="总时间" width="150" prop="cpu_time">
@@ -124,7 +128,7 @@ export default {
       this.condition_group2.condition =
         this.condition_group2.condition +
         window.localStorage.getItem("userid").toString();
-      console.log(this.condition_group2.condition);
+      //console.log(this.condition_group2.condition);
       this.getPageinfo();
       this.getshow_per_page();
       this.getresultslist();
@@ -181,8 +185,14 @@ export default {
     },
     // 显示提交的代码
     dialogcode(row) {
+      console.log(row);
       this.displayedcode = true;
       this.value = row.code;
+    },
+    // 进去题目
+    gotosubmit(row) {
+      console.log(row)
+     this.$router.push({path: '/submit', query: {id: row.prob_id}});
     },
     onSubmit() {
       console.log(this.region);
