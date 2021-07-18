@@ -44,7 +44,7 @@
                 <img src="../../assets/img/logosingle.png" />
               </div>
             </a>
-            <p>落谷</p>
+            <p>洛谷</p>
           </div>
         </div>
         <div class="main"></div>

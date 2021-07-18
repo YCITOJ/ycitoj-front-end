@@ -171,7 +171,7 @@ export default {
         extraKeys: { Ctrl: "autocomplete" }, // 可以用于为编辑器指定额外的键绑定，以及keyMap定义的键绑定
       },
       // 显示选择了什么语言
-      displaylanguage: "请选择编辑语言",
+      displaylanguage: "cpp",
       // 查询提交结果
       submission_id: "",
       // 提交按钮是否可以点击
