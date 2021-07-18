@@ -6,7 +6,7 @@ import axios from 'axios';
 
 let http = {};
 // let _baseURL = '/vpaas'
-let _baseURL = 'http://192.168.2.1:4001/'
+let _baseURL = 'http://net.htto.online:4001/'
 let ContentType = "application/json";
 
 let uploadFileType = "multipart/form-data";

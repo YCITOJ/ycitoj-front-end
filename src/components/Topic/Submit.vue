@@ -52,13 +52,11 @@
               >
                 <el-submenu index="1">
                   <template slot="title">{{ displaylanguage }}</template>
-                  <el-menu-item index="CPP">CPP</el-menu-item>
-                  <el-menu-item index="C">C</el-menu-item>
-                  <el-menu-item index="JAVA">JAVA</el-menu-item>
-                  <el-menu-item index="PHP">PHP</el-menu-item>
-                  <el-menu-item index="PHP">Python</el-menu-item>
-                  <el-menu-item index="PHP">Node</el-menu-item>
-                  <el-menu-item index="PHP">Merdog</el-menu-item>
+                  <el-menu-item index="cpp">cpp</el-menu-item>
+                  <el-menu-item index="rust">rust</el-menu-item>
+                  <el-menu-item index="python">python</el-menu-item>
+                  <el-menu-item index="merdog">merdog</el-menu-item>
+                  <el-menu-item index="node">node</el-menu-item>
                 </el-submenu>
               </el-menu>
             </el-header>
@@ -201,31 +199,23 @@ export default {
     },
     // 选择菜单的复制
     handleSelect(key, keyPath) {
-      if (key === "CPP") {
+      if (key === "cpp") {
         this.displaylanguage = "cpp";
         return;
       }
-      if (key === "C") {
-        this.displaylanguage = "C";
+      if (key === "rust") {
+        this.displaylanguage = "rust";
         return;
       }
-      if (key === "JAVA") {
-        this.displaylanguage = "JAVA";
-        return;
-      }
-      if (key === "PHP") {
-        this.displaylanguage = "PHP";
-        return;
-      }
-      if(key === "Python") {
+      if(key === "python") {
         this.displaylanguage = "python";
         return;
       }
-      if(key === "Node") {
+      if(key === "node") {
         this.displaylanguage = "node";
         return;
       }
-      if(key === "Merdog") {
+      if(key === "merdog") {
         this.displaylanguage = "merdog";7455
         return;
       }
@@ -235,18 +225,14 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
     async submitcode() {
-      if(this.displaylanguage === "请选择编辑语言") {
-        return this.$message.error("请选择语言！");
-      }
       this.submitstring.num = this.num;
       this.submitstring.lang = this.displaylanguage;
       this.submitstring.data = this.item.content;
-      console.log(1);
       const { data: res } = await this.$http.post(
         "submit/submit_code/",
         this.submitstring
       );
-      console.log(2);
+      console.log(1);
       console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交题目失败,请登录！");

@@ -209,7 +209,8 @@ export default {
     dialogcode(row) {
       //console.log(row);
       this.displayedcode = true;
-      this.value = "```cpp\n" + row.code + "```";
+      this.value = "```"+row.lang+"\n" + row.code;
+      //console.log(this.value)
     },
     // 进去题目
     gotosubmit(row) {
