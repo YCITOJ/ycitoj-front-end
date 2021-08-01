@@ -5,13 +5,13 @@
        <el-col>
           <el-input
             placeholder="请输入题目编号"
-            v-model="queryInfo.query"
+            v-model="formInline.problem"
             clearable
-            @clear="getUserList">
+            @clear="getSearch">
             <el-button
               slot="append"
               icon="el-icon-search"
-              @click="getproblemList"
+              @click="getSearch"
             ></el-button>
           </el-input>
         </el-col>
@@ -135,9 +135,9 @@ export default {
     },
     // 获取搜索页面数据
     getSearch() {
-      this.condition_group2.condition = "prob_id="+this.formInline.problem+" and who=";
+      this.condition_group2.condition = "prob_id=\""+this.formInline.problem+"\" and who=";
       this.condition_group2.condition = this.condition_group2.condition + window.localStorage.getItem("userid");
-      //console.log(this.condition_group2.condition);
+      console.log(this.condition_group2.condition);
       this.getPageinfo();
       this.getshow_per_page();
       this.getresultslist();

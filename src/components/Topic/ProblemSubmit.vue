@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     getuserid() {
-      this.condition_group.condition = "prob_id="+this.$route.query.id+" and who=";
+      this.condition_group.condition = "prob_id=\""+this.$route.query.id+"\" and who=";
       this.condition_group.condition = this.condition_group.condition + window.localStorage.getItem("userid");
       //console.log(this.condition_group.condition);
       this.getPageinfo();

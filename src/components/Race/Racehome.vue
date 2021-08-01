@@ -2,10 +2,9 @@
   <div class="box">
     <el-container>
       <!-- 头部 -->
-      <el-header class="header_title" height="250px">
+      <el-header class="header_title" height="550px">
         <div>
-          111
-          <!-- <mavon-editor
+          <mavon-editor
           class="md"
           v-model="value"
           :subfield="false"
@@ -14,7 +13,7 @@
           :editable="false"
           :scrollStyle="true"
           :ishljs="true"
-        /> -->
+        />
         </div>
       </el-header>
       <el-main class="mainthins">
@@ -58,7 +57,7 @@ export default {
           name: '王小虎',
           address: '1/2'
         }],
-      value: "盐城工学院程序设计大赛DIV1",
+      value: "<h3>盐城工学院程序设计大赛DIV1<h3><h3>盐城工学院程序设计大赛DIV1<h3><h3>盐城工学院程序设计大赛DIV1<h3><h3>盐城工学院程序设计大赛DIV1<h3><h3>盐城工学院程序设计大赛DIV1<h3><h3>盐城工学院程序设计大赛DIV1<h3>",
     };
   },
 };
@@ -70,9 +69,10 @@ export default {
 }
 .header_title {
   width: 80%;
+  background-color: black;
 }
 .md {
-  height: 250px;
+  height: 550px;
 }
 .mainthins {
   padding-top: 50px;

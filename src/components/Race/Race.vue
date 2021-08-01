@@ -3,7 +3,7 @@
     <el-row :gutter="20">
         <el-col :span="8">
           <el-input
-            placeholder="请输入内容"
+            placeholder="请输入比赛名称"
             v-model="queryInfo.query"
             clearable
             @clear="getUserList">
@@ -15,11 +15,11 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="addDialogVisible"  v-if="userlevel==1">添加题目</el-button>
+          <el-button type="primary" @click="addDialogVisible"  v-if="userlevel==1">添加比赛</el-button>
         </el-col>
       </el-row>
     <el-table :data="tableData" style="width: 100%" @row-click="gotoracehome">
-      <el-table-column prop="name" label="比赛名称" width="300">
+      <el-table-column prop="name" label="比赛名称" width="600">
         <template slot-scope="scope">
           {{scope.row.name}}
           <el-button type="primary" size="mini" v-show="scope.row.fff == 1">报名</el-button>
@@ -27,11 +27,10 @@
           <el-button type="info" size="mini" v-if="scope.row.fff == 3">结束</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="starttime" label="开始时间" width="180">
+      <el-table-column prop="starttime" label="开始时间" width="300">
       </el-table-column>
-      <el-table-column prop="lasttime" label="结束时间" width="180">
+      <el-table-column prop="lasttime" label="结束时间" width="300">
       </el-table-column>
-      <el-table-column prop="description" label="描述"> </el-table-column>
     </el-table>
 
     <!-- 分页区域 -->
@@ -79,7 +78,6 @@ export default {
           name: "盐工程序设计大赛DVI2",
           starttime: "2021-10-9 4:00",
           lasttime: "2021-10-9 5:00",
-          description: "本场比赛是测试样例，看布局形态的空间的开发了解到了房间了开放的开发了解到了房间了开放的开发了解到了房间了开放地方开心就好！",
           fff: "3",
         },
         {
@@ -169,6 +167,9 @@ export default {
       ],
     };
   },
+  created() {
+    this.getuserlevel();
+  },
   methods: {
     gotoracehome() {
       this.$router.push({ path: "/racehome" });
@@ -184,6 +185,11 @@ export default {
       // console.log(newPage);
       //this.queryInfo.pagenum = newPage;
       //this.getUserList();
+    },
+    // 获取用户等级
+    getuserlevel() {
+      if(window.localStorage.getItem("token"))
+        this.userlevel=1;
     },
   },
 };
