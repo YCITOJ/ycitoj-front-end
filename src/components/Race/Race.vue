@@ -1,5 +1,23 @@
 <template>
   <div class="box">
+    <el-row :gutter="20">
+        <el-col :span="8">
+          <el-input
+            placeholder="请输入内容"
+            v-model="queryInfo.query"
+            clearable
+            @clear="getUserList">
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getproblemList"
+            ></el-button>
+          </el-input>
+        </el-col>
+        <el-col :span="4">
+          <el-button type="primary" @click="addDialogVisible"  v-if="userlevel==1">添加题目</el-button>
+        </el-col>
+      </el-row>
     <el-table :data="tableData" style="width: 100%" @row-click="gotoracehome">
       <el-table-column prop="name" label="比赛名称" width="300">
         <template slot-scope="scope">
@@ -92,6 +110,62 @@ export default {
           description: "开心就好！",
           fff: "3",
         },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        },
+        {
+          name: "盐工程序设计大赛DVI2",
+          starttime: "2021-10-9 4:00",
+          lasttime: "2021-10-9 5:00",
+          description: "开心就好！",
+          fff: "3",
+        }
       ],
     };
   },

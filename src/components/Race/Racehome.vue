@@ -2,11 +2,22 @@
   <div class="box">
     <el-container>
       <!-- 头部 -->
-      <el-header class="header_title">{{ headertitle }}</el-header>
-      <!-- 主题 -->
-      <el-main>
-        <!-- 比赛介绍 -->
-        <div>{{ mianintroduce }}</div>
+      <el-header class="header_title" height="250px">
+        <div>
+          111
+          <!-- <mavon-editor
+          class="md"
+          v-model="value"
+          :subfield="false"
+          :defaultOpen="'preview'"
+          :toolbarsFlag="false"
+          :editable="false"
+          :scrollStyle="true"
+          :ishljs="true"
+        /> -->
+        </div>
+      </el-header>
+      <el-main class="mainthins">
         <!-- 比赛内容 -->
         <el-card class="main_card">
           <div>
@@ -47,8 +58,7 @@ export default {
           name: '王小虎',
           address: '1/2'
         }],
-      headertitle: "盐城工学院程序设计大赛DIV1",
-      mianintroduce: "本场比赛允许全体盐城工学院学生参加",
+      value: "盐城工学院程序设计大赛DIV1",
     };
   },
 };
@@ -59,11 +69,15 @@ export default {
   padding-top: 20px;
 }
 .header_title {
-  font-size: 30px;
-  font-weight: bold;
+  width: 80%;
+}
+.md {
+  height: 250px;
+}
+.mainthins {
+  padding-top: 50px;
 }
 .main_card {
-  margin-top: 50px;
   width: 80%;
 }
 .el-table {

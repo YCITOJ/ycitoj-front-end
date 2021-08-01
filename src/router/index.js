@@ -12,12 +12,13 @@ import Submit from '../components/Topic/Submit.vue'
 import User from '../components/User/User.vue'
 import Revise from '../components/Topic/Revise.vue'
 import UserSubmit from '../components/UserSubmit/UserSubmit.vue'
+import ProblemSubmit from '../components/Topic/ProblemSubmit.vue'
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/navigtionbar' },
   { path: '/login', component: Login },
-  { path: '/submit', name: 'submit', component: Submit },
+  { path: '/submit', name: 'submit', component: Submit},
   { path: '/navigtionbar',
     component: NavigtionBar,
     children: [
@@ -32,6 +33,7 @@ const routes = [
       { path: '/addproblems', name: 'addproblems', component: Addproblems },
       { path: '/addcontent', name: 'addcontent', component: Addcontent },
       { path: '/revise', name: 'revise', component: Revise },
+      { path: '/problemSubmit', name: 'problemSubmit', component: ProblemSubmit },
       // 提交记录页面
       { path: '/usersubmit', name: 'usersubmit', component: UserSubmit },
       // 用户界面

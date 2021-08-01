@@ -1,18 +1,6 @@
 <template>
   <el-container class="page">
     <el-header>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="题目编号:">
-          <el-input
-            size="small"
-            style="width: 100px"
-            v-model="formInline.problem"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="getSearch">查询</el-button>
-        </el-form-item>
-      </el-form>
     </el-header>
     <el-main>
       <el-table :data="resultslist" style="width: 100%" border fit>
@@ -90,10 +78,6 @@
 export default {
   data() {
     return {
-      // 搜索列表
-      formInline: {
-        problem: "",
-      },
       // 获取用户列表的参数对象
       queryInfo: {
         query: "",
@@ -105,9 +89,9 @@ export default {
       resultslist: [],
       total: 1,
       // 获取提交页面的请求数据
-      condition_group2: {
+      condition_group: {
         page_no: 1,
-        condition: "who=",
+        condition: "",
       },
       //代码的显示
       displayedcode: false,
@@ -119,62 +103,55 @@ export default {
     this.getuserid();
   },
   methods: {
-    // 获取请求页面数据
     getuserid() {
-      //console.log(window.localStorage.getItem('userid'));
-      this.condition_group2.condition =
-        this.condition_group2.condition +
-        window.localStorage.getItem("userid").toString();
-      //console.log(this.condition_group2.condition);
-      this.getPageinfo();
-      this.getshow_per_page();
-      this.getresultslist();
-    },
-    // 获取搜索页面数据
-    getSearch() {
-      this.condition_group2.condition = "prob_id="+this.formInline.problem+" and who=";
-      this.condition_group2.condition = this.condition_group2.condition + window.localStorage.getItem("userid");
-      //console.log(this.condition_group2.condition);
+      this.condition_group.condition = "prob_id="+this.$route.query.id+" and who=";
+      this.condition_group.condition = this.condition_group.condition + window.localStorage.getItem("userid");
+      //console.log(this.condition_group.condition);
       this.getPageinfo();
       this.getshow_per_page();
       this.getresultslist();
     },
     // 获取提交列表
     async getresultslist() {
-      this.condition_group2.page_no = this.queryInfo.pagenum;
+      this.condition_group.page_no = this.queryInfo.pagenum;
       const { data: res } = await this.$http.get(
         "submit/get_submissions?page_no=" +
-          this.condition_group2.page_no +
+          this.condition_group.page_no +
           "&condition=" +
-          this.condition_group2.condition
+          this.condition_group.condition
       );
+      console.log(this.condition_group.page_no)
+      console.log(this.condition_group.condition
+)
+      console.log(res)
       if (res.meta.status !== 200) {
         return console.log("获取题目列表表失败！");
       }
-      console.log(res)
+      
       this.resultslist = res.data;
     },
     // 提交页数以及提交数量
     async getPageinfo() {
       const { data: res } = await this.$http.get(
-        "submit/submission_info?condition=" + this.condition_group2.condition
+        "submit/submission_info?condition=" + this.condition_group.condition
       );
+      console.log(this.condition_group.condition);
+      console.log(res);
       if (res.meta.status === 403) {
         return this.$message.error("请先登录！");
       }
       if (res.meta.status !== 200) {
         return console.log("获取提交表数量失败！");
       }
-      //console.log(res);
       this.total = res.data.sub_cnt;
     },
     // 提交每一页的题目数量
     async getshow_per_page() {
       const { data: res } = await this.$http.get("submit/show_per_page");
+      //console.log(res);
       if (res.meta.status !== 200) {
         return console.log("获取提交表题目失败！");
       }
-      //console.log(res);
       this.queryInfo.pagesize = res.data;
     },
     // 监听 pagesize 改变的事件
@@ -200,6 +177,10 @@ export default {
     gotosubmit(row) {
       // console.log(row)
       this.$router.push({ path: "/submit", query: { id: row.prob_id } });
+    },
+    onSubmit() {
+      console.log(this.region);
+      console.log("submit!");
     },
   },
 };

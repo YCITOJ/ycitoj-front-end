@@ -14,7 +14,7 @@
           class="el-icon-house"
           @click="gotohome"
         ></el-menu-item>
-        <el-menu-item index="2">提交记录</el-menu-item>
+        <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
         <el-menu-item index="3">讨论</el-menu-item>
         <el-menu-item index="4">上传文件</el-menu-item>
       </el-menu>
@@ -193,6 +193,10 @@ export default {
     // 返回主页
     gotohome() {
       this.$router.push("/topic");
+    },
+    // 进去提交页面
+    gotoproblemSubmit() {
+        this.$router.push({path: '/problemSubmit', query: {id: this.num}});
     },
     onCmReady3() {
       this.$refs.myCmGenerate.codemirror.setSize("100%", "500px");
