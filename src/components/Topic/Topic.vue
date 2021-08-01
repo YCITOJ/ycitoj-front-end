@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input
-            placeholder="请输入内容"
+            placeholder="请输入题目编号或内容"
             v-model="queryInfo.query"
             clearable
             @clear="getUserList">
@@ -265,7 +265,6 @@ export default {
   width: 80%;
   margin-top: 40px;
   margin-left: 160px;
-
 }
 .problemlist {
   margin-top: 40px;

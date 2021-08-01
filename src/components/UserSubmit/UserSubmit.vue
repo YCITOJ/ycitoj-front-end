@@ -1,18 +1,21 @@
 <template>
   <el-container class="page">
     <el-header>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="题目编号:">
+      <el-row :gutter="20" class="Search">
+       <el-col>
           <el-input
-            size="small"
-            style="width: 100px"
-            v-model="formInline.problem"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="getSearch">查询</el-button>
-        </el-form-item>
-      </el-form>
+            placeholder="请输入题目编号"
+            v-model="queryInfo.query"
+            clearable
+            @clear="getUserList">
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="getproblemList"
+            ></el-button>
+          </el-input>
+        </el-col>
+      </el-row>
     </el-header>
     <el-main>
       <el-table :data="resultslist" style="width: 100%" border fit>
@@ -205,6 +208,9 @@ export default {
 };
 </script>
 <style scoped>
+.Search {
+  width: 30%;
+}
 .page {
   padding-top: 20px;
   padding-left: 15%;
