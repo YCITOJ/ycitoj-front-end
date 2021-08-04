@@ -44,7 +44,7 @@
         prop="difficulty"
         width="50"
       ></el-table-column>
-      <el-table-column label="通过" prop="email" width="50"></el-table-column>
+      <el-table-column label="通过" prop="email" wigdth="50"></el-table-column>
       <el-table-column label="提交" prop="mobile" width="50"></el-table-column>
       <el-table-column
         label="通过率"
@@ -86,7 +86,6 @@
         </template>
       </el-table-column>
     </el-table>
-
     <!-- 分页区域 -->
     <el-pagination
       @size-change="handleSizeChange"

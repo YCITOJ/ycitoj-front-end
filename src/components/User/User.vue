@@ -71,7 +71,7 @@ export default {
   methods: {
     out() {
       window.localStorage.setItem("token", "");
-      this.$router.push("/home");
+      this.$router.push("/login");
     },
   },
 };

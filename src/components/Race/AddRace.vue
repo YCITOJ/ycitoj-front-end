@@ -110,6 +110,7 @@ export default {
         return this.$message.error("比赛创建失败！");
       }
     this.$message.success("比赛创建成功！");
+     this.$router.push({ path: "/race" });
     },
     async addProblemId() {
       const { data: res } = await this.$http.get(`problems/prob_exists?num=${this.problemid}`);
