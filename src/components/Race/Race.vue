@@ -1,14 +1,13 @@
 <template>
   <div class="box">
-    <el-row :gutter="20">
-      <el-col :span="4">
+      <el-col>
         <el-button
           type="primary"
+          class="addRacebutton"
           @click="addRace"
           v-if="userlevel == 1"
           >添加比赛</el-button>
       </el-col>
-    </el-row>
     <el-table :data="tableData" style="width: 100%" @row-click="gotoracehome">
       <el-table-column prop="name" label="比赛名称" width="600">
         <template slot-scope="scope">
@@ -55,10 +54,7 @@ export default {
         pagesize: 6,
       },
       total: 50,
-      tableData: [
-        {
-        },
-      ],
+      tableData: [],
       // 添加题目弹出框
       dialogVisible: false,
       addRaceform: {
@@ -79,7 +75,7 @@ export default {
       const { data: res } = await this.$http.get(
         "contest/list?page_no=" + this.queryInfo.pagenum
       );
-      console.log(res)
+      //console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -94,14 +90,15 @@ export default {
       this.total = res.count;
       this.queryInfo.pagesize = res.show_per_page;
     },
-    gotoracehome() {
-      this.$router.push({ path: "/racehome" });
-    },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       // console.log(newPage);
       this.queryInfo.pagenum = newPage;
       this.getRaceList();
+    },
+    // 进入比赛页面
+    gotoracehome(row) {
+      this.$router.push({ path: "/racehome", query: {id: row.id} });
     },
     // 获取用户等级
     getuserlevel() {
@@ -119,5 +116,8 @@ export default {
   margin-top: 40px;
   margin-left: 10%;
   margin-right: 10%;
+}
+.addRacebutton {
+  float: right;
 }
 </style>

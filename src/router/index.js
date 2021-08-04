@@ -14,6 +14,7 @@ import Revise from '../components/Topic/Revise.vue'
 import UserSubmit from '../components/UserSubmit/UserSubmit.vue'
 import ProblemSubmit from '../components/Topic/ProblemSubmit.vue'
 import AddRace from '../components/Race/AddRace.vue'
+import ReviseRace from '../components/Race/ReviseRace.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -30,6 +31,7 @@ const routes = [
       { path: '/race', name: 'race', component: Race },
       { path: '/racehome', name: 'racehome', component: Racehome },
       { path: '/addrace', name: 'addrace', component: AddRace },
+      { path: '/reviserace', name: 'reviserace', component: ReviseRace },
       // 题库页面
       { path: '/topic', name: 'topic', component: Topic },
       { path: '/addproblems', name: 'addproblems', component: Addproblems },

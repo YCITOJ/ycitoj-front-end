@@ -81,7 +81,7 @@ export default {
         start: "",
         end: "",
         manager: "",
-        contest_type: [],
+        contest_type: "1",
         info: "",
       },
       // 添加比赛题目编号

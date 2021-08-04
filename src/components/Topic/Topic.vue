@@ -32,7 +32,11 @@
       class="problemlist"
       @row-click="gotosubmit"
     >
-      <el-table-column label="提交状态" width="100"></el-table-column>
+      <el-table-column label="提交状态" prop="ac" width="100" align="center">
+        <template slot-scope="scope">
+          <i class="el-icon-check" v-if="scope.row.ac"></i>
+        </template>
+      </el-table-column>
       <el-table-column label="编号" prop="num" width="100"></el-table-column>
       <el-table-column label="题目" prop="title"></el-table-column>
       <el-table-column
@@ -141,7 +145,7 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.problemslist = res.data;
-      // console.log(res)
+       console.log(res)
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
