@@ -113,6 +113,7 @@ export default {
           window.localStorage.setItem("token", res.data.token);
           window.localStorage.setItem("userid", res.data.id);
           window.localStorage.setItem("username",res.data.username);
+          window.localStorage.setItem("access",res.data.access);
           //路由地址是 /home
           this.$router.push("/home");
         });

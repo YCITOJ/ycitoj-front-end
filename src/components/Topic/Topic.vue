@@ -25,7 +25,7 @@
         >
       </el-col>
     </el-row>
-    <!-- 题目列表区域 --><!-- @row-dblclick="gotosubmit" -->
+    <!-- 题目列表区域 -->
     <el-table
       :data="problemslist"
       stripe
@@ -39,18 +39,10 @@
       </el-table-column>
       <el-table-column label="编号" prop="num" width="100"></el-table-column>
       <el-table-column label="题目" prop="title"></el-table-column>
-      <el-table-column
-        label="难度"
-        prop="difficulty"
-        width="50"
-      ></el-table-column>
-      <el-table-column label="通过" prop="email" wigdth="50"></el-table-column>
-      <el-table-column label="提交" prop="mobile" width="50"></el-table-column>
-      <el-table-column
-        label="通过率"
-        prop="role_name"
-        width="70"
-      ></el-table-column>
+      <el-table-column label="难度" prop="difficulty" width="50"></el-table-column>
+      <el-table-column label="通过" prop="pass" width="70"></el-table-column>
+      <el-table-column label="提交" prop="submit" width="70"></el-table-column>
+      <el-table-column label="通过率" prop="role_name" width="70"></el-table-column>
       <el-table-column label="状态" width="100" v-if="userlevel == 1">
         <template slot-scope="scope">
           <el-switch
@@ -169,7 +161,8 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("token")) this.userlevel = 1;
+      console.log(window.localStorage.getItem("access"))
+      if (window.localStorage.getItem("access") === '0') this.userlevel = 1;
     },
     // 搜索题目
     async getproblemList() {
