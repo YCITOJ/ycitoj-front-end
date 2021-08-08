@@ -12,7 +12,7 @@
       <el-table-column prop="name" label="比赛名称" width="600">
         <template slot-scope="scope">
           {{ scope.row.title }}
-          <el-button type="primary" size="mini" v-show="scope.row.fff == 1"
+          <el-button type="primary" size="mini" v-show="true"
             >报名</el-button
           >
           <el-button type="success" size="mini" v-if="scope.row.fff == 2"

@@ -74,7 +74,7 @@
             type="danger"
             icon="el-icon-delete"
             size="mini"
-            @click.native.stop="removeUserById(scope.row.num)"
+            @click.native.stop="removeProblemById(scope.row.num)"
           ></el-button>
           <!-- 上传按钮 -->
           <el-button

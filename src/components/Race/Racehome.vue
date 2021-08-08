@@ -25,6 +25,7 @@
             <el-button type="primary">排行榜</el-button>
             <el-button type="success">提交记录</el-button>
             <el-button type="info" @click="gotoReviseRace">编辑</el-button>
+            <el-button type="danger" @click="deleteRaceById">删除</el-button>
             <el-table :data="tableData" border style="width: 100%">
               <el-table-column prop="date" label="状态" width="80">
               </el-table-column>
@@ -69,6 +70,33 @@ export default {
         path: "/reviserace",
         query: { id: this.$route.query.id },
       });
+    },
+    // 删除比赛
+    async deleteRaceById() {
+      // 弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该比赛, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+
+      // 如果用户确认删除，则返回值为字符串 confirm
+      // 如果用户取消了删除，则返回值为字符串 cancel
+      // console.log(confirmResult)
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
+      const { data: res } = await this.$http.post(`contest/list?id=${this.$route.query.id}`);
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error("删除比赛失败！");
+      }
+      this.$message.success("删除比赛成功！");
+      this.$router.push({ path: "/race" });
     },
   },
 };
