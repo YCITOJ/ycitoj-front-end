@@ -136,7 +136,7 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.problemslist = res.data;
-       console.log(res)
+      console.log(res)
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {

@@ -16,15 +16,15 @@
         ></el-menu-item>
         <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
         <el-menu-item index="3">讨论</el-menu-item>
-        <el-menu-item index="4">上传文件</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
     <el-container>
       <el-aside width="800px" class="el-aside1">
-        <!-- <P class="container_title">{{num}}</P> -->
+        <h3>{{info.num}} {{info.title}}</h3>
         <div class="submitjshao">
-          <p>时间限制： {{value.time_limit}}ms 空间限制： {{value.memory_limit}} </p>
+          <div class="submitjshao_time_limit">时间限制： {{info.time_limit}}ms </div>
+          <div class="submitjshao_memory_limit">空间限制： {{info.memory_limit}}MB </div>
         </div>
         <mavon-editor
           class="md"
@@ -127,6 +127,9 @@ export default {
   },
   data() {
     return {
+      // 题目信息
+      info: [],
+      // 题目内容
       value: "",
       // 题目编号
       num: "",
@@ -189,6 +192,7 @@ export default {
       );
       console.log(res);
       this.value = res.data;
+      this.info = res.info;
     },
     // 返回主页
     gotohome() {
@@ -307,6 +311,9 @@ export default {
   top: 70px;
   bottom: 0;
 }
+.el-aside1 h3 {
+  padding-left: 4%;
+}
 .el-main1 {
   position: absolute;
   left: 820px;
@@ -327,6 +334,14 @@ export default {
   margin-top: 20px;
   padding-left: 20px;
   line-height: 60px;
+}
+.submitjshao_time_limit {
+  float: left;
+  padding-left: 5%;
+}
+.submitjshao_memory_limit{
+  float: right;
+  padding-right: 20%;
 }
 .md {
   margin-top: 20px;
