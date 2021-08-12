@@ -33,7 +33,7 @@
       <el-form-item label="是否公开" prop="is_public">
         <el-radio-group v-model="form.is_public">
           <el-radio label="1">公开</el-radio>
-          <el-radio label="2">不公开</el-radio>
+          <el-radio label="0">不公开</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="编辑题目">
@@ -50,9 +50,9 @@ export default {
       form: {
         num: "",
         title: "",
-        difficulty: "",
-        memory_limit: "",
-        time_limit: "",
+        difficulty: "1",
+        memory_limit: "128",
+        time_limit: "1000",
         content: "",
         is_public: "1",
       },
@@ -145,9 +145,10 @@ export default {
     change(value, render) {
       this.form.content = render;
     },
-    async addpb() {
-      console.log(this.form);
-      const { data: res } = await this.$http.post(
+    addpb() {
+    this.$refs.form.validate(async (valid) => {
+    if (!valid) return;
+    const { data: res } = await this.$http.post(
         "problems/new_problem",
         this.form
       );
@@ -156,7 +157,8 @@ export default {
         return this.$message.error("添加失败！");
       }
       this.$message.success("添加成功");
-      //this.$router.push({path: '/addcontent', query: {id: this.form.num}})
+      this.$router.push('/topic')  
+      })   
     },
   },
 };
