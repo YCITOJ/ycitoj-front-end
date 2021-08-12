@@ -161,7 +161,6 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      console.log(window.localStorage.getItem("access"))
       if (window.localStorage.getItem("access") === '0') this.userlevel = 1;
     },
     // 搜索题目
@@ -199,7 +198,7 @@ export default {
       this.$router.push({ path: "/revise", query: { id: num } });
     },
     // 根据Id删除对应的题目
-    async removeUserById(id) {
+    async removeProblemById(id) {
       // 弹框询问用户是否删除数据
       const confirmResult = await this.$confirm(
         "此操作将永久删除该题目, 是否继续?",

@@ -9,26 +9,19 @@
           >添加比赛</el-button>
       </el-col>
     <el-table :data="tableData" style="width: 100%" @row-click="gotoracehome">
-      <el-table-column prop="name" label="比赛名称" width="600">
+      <el-table-column prop="title" label="比赛名称"></el-table-column>
+      <el-table-column label="状态" width="200">
         <template slot-scope="scope">
-          {{ scope.row.title }}
-          <el-button type="primary" size="mini" v-show="true"
-            >报名</el-button
-          >
-          <el-button type="success" size="mini" v-if="scope.row.fff == 2"
-            >进行中</el-button
-          >
-          <el-button type="info" size="mini" v-if="scope.row.fff == 3"
-            >结束</el-button
-          >
+          <el-link type="primary" disabled v-if="scope.row.state==1">未开始</el-link>
+          <el-link type="success" disabled v-if="scope.row.state==2">进行中</el-link>
+          <el-link type="info" disabled v-if="scope.row.state==3">已结束</el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="start_time" label="开始时间" width="300">
+      <el-table-column prop="start_time" label="开始时间" width="270">
       </el-table-column>
-      <el-table-column prop="end_time" label="结束时间" width="300">
+      <el-table-column prop="end_time" label="结束时间" width="270">
       </el-table-column>
     </el-table>
-
     <!-- 分页区域 -->
     <el-pagination
       @current-change="handleCurrentChange"
@@ -75,7 +68,7 @@ export default {
       const { data: res } = await this.$http.get(
         "contest/list?page_no=" + this.queryInfo.pagenum
       );
-      //console.log(res)
+      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }

@@ -24,7 +24,7 @@
       <el-aside width="800px" class="el-aside1">
         <!-- <P class="container_title">{{num}}</P> -->
         <div class="submitjshao">
-          时间限制： C/C++1秒,其他语言2秒 空间限制： C/C++ 64M,其他语言128M
+          <p>时间限制： {{value.time_limit}}ms 空间限制： {{value.memory_limit}} </p>
         </div>
         <mavon-editor
           class="md"
@@ -187,7 +187,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      // console.log(res);
+      console.log(res);
       this.value = res.data;
     },
     // 返回主页

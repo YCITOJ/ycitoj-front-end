@@ -21,12 +21,13 @@
         <!-- 比赛内容 -->
         <el-card class="main_card">
           <div>
-            <el-button type="primary">报名</el-button>
+            <el-button type="primary" @click="registerRace" v-if="!checkUserRaceFlang">报名</el-button>
+            <el-button type="primary" disabled v-if="checkUserRaceFlang">已报名</el-button>
             <el-button type="primary">排行榜</el-button>
             <el-button type="success">提交记录</el-button>
             <el-button type="info" @click="gotoReviseRace">编辑</el-button>
             <el-button type="danger" @click="deleteRaceById">删除</el-button>
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%" v-if="checkUseraccess">
               <el-table-column prop="date" label="状态" width="80">
               </el-table-column>
               <el-table-column prop="title" label="题目" width="800">
@@ -45,11 +46,20 @@ export default {
     return {
       tableData: [],
       value: "",
-      title: ""
+      title: "",
+      raceid: {
+        del_contest_id: "",
+        id: ""
+      },
+      // 检查用户报名情况参数
+      checkUserRaceFlang: "",
+      // 检查比赛是否开始和用户等级
+      checkUseraccess: "",
     };
   },
   created() {
     this.getRaceList();
+    this.checkUserRace();
   },
   methods: {
     async getRaceList() {
@@ -63,6 +73,52 @@ export default {
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
+      if(window.localStorage.getItem("access") < 2) {
+        this.checkUseraccess = true;
+      } else if(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date()))){
+        /* console.log(res.data.start_time)
+        console.log(Date.parse(new Date(res.data.start_time)))
+        console.log((new Date()).getTime())
+        console.log(Date.parse(new Date(res.data.start_time)) <=　Date.parse(new Date(new Date()))); */
+        this.checkUseraccess = true;
+      } else {
+        this.checkUseraccess = false;
+      }
+
+    },
+    // 检查用户报名情况
+    async checkUserRace() {
+      const { data: res } = await this.$http.get(`contest/check_reg?contest_id=${this.$route.query.id}`);
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error("获取题目列表失败！");
+      }
+      this.checkUserRaceFlang = res.verdict;
+    },
+    // 注册比赛
+    async registerRace() {
+      // 弹框询问用户是否报名比赛
+      const confirmResult = await this.$confirm(
+        "此操作报名该比赛, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+      // console.log(confirmResult)
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
+      this.raceid.id = this.$route.query.id
+      const { data: res } = await this.$http.post("contest/register",this.raceid);
+      //console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success("报名比赛成功！");
+      this.$router.push({ path: "/race" });
     },
     // 修改题目
     gotoReviseRace() {
@@ -84,14 +140,13 @@ export default {
         }
       ).catch((err) => err);
 
-      // 如果用户确认删除，则返回值为字符串 confirm
-      // 如果用户取消了删除，则返回值为字符串 cancel
       // console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      const { data: res } = await this.$http.post(`contest/list?id=${this.$route.query.id}`);
-      console.log(res);
+      this.raceid.del_contest_id=this.$route.query.id
+      const { data: res } = await this.$http.post("contest/del",this.raceid);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("删除比赛失败！");
       }
