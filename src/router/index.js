@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import NavigtionBar from '../components/NavigationBar.vue'
 import Home from '../components/Home/Home.vue'
-import Race from '../components/Race/Race.vue'
-import Racehome from '../components/Race/Racehome.vue'
+import compete from '../components/Compete/Compete.vue'
+import Competehome from '../components/Compete/Competehome.vue'
 import Topic from '../components/Topic/Topic.vue'
 import Login from '../components/Login.vue'
 import Addproblems from '../components/Topic/Addproblems.vue'
@@ -13,8 +13,8 @@ import User from '../components/User/User.vue'
 import Revise from '../components/Topic/Revise.vue'
 import UserSubmit from '../components/UserSubmit/UserSubmit.vue'
 import ProblemSubmit from '../components/Topic/ProblemSubmit.vue'
-import AddRace from '../components/Race/AddRace.vue'
-import ReviseRace from '../components/Race/ReviseRace.vue'
+import AddCompete from '../components/Compete/AddCompete.vue'
+import ReviseCompete from '../components/Compete/ReviseCompete.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,10 +28,10 @@ const routes = [
       // 主页
       { path: '/home', name: 'home',component: Home },
       // 比赛页面
-      { path: '/race', name: 'race', component: Race },
-      { path: '/racehome', name: 'racehome', component: Racehome },
-      { path: '/addrace', name: 'addrace', component: AddRace },
-      { path: '/reviserace', name: 'reviserace', component: ReviseRace },
+      { path: '/compete', name: 'compete', component: Compete },
+      { path: '/competehome', name: 'competehome', component: Competehome },
+      { path: '/addcompete', name: 'addcompete', component: AddCompete },
+      { path: '/revisecompete', name: 'revisecompete', component: ReviseCompete },
       // 题库页面
       { path: '/topic', name: 'topic', component: Topic },
       { path: '/addproblems', name: 'addproblems', component: Addproblems },

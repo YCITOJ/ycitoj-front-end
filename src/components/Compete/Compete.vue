@@ -91,7 +91,7 @@ export default {
     },
     // 进入比赛页面
     gotoracehome(row) {
-      this.$router.push({ path: "/racehome", query: {id: row.id} });
+      this.$router.push({ path: "/competehome", query: {id: row.id} });
     },
     // 获取用户等级
     getuserlevel() {
@@ -99,7 +99,7 @@ export default {
     },
     // 添加比赛
     addRace() {
-      this.$router.push("/addrace");
+      this.$router.push("/addcompete");
     }
   },
 };
