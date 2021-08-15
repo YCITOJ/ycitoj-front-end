@@ -56,6 +56,8 @@ export default {
         uploader: "",
         difficulty: "",
       },
+      // 用户等级
+      userlevel: ""
     };
   },
   created() {
@@ -68,7 +70,7 @@ export default {
       const { data: res } = await this.$http.get(
         "contest/list?page_no=" + this.queryInfo.pagenum
       );
-      console.log(res)
+      //console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }

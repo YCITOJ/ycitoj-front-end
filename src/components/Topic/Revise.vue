@@ -161,7 +161,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.form.num
       );
-      console.log(res)
+      //console.log(res)
       this.form.content = res.data;
       this.form.num = res.info.num;
       this.form.title = res.info.title;
@@ -177,7 +177,7 @@ export default {
         "problems/update_problem",
         this.form
       );
-      console.log(this.form);
+      //console.log(this.form);
       if (res.meta.status !== 200) {
         return this.$message.error("修改失败！");
       }

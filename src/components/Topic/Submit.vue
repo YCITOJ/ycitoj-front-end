@@ -190,7 +190,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      console.log(res);
+      //console.log(res);
       this.value = res.data;
       this.info = res.info;
     },
@@ -240,7 +240,7 @@ export default {
         "submit/submit_code/",
         this.submitstring
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交题目失败,请登录！");
       }
@@ -259,9 +259,9 @@ export default {
       }
     },
     async outcome() {
-      console.log(this.submission_id);
+      //console.log(this.submission_id);
       const { data: res } = await this.$http.get("submit/submission_result?submission_id=" + this.submission_id);
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }

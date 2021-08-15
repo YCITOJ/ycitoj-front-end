@@ -5,33 +5,27 @@
         <el-input v-model="form.title"></el-input>
       </el-form-item>
       <el-form-item label="添加题目">
-        <el-input
-          placeholder="请输入题目编号"
-          v-model="problemid"
-          clearable>
+        <el-input placeholder="请输入题目编号" v-model="problemid" clearable>
           <el-button
             slot="append"
             icon="el-icon-download"
             @click="addProblemId"
           ></el-button>
         </el-input>
-        <el-table
-      :data="problemlist"
-      style="width: 40%">
-      <el-table-column prop="id" label="题目编号">
-      </el-table-column>
-       <el-table-column label="操作" width="180">
-          <template slot-scope="scope">
-            <!-- 删除按钮 -->
-            <el-button
-              type="danger"
-              icon="el-icon-delete"
-              size="mini"
-              @click.native.stop="deleteproblem(scope.$index)"
-            ></el-button>
-          </template>
-        </el-table-column>
-    </el-table>
+        <el-table :data="problemlist" style="width: 40%">
+          <el-table-column prop="id" label="题目编号"> </el-table-column>
+          <el-table-column label="操作" width="180">
+            <template slot-scope="scope">
+              <!-- 删除按钮 -->
+              <el-button
+                type="danger"
+                icon="el-icon-delete"
+                size="mini"
+                @click.native.stop="deleteproblem(scope.$index)"
+              ></el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-form-item>
       <el-form-item label="开始时间">
         <el-date-picker
@@ -85,50 +79,53 @@ export default {
         info: "",
       },
       // 添加比赛题目编号
-      problemid: '',
-      problemlist: [
-      ],
+      problemid: "",
+      problemlist: [],
     };
   },
   methods: {
     // 提交比赛
     async putRace() {
-    if(this.problemlist.length<=0){
-      return this.$message.error("请添加题目！");
-    }
-     this.form.problem_sets=`${this.problemlist[0].id}`
-     for( var i=1;i<this.problemlist.length;i++)
-      {
-        this.form.problem_sets=`${this.form.problem_sets}|${this.problemlist[i].id}`
+      if (this.problemlist.length <= 0) {
+        return this.$message.error("请添加题目！");
+      }
+      this.form.problem_sets = `${this.problemlist[0].id}`;
+      for (var i = 1; i < this.problemlist.length; i++) {
+        this.form.problem_sets = `${this.form.problem_sets}|${this.problemlist[i].id}`;
       }
       //console.log(this.form.problem_sets);
-    this.form.manager =  window.localStorage.getItem("userid");
-    console.log(this.form);
-     const { data: res } = await this.$http.post("contest/add_new_contest",this.form);
-    console.log(res);
-     if(res.meta.status === 400){
+      this.form.manager = window.localStorage.getItem("userid");
+      //console.log(this.form);
+      const { data: res } = await this.$http.post(
+        "contest/add_new_contest",
+        this.form
+      );
+      console.log(res);
+      if (res.meta.status === 400) {
         return this.$message.error("比赛创建失败！");
       }
-    this.$message.success("比赛创建成功！");
-     this.$router.push({ path: "/ReviseCompete" });
+      this.$message.success("比赛创建成功！");
+      this.$router.push("/compete");
     },
     async addProblemId() {
-      const { data: res } = await this.$http.get(`problems/prob_exists?num=${this.problemid}`);
-      if(res.meta.status === 400){
+      const { data: res } = await this.$http.get(
+        `problems/prob_exists?num=${this.problemid}`
+      );
+      if (res.meta.status === 400) {
         return this.$message.error("题目编号不存在！");
       }
-      let newlist= {
-        id: ""
-      }
-      newlist.id=this.problemid;
+      let newlist = {
+        id: "",
+      };
+      newlist.id = this.problemid;
       this.problemlist.push(newlist);
     },
     // 输出当前问题编号
     deleteproblem(index) {
-      console.log(index)
+      //console.log(index)
       this.problemlist.splice(index, 1);
-      console.log(this.problemlist)
-    }
+      //console.log(this.problemlist)
+    },
   },
 };
 </script>

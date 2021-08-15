@@ -24,10 +24,13 @@
             <el-button type="primary" @click="registerRace" v-if="!checkUserRaceFlang">报名</el-button>
             <el-button type="primary" disabled v-if="checkUserRaceFlang">已报名</el-button>
             <el-button type="primary" @click="gotoRankList">排行榜</el-button>
-            <el-button type="info" @click="gotoReviseRace">编辑</el-button>
-            <el-button type="danger" @click="deleteRaceById">删除</el-button>
+            <el-button type="info" @click="gotoReviseRace" v-if="userlevel ==1">编辑</el-button>
+            <el-button type="danger" @click="deleteRaceById"  v-if="userlevel ==1">删除</el-button>
             <el-table :data="tableData" border style="width: 100%" v-if="checkUseraccess" @row-click="gotoSubmit">
-              <el-table-column prop="date" label="状态" width="80">
+              <el-table-column label="状态" width="80">
+                <template slot-scope="scope">
+                   <i class="el-icon-check" v-if="scope.row.ac"></i>
+                </template>
               </el-table-column>
               <el-table-column prop="title" label="题目" width="800">
               </el-table-column>
@@ -54,18 +57,22 @@ export default {
       checkUserRaceFlang: "",
       // 检查比赛是否开始和用户等级
       checkUseraccess: "",
+      checkAc: "",
+      // 用户等级
+      userlevel: ""
     };
   },
   created() {
     this.getRaceList();
     this.checkUserRace();
+    this.getuserlevel();
   },
   methods: {
     async getRaceList() {
       const { data: res } = await this.$http.get(
         `contest/contest?id=${this.$route.query.id}`
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -88,7 +95,7 @@ export default {
     // 检查用户报名情况
     async checkUserRace() {
       const { data: res } = await this.$http.get(`contest/check_reg?contest_id=${this.$route.query.id}`);
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -155,7 +162,11 @@ export default {
     },
     gotoSubmit(row) {
       this.$router.push({ path: "/submitcompete", query: { id: row.num , competeid: this.$route.query.id } });
-    }
+    }, 
+    // 获取用户等级
+    getuserlevel() {
+      if (window.localStorage.getItem("access")<=1) this.userlevel = 1;
+    },
   },
 };
 </script>

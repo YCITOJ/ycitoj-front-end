@@ -152,7 +152,7 @@ export default {
         "problems/new_problem",
         this.form
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("添加失败！");
       }

@@ -93,7 +93,7 @@ export default {
       const { data: res } = await this.$http.get(
         `contest/contest?id=${this.$route.query.id}`
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -121,7 +121,7 @@ export default {
         "contest/update_contest",
         this.form
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error("比赛修改失败！");
       }

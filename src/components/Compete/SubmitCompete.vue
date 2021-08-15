@@ -191,7 +191,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      console.log(res);
+      //console.log(res);
       this.value = res.data;
       this.info = res.info;
     },
@@ -239,14 +239,14 @@ export default {
       this.submitstring.lang = this.displaylanguage;
       this.submitstring.code = this.item.content;
       this.submitstring.num = this.$route.query.id;
-      console.log(this.submitstring);
+      //console.log(this.submitstring);
       const { data: res } = await this.$http.post(
         "contest/submit_code",
         this.submitstring
       );
       console.log(res);
       if (res.meta.status !== 200) {
-        return this.$message.error("提交题目失败,请登录！");
+        return this.$message.error(res.meta.message);
       }
       this.submission_id = res.data;
       this.submittijiaoflag='false';
@@ -263,9 +263,9 @@ export default {
       }
     },
     async outcome() {
-      console.log(this.submission_id);
+      //console.log(this.submission_id);
       const { data: res } = await this.$http.get("submit/submission_result?submission_id=" + this.submission_id);
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }

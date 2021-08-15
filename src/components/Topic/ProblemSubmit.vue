@@ -122,10 +122,9 @@ export default {
           "&condition=" +
           this.condition_group.condition
       );
-      console.log(this.condition_group.page_no)
-      console.log(this.condition_group.condition
-)
-      console.log(res)
+      //console.log(this.condition_group.page_no)
+      //console.log(this.condition_group.condition)
+      //console.log(res)
       if (res.meta.status !== 200) {
         return console.log("获取题目列表表失败！");
       }
@@ -137,8 +136,8 @@ export default {
       const { data: res } = await this.$http.get(
         "submit/submission_info?condition=" + this.condition_group.condition
       );
-      console.log(this.condition_group.condition);
-      console.log(res);
+      //console.log(this.condition_group.condition);
+      //console.log(res);
       if (res.meta.status === 403) {
         return this.$message.error("请先登录！");
       }
@@ -181,8 +180,8 @@ export default {
       this.$router.push({ path: "/submit", query: { id: row.prob_id } });
     },
     onSubmit() {
-      console.log(this.region);
-      console.log("submit!");
+      //console.log(this.region);
+      //console.log("submit!");
     },
   },
 };
