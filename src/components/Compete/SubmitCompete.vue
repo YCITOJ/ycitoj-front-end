@@ -15,7 +15,6 @@
           @click="gotohome"
         ></el-menu-item>
         <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
-        <el-menu-item index="3">讨论</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
@@ -140,9 +139,11 @@ export default {
         content: "",
       },
       submitstring: {
-        num: "",
+        contest_id: "",
+        whoe: "",
         lang: "",
-        data: "",
+        code: "",
+        num: ""
       },
       // 编辑器的设置
       cmOption: {
@@ -196,7 +197,7 @@ export default {
     },
     // 返回主页
     gotohome() {
-      this.$router.push("/topic");
+      this.$router.push({path: '/competehome', query: {id: this.$route.query.competeid}});
     },
     // 进去提交页面
     gotoproblemSubmit() {
@@ -233,11 +234,14 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
     async submitcode() {
-      this.submitstring.num = this.num;
+      this.submitstring.contest_id = this.$route.query.competeid;
+      this.submitstring.who = window.localStorage.getItem("userid");
       this.submitstring.lang = this.displaylanguage;
-      this.submitstring.data = this.item.content;
+      this.submitstring.code = this.item.content;
+      this.submitstring.num = this.$route.query.id;
+      console.log(this.submitstring);
       const { data: res } = await this.$http.post(
-        "submit/submit_code/",
+        "contest/submit_code",
         this.submitstring
       );
       console.log(res);

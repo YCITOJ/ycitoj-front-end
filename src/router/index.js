@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import NavigtionBar from '../components/NavigationBar.vue'
 import Home from '../components/Home/Home.vue'
-import compete from '../components/Compete/Compete.vue'
+import Compete from '../components/Compete/Compete.vue'
 import Competehome from '../components/Compete/Competehome.vue'
 import Topic from '../components/Topic/Topic.vue'
 import Login from '../components/Login.vue'
@@ -15,12 +15,15 @@ import UserSubmit from '../components/UserSubmit/UserSubmit.vue'
 import ProblemSubmit from '../components/Topic/ProblemSubmit.vue'
 import AddCompete from '../components/Compete/AddCompete.vue'
 import ReviseCompete from '../components/Compete/ReviseCompete.vue'
+import SubmitCompete from '../components/Compete/SubmitCompete.vue'
+import RankList from '../components/Compete/RankList.vue'
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/', redirect: '/navigtionbar' },
   { path: '/login', component: Login },
   { path: '/submit', name: 'submit', component: Submit},
+  { path: '/submitcompete', name: 'submitcompete', component: SubmitCompete },
   { path: '/navigtionbar',
     component: NavigtionBar,
     children: [
@@ -32,6 +35,7 @@ const routes = [
       { path: '/competehome', name: 'competehome', component: Competehome },
       { path: '/addcompete', name: 'addcompete', component: AddCompete },
       { path: '/revisecompete', name: 'revisecompete', component: ReviseCompete },
+      { path: '/RankList', name: 'RankList', component: RankList },
       // 题库页面
       { path: '/topic', name: 'topic', component: Topic },
       { path: '/addproblems', name: 'addproblems', component: Addproblems },

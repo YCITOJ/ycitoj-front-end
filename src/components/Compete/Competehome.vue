@@ -23,11 +23,10 @@
           <div>
             <el-button type="primary" @click="registerRace" v-if="!checkUserRaceFlang">报名</el-button>
             <el-button type="primary" disabled v-if="checkUserRaceFlang">已报名</el-button>
-            <el-button type="primary">排行榜</el-button>
-            <el-button type="success">提交记录</el-button>
+            <el-button type="primary" @click="gotoRankList">排行榜</el-button>
             <el-button type="info" @click="gotoReviseRace">编辑</el-button>
             <el-button type="danger" @click="deleteRaceById">删除</el-button>
-            <el-table :data="tableData" border style="width: 100%" v-if="checkUseraccess">
+            <el-table :data="tableData" border style="width: 100%" v-if="checkUseraccess" @row-click="gotoSubmit">
               <el-table-column prop="date" label="状态" width="80">
               </el-table-column>
               <el-table-column prop="title" label="题目" width="800">
@@ -118,14 +117,15 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.$message.success("报名比赛成功！");
-      this.$router.push({ path: "/race" });
+      this.$router.push({ path: "/compete" });
+    },
+    // 进入比赛排行榜
+    gotoRankList() {
+      this.$router.push({path: "/ranklist",query: { id: this.$route.query.id }});
     },
     // 修改题目
     gotoReviseRace() {
-      this.$router.push({
-        path: "/reviserace",
-        query: { id: this.$route.query.id },
-      });
+      this.$router.push({path: "/revisecompete",query: { id: this.$route.query.id }});
     },
     // 删除比赛
     async deleteRaceById() {
@@ -151,8 +151,11 @@ export default {
         return this.$message.error("删除比赛失败！");
       }
       this.$message.success("删除比赛成功！");
-      this.$router.push({ path: "/race" });
+      this.$router.push({ path: "/compete" });
     },
+    gotoSubmit(row) {
+      this.$router.push({ path: "/submitcompete", query: { id: row.num , competeid: this.$route.query.id } });
+    }
   },
 };
 </script>

@@ -15,7 +15,7 @@
           <el-menu-item disabled class="log">YCITOJ</el-menu-item>
           <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="topic">题库</el-menu-item>
-          <el-menu-item index="race">比赛</el-menu-item>
+          <el-menu-item index="compete">比赛</el-menu-item>
           <el-menu-item index="usersubmit">提交记录</el-menu-item>
           <el-submenu index="2">
             <template slot="title">班级</template>

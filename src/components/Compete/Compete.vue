@@ -95,7 +95,7 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("token")) this.userlevel = 1;
+      if (window.localStorage.getItem("access")<=1) this.userlevel = 1;
     },
     // 添加比赛
     addRace() {

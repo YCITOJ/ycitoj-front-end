@@ -40,7 +40,9 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="总时间" width="150" prop="cpu_time" align="center">
+         <el-table-column label="时间(ms)" width="150" prop="cpu_time" align="center">
+        </el-table-column>
+         <el-table-column label="内存(KB)" width="150" prop="memory" align="center">
         </el-table-column>
         <el-table-column label="语言" width="80" prop="lang" align="center">
         </el-table-column>
