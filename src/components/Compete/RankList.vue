@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <el-header>Header</el-header>
+    <el-header></el-header>
     <el-main>
       <el-table :data="rank_list" center>
         <el-table-column fixed prop="rank" label="排名" width="100" align="center">

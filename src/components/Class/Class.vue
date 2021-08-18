@@ -8,7 +8,7 @@
         </el-input>
       </el-col>
       <el-col :span="8">
-        <el-button type="primary" @click="addDialogVisible">创建班级</el-button>
+        <el-button type="primary" @click="addDialogVisible" v-if="userlevel">创建班级</el-button>
         <el-button type="success" @click="student_add_class"
           >加入班级</el-button
         >
@@ -77,7 +77,7 @@ export default {
       classlist: [],
       //　搜索内容
       query: "",
-      userlevel: "false",
+      userlevel: false,
       addourclass: {
         class_id: "",
         invite_code: "",
@@ -86,11 +86,12 @@ export default {
       dialogVisible: false,
       del_class_from: {
         class_id: ""
-      }
+      },
     };
   },
   created() {
     this.getClassList();
+    this.getuserlevel();
   },
   methods: {
     async getClassList() {
@@ -111,7 +112,7 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("access") === "0") this.userlevel = true;
+      if (window.localStorage.getItem("access") <=1 ) this.userlevel = true;
     },
     // 进入修改页面
     reviseClass(class_id) {

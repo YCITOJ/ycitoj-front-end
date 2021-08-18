@@ -24,7 +24,9 @@ import ClassHome from "../components/Class/ClassHome.vue"
 import ReviseClass from "../components/Class/ReviseClass.vue"
 import AddHomework from "../components/Class/AddHomework.vue"
 import StudentList from "../components/Class/StudentList.vue"
-import HomeworkList from "../components/Class/HomeworkList.vue"
+import ReviseHomework from "../components/Class/ReviseHomework.vue"
+import StudentHomework from "../components/Class/StudentHomework.vue"
+import HomeworkRankList from "../components/Class/HomeworkRankList.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -78,7 +80,9 @@ const routes = [
 			{ path: "/reviseclass", name: "reviseclass", component: ReviseClass },
 			{ path: "/addhomework", name: "addhomework", component: AddHomework },
 			{ path: "/studentlist", name: "studentlist", component: StudentList },
-			{ path: "/homeworklist", name: "homeworklist", component: HomeworkList },
+			{ path: "/revisehomework", name: "revisehomework", component: ReviseHomework },
+			{ path: "/studenthomework", name: "studenthomework", component: StudentHomework },
+			{ path: "/homework_rank_list", name: "homeworkranklist", component: HomeworkRankList },
 		],
 	},
 	 

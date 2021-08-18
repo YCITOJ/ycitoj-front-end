@@ -86,21 +86,8 @@ export default {
       problemlist: [],
     };
   },
-  created() {
-    this.getClassList();
-  },
   methods: {
-    // 获取班级信息
-    async getClassList() {
-      const { data: res } = await this.$http.get(
-        `class/myclass?class_id=${this.$route.query.id}`
-      );
-      console.log(res);
-      if (res.meta.status !== 200) {
-        return this.$message.error(res.meta.message);
-      }
-    },
-    // 提交比赛
+    // 提交作业
     async putRace() {
       if (this.problemlist.length <= 0) {
         return this.$message.error("请添加题目！");
@@ -109,19 +96,19 @@ export default {
       for (var i = 1; i < this.problemlist.length; i++) {
         this.form.prob_list = `${this.form.prob_list}|${this.problemlist[i].id},${this.problemlist[i].score}`;
       }
-      console.log(this.form.problem_sets);
+      //console.log(this.form.problem_sets);
       this.form.class_id = this.$route.query.id;
-      console.log(this.form)
+      //console.log(this.form)
       const { data: res } = await this.$http.post(
         "homework/new_homework",
         this.form
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
       this.$message.success(res.meta.message);
-      this.$router.push("/compete");
+      this.$router.push("/classhome");
     },
     async addProblemId() {
       if(this.score.length<=0){

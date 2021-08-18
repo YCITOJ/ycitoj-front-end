@@ -19,9 +19,10 @@ export default {
   data() {
     return {
       form: {
-        class_name: "",
+        class_id: "",
         intro: "",
         teacher_id: "",
+        class_name: ""
       },
       markdownOption: {
         bold: true, // 粗体
@@ -84,6 +85,7 @@ export default {
     reviseclass() {
       this.$refs.form.validate(async (valid) => {
         if (!valid) return;
+        this.form.class_id = this.$route.query.id;
         const { data: res } = await this.$http.post(
           "class/update_class",
           this.form
