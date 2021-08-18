@@ -50,8 +50,8 @@ export default {
       value: "",
       title: "",
       raceid: {
-        del_contest_id: "",
-        id: ""
+      del_contest_id: "",
+      id: ""
       },
       // 检查用户报名情况参数
       checkUserRaceFlang: "",

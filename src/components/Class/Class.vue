@@ -1,127 +1,175 @@
 <template>
-  <el-container class="home-container">
-    <el-header>
-      <div>
-        <span class="header-title">班级系统</span>
-      </div>
-      <el-button type="info" @click="logout" class="header-button">退出</el-button>
-    </el-header>
-    <el-container>
-      <el-aside :width="isCollapse ? '64px' : '200px'">
-        <div class="toggle-button" @click="toggleCollapse">|||</div>
-        <el-menu background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
-          <el-submenu index="1">
-            <template slot="title">
-              <i class="el-icon-setting"></i>
-              <span slot="title">管理系统</span>
-            </template>
-            <el-menu-item index="1-1">班级管理</el-menu-item>
-            <el-menu-item index="1-2">学生管理</el-menu-item>
-            <el-menu-item index="1-3">考试管理</el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-user"></i>
-              <span slot="title">个人信息</span>
-            </template>
-            <el-menu-item index="2-1">班级信息</el-menu-item>
-            <el-menu-item index="2-2">个人信息管理</el-menu-item>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span slot="title">考试</span>
-            </template>
-            <el-menu-item index="3-1">考试</el-menu-item>
-            <el-menu-item index="3-2">历史记录</el-menu-item>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-edit"></i>
-              <span slot="title">作业</span>
-            </template>
-            <el-menu-item index="4-1">作业概况</el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-aside>
-      <el-main>
-          <router-view></router-view>
-      </el-main>
-    </el-container>
-  </el-container>
+  <div class="box">
+    <!-- 搜索与添加区域 -->
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-input placeholder="请输入班级" v-model="query" clearable>
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
+      </el-col>
+      <el-col :span="8">
+        <el-button type="primary" @click="addDialogVisible">创建班级</el-button>
+        <el-button type="success" @click="student_add_class"
+          >加入班级</el-button
+        >
+      </el-col>
+    </el-row>
+    <el-table
+      :data="classlist"
+      style="width: 100%"
+      @row-click="gotoClassHome"
+      class="classlist"
+    >
+      <el-table-column prop="class_id" label="班级编号" width="180">
+      </el-table-column>
+      <el-table-column prop="class_name" label="班级名称" width="180">
+      </el-table-column>
+      <el-table-column
+        prop="intro"
+        label="介绍"
+        width="500"
+        :show-overflow-tooltip="true"
+      >
+      </el-table-column>
+      <el-table-column label="操作" v-if="userlevel">
+        <template slot-scope="scope">
+          <!-- 修改按钮 -->
+          <el-button
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+            @click.native.stop="reviseClass(scope.row.class_id)"
+          ></el-button>
+           <!-- 删除按钮 -->
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              size="mini"
+              @click.native.stop="del_class(scope.row.class_id)"
+            ></el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!-- 加入班级 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <el-form label-width="80px">
+        <el-form-item label="班级ID">
+          <el-input v-model="addourclass.class_id"></el-input>
+        </el-form-item>
+        <el-form-item label="邀请码">
+          <el-input v-model="addourclass.invite_code"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="join_class">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      // 是否折叠
-      isCollapse: false,
-      // 被激活的链接地址
-      activePath: "",
+      classlist: [],
+      //　搜索内容
+      query: "",
+      userlevel: "false",
+      addourclass: {
+        class_id: "",
+        invite_code: "",
+      },
+      // 对话框的弹出
+      dialogVisible: false,
+      del_class_from: {
+        class_id: ""
+      }
     };
   },
   created() {
-    this.activePath = window.sessionStorage.getItem('activePath')
+    this.getClassList();
   },
   methods: {
-    logout() {
-      window.sessionStorage.clear()
-      this.$router.push('/home')
+    async getClassList() {
+      const { data: res } = await this.$http.get("class/home");
+      if (res.meta.status !== 200) {
+        return this.$message.error("获取题目列表失败！");
+      }
+      //console.log(res);
+      this.classlist = res.data;
     },
-    // 点击按钮，切换菜单的折叠与展开
-    toggleCollapse() {
-      this.isCollapse = !this.isCollapse;
+    // 跳转到添加题目
+    addDialogVisible() {
+      this.$router.push("/addclass");
     },
-    // 保存链接的激活状态
-    saveNavState(activePath) {
-      window.sessionStorage.setItem("activePath", activePath);
-      this.activePath = activePath;
+    // 进入班级页面
+    gotoClassHome(row) {
+      this.$router.push({ path: "/classhome", query: { id: row.class_id } });
+    },
+    // 获取用户等级
+    getuserlevel() {
+      if (window.localStorage.getItem("access") === "0") this.userlevel = true;
+    },
+    // 进入修改页面
+    reviseClass(class_id) {
+      this.$router.push({ path: "/reviseclass", query: { id: class_id } });
+    },
+    // 加入班级
+    student_add_class() {
+      this.dialogVisible = true;
+    },
+    async join_class() {
+      const { data: res } = await this.$http.post("class/join_class", this.addourclass);
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success(res.meta.message);
+      this.dialogVisible = false;
+    },
+
+     // 根据班级Id删除对应的班级
+    async del_class(id) {
+      // 弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该班级, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
+      // console.log(this.form.num);
+      this.del_class_from.class_id = id;
+      const { data: res } = await this.$http.post(
+        "class/delete_class",
+        this.del_class_from
+      );
+       //console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success("删除成功");
+      this.getClassList();
     },
   },
 };
 </script>
 <style scoped>
-.home-container {
-  height: 100%;
+.box {
+  width: 80%;
+  margin-top: 40px;
+  margin-left: 160px;
 }
-.el-header {
-  background-color: #373d41;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 0;
-  align-items: center;
-  color: #fff;
-  font-size: 20px;
-}
-.header-title {
-  margin-left: 30px;
-}
-.header-button {
-    margin-right: 10px;
-}
-.el-aside {
-  background-color: #333744;
-}
-
-.el-aside .el-menu {
-  border-right: none;
-}
-
-.el-main {
-  background-color: #eaedf1;
-}
-
-.iconfont {
-  margin-right: 10px;
-}
-
-.toggle-button {
-  background-color: #4a5064;
-  font-size: 10px;
-  line-height: 24px;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 0.2em;
-  cursor: pointer;
+.classlist {
+  margin-top: 40px;
 }
 </style>

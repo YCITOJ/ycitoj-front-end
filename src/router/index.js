@@ -19,7 +19,12 @@ import SubmitCompete from "../components/Compete/SubmitCompete.vue";
 import RankList from "../components/Compete/RankList.vue";
 
 import Class from "../components/Class/Class.vue";
-import ClassHome from "../components/Class/ClassHome.vue";
+import AddClass from "../components/Class/AddClass.vue"
+import ClassHome from "../components/Class/ClassHome.vue"
+import ReviseClass from "../components/Class/ReviseClass.vue"
+import AddHomework from "../components/Class/AddHomework.vue"
+import StudentList from "../components/Class/StudentList.vue"
+import HomeworkList from "../components/Class/HomeworkList.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -66,18 +71,17 @@ const routes = [
 			{ path: "/usersubmit", name: "usersubmit", component: UserSubmit },
 			// 用户界面
 			{ path: "/user", component: User },
-		],
-	},
-	// 班级页面
-	{
-		path: "/class",
-		name: "class",
-		component: Class,
-		children: [
-			{ path: "/", redirect: "/classhome" },
+			// 班级页面
+  			{ path: "/class", name: "class", component: Class },
+			{ path: "/addclass", name: "addclass", component: AddClass },
 			{ path: "/classhome", name: "classhome", component: ClassHome },
+			{ path: "/reviseclass", name: "reviseclass", component: ReviseClass },
+			{ path: "/addhomework", name: "addhomework", component: AddHomework },
+			{ path: "/studentlist", name: "studentlist", component: StudentList },
+			{ path: "/homeworklist", name: "homeworklist", component: HomeworkList },
 		],
 	},
+	 
 ];
 
 const router = new VueRouter({
