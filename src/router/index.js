@@ -38,7 +38,7 @@ const routes = [
 		path: "/navigtionbar",
 		component: NavigtionBar,
 		children: [
-			{ path: "/", redirect: "/home" },
+			{ path: "/", redirect: "/topic" },
 			// 主页
 			{ path: "/home", name: "home", component: Home },
 			// 比赛页面

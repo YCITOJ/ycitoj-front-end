@@ -3,7 +3,7 @@
     <el-header></el-header>
     <el-main>
       <el-table :data="rank_list" center>
-        <el-table-column fixed prop="rank" label="排名" width="100" align="center">
+        <el-table-column fixed type="index" label="排名" width="100" align="center">
         </el-table-column>
         <el-table-column fixed prop="name" label="姓名" width="100" align="center">
         </el-table-column>

@@ -70,17 +70,6 @@ export default {
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
-      if(window.localStorage.getItem("access") < 3) {
-        this.checkUseraccess = true;
-      } else if(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date()))){
-        /* console.log(res.data.start_time)
-        console.log(Date.parse(new Date(res.data.start_time)))
-        console.log((new Date()).getTime())
-        console.log(Date.parse(new Date(res.data.start_time)) <=　Date.parse(new Date(new Date()))); */
-        this.checkUseraccess = true;
-      } else {
-        this.checkUseraccess = false;
-      }
 
     },
     // 进入比赛排行榜
