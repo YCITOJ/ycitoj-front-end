@@ -101,7 +101,10 @@ export default {
     },
     // 添加比赛
     addRace() {
-      this.$router.push("/addcompete");
+      const { href } = this.$router.resolve({
+        path: '/addcompete'
+      });
+      window.open(href, '_blank');
     }
   },
 };

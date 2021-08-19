@@ -27,7 +27,7 @@
             <el-button type="success" @click="gotoAddHomework" v-if="userlevel"
               >创建作业</el-button
             >
-            <el-button type="primary" @click="goto_Student_List"
+            <el-button type="primary" @click="goto_Student_List" v-if="userlevel"
               >学生列表</el-button
             >
             <el-table :data="homeworkfrom" border style="width: 100%" @row-click="goto_Student_Homework">

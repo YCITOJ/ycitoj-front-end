@@ -57,9 +57,6 @@
       width="30%"
     >
       <el-form label-width="80px">
-        <el-form-item label="班级ID">
-          <el-input v-model="addourclass.class_id"></el-input>
-        </el-form-item>
         <el-form-item label="邀请码">
           <el-input v-model="addourclass.invite_code"></el-input>
         </el-form-item>

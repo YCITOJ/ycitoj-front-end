@@ -68,7 +68,7 @@ export default {
           { required: true, message: "请输入登录名称", trigger: "blur" },
           {
             min: 3,
-            max: 10,
+            max: 20,
             message: "长度在 3 到 10 个字符",
             trigger: "blur",
           },
@@ -78,7 +78,7 @@ export default {
           { required: true, message: "请输入登录密码", trigger: "blur" },
           {
             min: 6,
-            max: 15,
+            max: 20,
             message: "长度在 6 到 15 个字符",
             trigger: "blur",
           },
@@ -115,7 +115,7 @@ export default {
           window.localStorage.setItem("username",res.data.username);
           window.localStorage.setItem("access",res.data.access);
           //路由地址是 /home
-          this.$router.push("/home");
+          this.$router.push("/topic");
         });
       } else if (this.model === "register") {
         this.$refs.loginFormRef.validate(async (valid) => {
