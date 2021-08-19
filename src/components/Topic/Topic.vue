@@ -39,19 +39,19 @@
       </el-table-column>
       <el-table-column label="编号" prop="num" width="100"></el-table-column>
       <el-table-column label="题目" prop="title"></el-table-column>
-      <el-table-column label="难度" prop="difficulty" width="50"></el-table-column>
-      <el-table-column label="通过" prop="pass" width="70"></el-table-column>
-      <el-table-column label="提交" prop="submit" width="70"></el-table-column>
-      <el-table-column label="通过率" prop="role_name" width="70"></el-table-column>
-      <el-table-column label="状态" width="100" v-if="userlevel == 1">
+      <el-table-column label="难度" width="100">
         <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.mg_state"
-            @change="userStateChanged(scope.row)"
-          >
-          </el-switch>
+          <!-- v-bind:color="difficulty_color_form[scope.row.difficulty]" -->
+          <el-tag
+            :type="difficulty_form[scope.row.difficulty].type"
+            effect="plain">
+            {{ difficulty_form[scope.row.difficulty].label }}
+          </el-tag>
         </template>
       </el-table-column>
+      <!--  <el-table-column label="通过" prop="pass" width="70"></el-table-column>
+      <el-table-column label="提交" prop="submit" width="70"></el-table-column>
+      <el-table-column label="通过率" prop="role_name" width="70"></el-table-column> -->
       <el-table-column label="操作" width="400" v-if="userlevel == 1">
         <template slot-scope="scope">
           <!-- 修改按钮 -->
@@ -89,6 +89,7 @@
     >
     </el-pagination>
     <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
+      <p>压缩包不要包含文件夹</p>
       <input type="file" @change="getFile($event)" />
       <button @click="uploadsubmit($event)">提交</button>
     </el-dialog>
@@ -120,6 +121,15 @@ export default {
       uploadnum: "",
       // 用户等级
       userlevel: "0",
+      // 难度等级
+      difficulty_form: [
+        {},
+        { type: "", label: "入门" },
+        { type: "success", label: "简单" },
+        { type: "info", label: "中等" },
+        { type: "danger", label: "较难" },
+        { type: "warning", label: "困难" },
+      ],
     };
   },
   created() {
@@ -161,7 +171,7 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("access") === '0') this.userlevel = 1;
+      if (window.localStorage.getItem("access") === "0") this.userlevel = 1;
     },
     // 搜索题目
     async getproblemList() {
@@ -248,6 +258,11 @@ export default {
         formData
       );
       //console.log(res)
+      if (res.meta.status !== 200) {
+        return this.$message.error("上传失败！");
+      }
+      this.$message.success("上传成功！");
+      this.dialogVisible = false;
     },
     upload(id) {
       this.uploadnum = id;

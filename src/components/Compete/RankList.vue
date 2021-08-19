@@ -79,7 +79,7 @@ export default {
         `contest/rank_list?contest_id=${this.$route.query.id}`
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("获取题目列表失败！");
+        return console.log("获取比赛列表失败！");
       }
       //console.log(`contest/rank_list?contest_id=${this.$route.query.id}`);
       //console.log(res);

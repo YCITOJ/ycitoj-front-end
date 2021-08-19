@@ -97,7 +97,7 @@ export default {
     async getClassList() {
       const { data: res } = await this.$http.get("class/home");
       if (res.meta.status !== 200) {
-        return this.$message.error("获取题目列表失败！");
+        return console.log("获取班级列表失败！");
       }
       //console.log(res);
       this.classlist = res.data;

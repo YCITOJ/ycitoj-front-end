@@ -92,7 +92,7 @@ export default {
       const { data: res } = await this.$http.get(
         `class/myclass?class_id=${this.$route.query.id}`
       );
-      //console.log(res);
+      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

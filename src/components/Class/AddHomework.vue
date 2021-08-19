@@ -104,11 +104,11 @@ export default {
         this.form
       );
       //console.log(res);
-      if (res.meta.status === 400) {
+      if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
       this.$message.success(res.meta.message);
-      this.$router.push("/classhome");
+      this.$router.go(-1);
     },
     async addProblemId() {
       if(this.score.length<=0){

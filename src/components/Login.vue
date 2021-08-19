@@ -28,12 +28,12 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="loginForm.password" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email" v-show="model === 'register'">
+        <!-- <el-form-item label="邮箱" prop="email" v-show="model === 'register'">
           <el-input v-model="loginForm.email" type="password"></el-input>
         </el-form-item>
         <el-form-item label="手机" prop="mobil" v-show="model === 'register'">
           <el-input v-model="loginForm.mobile" type="password"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button type="primary" @click="login" class="block"
@@ -127,10 +127,10 @@ export default {
           );
           //console.log(res)
           if (res.meta.status !== 200) {
-            this.$message.error("添加用户失败！");
+            this.$message.error("注册失败！");
             return;
           }
-          this.$message.success("添加用户成功！");
+          this.$message.success("注册成功,请登录！");
         });
       }
     },
