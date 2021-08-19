@@ -7,7 +7,7 @@ import axios from 'axios';
 let http = {};
 // let _baseURL = '/vpaas'
 //http://1.117.147.109:4001/
-let _baseURL = 'https://merdog.39nat.com'
+let _baseURL = 'http://1.117.147.109:4001/'
 let ContentType = "application/json";
 
 let uploadFileType = "multipart/form-data";

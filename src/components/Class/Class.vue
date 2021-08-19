@@ -121,6 +121,7 @@ export default {
     // 加入班级
     student_add_class() {
       this.dialogVisible = true;
+      this.getClassList();
     },
     async join_class() {
       const { data: res } = await this.$http.post("class/join_class", this.addourclass);

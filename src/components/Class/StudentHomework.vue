@@ -22,7 +22,7 @@
         <el-card class="main_card">
           <div>
             <el-button type="primary" @click="goto_homework_rank_list">排行榜</el-button>
-            <el-table :data="tableData" border style="width: 100%" v-if="checkUseraccess" @row-click="gotoSubmit">
+            <el-table :data="tableData" border style="width: 100%" @row-click="gotoSubmit">
               <el-table-column label="状态" width="80" align="center">
                 <template slot-scope="scope">
                    <i class="el-icon-check" v-if="scope.row.ac"></i>
@@ -51,9 +51,6 @@ export default {
       },
       // 检查用户报名情况参数
       checkUserRaceFlang: "",
-      // 检查比赛是否开始和用户等级
-      checkUseraccess: "",
-      checkAc: "",
       // 用户等级
       userlevel: ""
     };
