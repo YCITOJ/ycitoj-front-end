@@ -247,11 +247,11 @@ export default {
       this.submission_id = res.data;
       this.submittijiaoflag='false';
       this.ans = "评测中..."
-      for(var i=0;i<=20;i++)
+      for(var i=0;i<=30;i++)
       {
         await this.sleep(1000);
         await this.outcome();
-        if(this.ans !== "Judging")
+        if(this.ans !== "评测中...")
         {
           this.submittijiaoflag='true';
           break;
@@ -266,7 +266,7 @@ export default {
         return this.$message.error("提交反馈失败");
       }
       if (res.verdict === 0) {
-        return (this.ans = "Judging");
+        return (this.ans = "评测中...");
       }
       if (res.verdict === 1) {
         return (this.ans = "Time Limit Exceeded.");
