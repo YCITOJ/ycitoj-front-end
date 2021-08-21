@@ -76,7 +76,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
-      this.$message.success(res.meta.message);
+      this.$message.success("删除成功！");
       this.get_Student_List();
     },
   },

@@ -57,9 +57,9 @@
       width="30%"
     >
       <el-form label-width="80px">
-        <el-form-item label="班级ID">
+       <!--  <el-form-item label="班级ID">
           <el-input v-model="addourclass.class_id"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="邀请码">
           <el-input v-model="addourclass.invite_code"></el-input>
         </el-form-item>
@@ -121,7 +121,6 @@ export default {
     // 加入班级
     student_add_class() {
       this.dialogVisible = true;
-      this.getClassList();
     },
     async join_class() {
       const { data: res } = await this.$http.post("class/join_class", this.addourclass);
@@ -131,6 +130,7 @@ export default {
       }
       this.$message.success(res.meta.message);
       this.dialogVisible = false;
+      this.getClassList();
     },
 
      // 根据班级Id删除对应的班级
