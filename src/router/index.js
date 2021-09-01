@@ -7,7 +7,6 @@ import Competehome from "../components/Compete/Competehome.vue";
 import Topic from "../components/Topic/Topic.vue";
 import Login from "../components/Login.vue";
 import Addproblems from "../components/Topic/Addproblems.vue";
-import Addcontent from "../components/Topic/Addcontent.vue";
 import Submit from "../components/Topic/Submit.vue";
 import User from "../components/User/User.vue";
 import Revise from "../components/Topic/Revise.vue";
@@ -62,7 +61,6 @@ const routes = [
 				name: "addproblems",
 				component: Addproblems,
 			},
-			{ path: "/addcontent", name: "addcontent", component: Addcontent },
 			{ path: "/revise", name: "revise", component: Revise },
 			{
 				path: "/problemSubmit",

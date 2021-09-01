@@ -167,7 +167,7 @@ export default {
       this.form.title = res.info.title;
       this.form.time_limit = res.info.time_limit;
       this.form.memory_limit = res.info.memory_limit;
-      this.form.difficulty = res.info.difficulty;
+      this.form.difficulty = res.info.difficulty+'';
       this.form.is_public = res.info.is_public.toString();
     },
      addpb() {

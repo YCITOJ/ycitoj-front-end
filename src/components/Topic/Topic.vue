@@ -44,7 +44,8 @@
           <!-- v-bind:color="difficulty_color_form[scope.row.difficulty]" -->
           <el-tag
             :type="difficulty_form[scope.row.difficulty].type"
-            effect="plain">
+            effect="plain"
+          >
             {{ difficulty_form[scope.row.difficulty].label }}
           </el-tag>
         </template>
@@ -90,8 +91,13 @@
     </el-pagination>
     <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
       <p>压缩包不要包含文件夹</p>
-      <input type="file" @change="getFile($event)" />
-      <button @click="uploadsubmit($event)">提交</button>
+      <input type="file" @change="getFile($event)" class="up_things"/>
+      <el-button @click="uploadsubmit($event)">提交</el-button>
+      <template>
+        <el-table :data="file_form" style="width: 100%">
+          <el-table-column prop="point" label="样例点"> </el-table-column>
+        </el-table>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -119,6 +125,8 @@ export default {
       // 上传附加数据
       uploadfile: "",
       uploadnum: "",
+      // 获取样例点
+      file_form: [],
       // 用户等级
       userlevel: "0",
       // 难度等级
@@ -262,11 +270,24 @@ export default {
         return this.$message.error("上传失败！");
       }
       this.$message.success("上传成功！");
-      this.dialogVisible = false;
+      this.get_file_form()
     },
     upload(id) {
       this.uploadnum = id;
       this.dialogVisible = true;
+      this.file_form = []
+      this.get_file_form();
+    },
+
+    // 获取样例点
+    async get_file_form() {
+      const { data: res } = await this.$http.get(
+        `problems/cases_list?num=${this.uploadnum}`
+      );
+      console.log(res);
+      this.file_form = res.data.map((str) => {
+        return { point: str };
+      });
     },
 
     // 跳转到添加题目
@@ -285,5 +306,12 @@ export default {
 }
 .problemlist {
   margin-top: 40px;
+}
+.up_things {
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 </style>

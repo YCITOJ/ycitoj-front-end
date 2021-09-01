@@ -14,17 +14,23 @@
           class="el-icon-house"
           @click="gotohome"
         ></el-menu-item>
-        <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
+        <el-menu-item index="2" @click="gotoproblemSubmit"
+          >提交记录</el-menu-item
+        >
         <el-menu-item index="3">讨论</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
     <el-container>
       <el-aside width="800px" class="el-aside1">
-        <h3>{{info.num}} {{info.title}}</h3>
+        <h3>{{ info.num }} {{ info.title }}</h3>
         <div class="submitjshao">
-          <div class="submitjshao_time_limit">时间限制： {{info.time_limit}}ms </div>
-          <div class="submitjshao_memory_limit">空间限制： {{info.memory_limit}}MB </div>
+          <div class="submitjshao_time_limit">
+            时间限制： {{ info.time_limit }}ms
+          </div>
+          <div class="submitjshao_memory_limit">
+            空间限制： {{ info.memory_limit }}MB
+          </div>
         </div>
         <mavon-editor
           class="md"
@@ -70,10 +76,21 @@
               ></codemirror>
             </el-main>
             <el-footer class="submittijiao">
-              <el-button type="primary" @click="submitcode()" v-if="submittijiaoflag=='true'" class="submittijiao_button">提交代码</el-button>
-              <el-card class="sumitcard">
-                <div>{{ ans }}</div>
-              </el-card>
+                  <!-- <div class="submittijiao_ans">{{ ans }}</div> -->
+                  <el-button
+                    type="primary"
+                    @click="submitcode()"
+                    v-if="submittijiaoflag == 'true'"
+                    class="submittijiao_button"
+                    >提交代码</el-button
+                  >
+                  <el-button
+                    type="primary"
+                    icon="el-icon-loading"
+                    v-if="submittijiaoflag == 'false'"
+                    class="submittijiao_button"
+                    ></el-button
+                  >
             </el-footer>
           </el-container>
         </div>
@@ -200,7 +217,7 @@ export default {
     },
     // 进去提交页面
     gotoproblemSubmit() {
-        this.$router.push({path: '/problemSubmit', query: {id: this.num}});
+      this.$router.push({ path: "/problemSubmit", query: { id: this.num } });
     },
     onCmReady3() {
       this.$refs.myCmGenerate.codemirror.setSize("100%", "500px");
@@ -215,16 +232,17 @@ export default {
         this.displaylanguage = "rust";
         return;
       }
-      if(key === "python") {
+      if (key === "python") {
         this.displaylanguage = "python";
         return;
       }
-      if(key === "node") {
+      if (key === "node") {
         this.displaylanguage = "node";
         return;
       }
-      if(key === "merdog") {
-        this.displaylanguage = "merdog";7455
+      if (key === "merdog") {
+        this.displaylanguage = "merdog";
+        7455;
         return;
       }
     },
@@ -245,50 +263,51 @@ export default {
         return this.$message.error("提交题目失败,请登录！");
       }
       this.submission_id = res.data;
-      this.submittijiaoflag='false';
-      this.ans = "评测中..."
-      for(var i=0;i<=30;i++)
-      {
+      this.submittijiaoflag = "false";
+      this.ans = "评测中...";
+      for (var i = 0; i <= 30; i++) {
         await this.sleep(1000);
         await this.outcome();
-        if(this.ans !== "评测中...")
-        {
-          this.submittijiaoflag='true';
+        if (this.ans == true) {
+          this.submittijiaoflag = "true";
           break;
-        }  
+        }
       }
     },
     async outcome() {
       //console.log(this.submission_id);
-      const { data: res } = await this.$http.get("submit/submission_result?submission_id=" + this.submission_id);
-      //console.log(res);
+      const { data: res } = await this.$http.get(
+        "submit/submission_result?submission_id=" + this.submission_id
+      );
+      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }
+      this.ans = true
       if (res.verdict === 0) {
+        this.ans = false;
         return (this.ans = "评测中...");
       }
       if (res.verdict === 1) {
-        return (this.ans = "Time Limit Exceeded.");
+        return this.$message.error("Time Limit Exceeded.");
       }
       if (res.verdict === 2) {
-        return (this.ans = "Memory Limit Exceeded.");
+        return this.$message.error("Memory Limit Exceeded.");
       }
       if (res.verdict === 3) {
-        return (this.ans = "RunTime Error.");
+        return this.$message.error("RunTime Error.");
       }
       if (res.verdict === 4) {
-        return (this.ans = "UKE");
+        return this.$message.error("未知错误!");
       }
       if (res.verdict === 5) {
-        return (this.ans = "Compile Error.");
+       return this.$message.error("编译错误！");
       }
       if (res.verdict === 6) {
-        this.$message.success("恭喜你，通过了！");
-        return (this.ans = "Accepted.");
+        return this.$message.success("恭喜你，通过了！");
       }
       if (res.verdict === 7) {
-        return (this.ans = "Wrong Answer.");
+        return this.$message.error("回答错误！");
       }
     },
   },
@@ -339,7 +358,7 @@ export default {
   float: left;
   padding-left: 5%;
 }
-.submitjshao_memory_limit{
+.submitjshao_memory_limit {
   float: right;
   padding-right: 20%;
 }
@@ -375,7 +394,7 @@ export default {
   position: relative;
   border: 1px solid #dddddd;
 }
-.code-mirror {            
+.code-mirror {
   font-size: 20px;
   line-height: 150%;
   text-align: left;
@@ -384,6 +403,7 @@ export default {
 }
 
 .submittijiao_button {
-  float: right;
+  float: left;
+  width: 20%;
 }
 </style>
