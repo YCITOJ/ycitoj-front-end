@@ -26,6 +26,15 @@ import StudentList from "../components/Class/StudentList.vue"
 import ReviseHomework from "../components/Class/ReviseHomework.vue"
 import StudentHomework from "../components/Class/StudentHomework.vue"
 import HomeworkRankList from "../components/Class/HomeworkRankList.vue"
+
+/* 题单 */
+import ProblemList from '../components/ProblemList/ProblemList.vue'
+import AddProblemsList from '../components/ProblemList/AddProblemsList.vue'
+import ProblemListHome from '../components/ProblemList/ProblemListHome.vue'
+import ProblemListHomeInfo from '../components/ProblemList/ProblemListHomeInfo.vue'
+import ProblemListHomeList from '../components/ProblemList/ProblemListHomeList.vue'
+import ReviseProblemList from '../components/ProblemList/ReviseProblemList.vue'
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -61,12 +70,20 @@ const routes = [
 				name: "addproblems",
 				component: Addproblems,
 			},
-			{ path: "/revise", name: "revise", component: Revise },
-			{
-				path: "/problemSubmit",
-				name: "problemSubmit",
-				component: ProblemSubmit,
-			},
+			// 题单页面
+			{ path: "/problemlist", name: "problemlist", component: ProblemList },
+			{ path: "/addproblemslist", name: "addproblemslist", component: AddProblemsList },
+			{ path: "/reviseproblemlist", name: "reviseproblemlistt", component: ReviseProblemList },
+			{ path: "/problemlisthome", 
+			  name: "problemlisthome", 
+			  component: ProblemListHome,
+			  children: [
+				{ path: "/", redirect: "/problemlisthomeinfo" },
+				{ path: "/problemlisthomeinfo", name: "problemlisthomeinfo", component: ProblemListHomeInfo },
+				{ path: "/problemlisthomelist", name: "problemlisthomelist", component: ProblemListHomeList },
+			  ]
+		    },
+
 			// 提交记录页面
 			{ path: "/usersubmit", name: "usersubmit", component: UserSubmit },
 			// 用户界面

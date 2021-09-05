@@ -213,7 +213,7 @@ export default {
     },
     // 返回主页
     gotohome() {
-      this.$router.push("/topic");
+      this.$router.go(-1);
     },
     // 进去提交页面
     gotoproblemSubmit() {

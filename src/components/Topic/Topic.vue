@@ -91,7 +91,7 @@
     </el-pagination>
     <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
       <p>压缩包不要包含文件夹</p>
-      <input type="file" @change="getFile($event)" class="up_things"/>
+      <input type="file" @change="getFile($event)" class="up_things" />
       <el-button @click="uploadsubmit($event)">提交</el-button>
       <template>
         <el-table :data="file_form" style="width: 100%">
@@ -270,12 +270,12 @@ export default {
         return this.$message.error("上传失败！");
       }
       this.$message.success("上传成功！");
-      this.get_file_form()
+      this.get_file_form();
     },
     upload(id) {
       this.uploadnum = id;
       this.dialogVisible = true;
-      this.file_form = []
+      this.file_form = [];
       this.get_file_form();
     },
 
@@ -301,17 +301,18 @@ export default {
 <style scoped>
 .topicbox {
   width: 80%;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-left: 160px;
 }
+
 .problemlist {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .up_things {
-    border: none;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
 </style>

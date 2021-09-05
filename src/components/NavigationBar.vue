@@ -4,7 +4,7 @@
       <el-header>
         <!-- 导航栏 -->
         <el-menu
-          :default-active="this.$route.path"
+          :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
           router
@@ -15,12 +15,11 @@
           <el-menu-item disabled index="1" class="log">YCITOJ</el-menu-item>
           <!-- <el-menu-item index="home">首页</el-menu-item> -->
           <el-menu-item index="topic">题库</el-menu-item>
+          <el-menu-item index="problemlist">题单</el-menu-item>
           <el-menu-item index="compete">比赛</el-menu-item>
           <el-menu-item index="usersubmit">提交记录</el-menu-item>
           <el-menu-item index="class">班级</el-menu-item>
-          <el-menu-item class="signin" index="login" v-show="loginname === 'in'"
-            >登录|注册</el-menu-item
-          >
+          <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
           <el-menu-item class="signin" index="user" v-show="loginname === 'out'">
             <i class="el-icon-user-solid"></i>
             {{username}}
@@ -28,7 +27,9 @@
         </el-menu>
       </el-header>
       <el-main>
-        <router-view></router-view>
+        <div >
+          <router-view></router-view>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -39,10 +40,12 @@ export default {
     return {
       loginname: "",
       username: "",
+      activeIndex: "topic"
     };
   },
   created() {
     this.pdlogin();
+    this.get_activeIndex()
   },
   methods: {
     pdlogin() {
@@ -54,6 +57,10 @@ export default {
       }
       this.loginname = "in";
     },
+    // 获取图标
+    get_activeIndex() {
+      this.activeIndex = window.localStorage.getItem("navigation_bar_activeIndex");
+    }
   },
 };
 </script>
