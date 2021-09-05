@@ -57,10 +57,10 @@ export default {
       }
       this.loginname = "in";
     },
-    // 获取图标
+    /* // 获取图标
     get_activeIndex() {
       this.activeIndex = window.localStorage.getItem("navigation_bar_activeIndex");
-    }
+    } */
   },
 };
 </script>
