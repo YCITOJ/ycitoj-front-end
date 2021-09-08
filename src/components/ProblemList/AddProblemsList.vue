@@ -53,7 +53,7 @@ export default {
     };
   },
   methods: {
-    // 提交比赛
+    // 提交题单
     async putRace() {
       // 题目数量判断
       if (this.problemlist.length <= 0) {
@@ -61,7 +61,7 @@ export default {
       } else if(this.problemlist.length >50) {
         return this.$message.error("添加题目不能多于50题！");
       }
-7
+
       // 提交题目数组修改为 p001|p002|
       this.form.problem_sets = `${this.problemlist[0].id}`;
       for (var i = 1; i < this.problemlist.length; i++) {
@@ -79,6 +79,7 @@ export default {
       this.$message.success(res.meta.message);
       this.$router.go(-1);
     },
+
     async addProblemId() {
       const { data: res } = await this.$http.get(
         `problems/prob_exists?num=${this.problemid}`

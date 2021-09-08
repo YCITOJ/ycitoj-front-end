@@ -15,6 +15,7 @@
           @click="gotohome"
         ></el-menu-item>
         <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
+        <el-menu-item index="3" v-if="is_admin" @click="editProblem">编辑</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
@@ -178,12 +179,23 @@ export default {
       submission_id: "",
       // 提交按钮是否可以点击
       submittijiaoflag: "true",
+
+      is_admin:false
     };
   },
   created() {
     this.readproblem();
+    this.check_access();
   },
   methods: {
+    // 检查编辑权限
+    check_access(){
+      console.log(window.localStorage.getItem("access"));
+      if (window.localStorage.getItem("access") <= 1) 
+        this.is_admin = true;
+      else 
+        this.is_admin = false;
+    },
     // 获取题目
     async readproblem() {
       this.num = this.$route.query.id;
@@ -295,6 +307,9 @@ export default {
         return (this.ans = "Wrong Answer.");
       }
     },
+    editProblem(){
+      this.$router.push({ path: "/revise", query: { id: this.num } });
+    }
   },
 };
 </script>

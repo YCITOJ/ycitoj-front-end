@@ -17,7 +17,7 @@
         <el-menu-item index="2" @click="gotoproblemSubmit"
           >提交记录</el-menu-item
         >
-        <el-menu-item index="3">讨论</el-menu-item>
+        <el-menu-item index="3" v-if="is_admin" @click="editProblem">编辑</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
@@ -194,12 +194,22 @@ export default {
       submission_id: "",
       // 提交按钮是否可以点击
       submittijiaoflag: "true",
+      
+      is_admin:false
     };
   },
   created() {
     this.readproblem();
+    this.check_access();
   },
   methods: {
+    check_access(){
+      console.log(window.localStorage.getItem("access"));
+      if (window.localStorage.getItem("access") <= 1) 
+        this.is_admin = true;
+      else 
+        this.is_admin = false;
+    },
     // 获取题目
     async readproblem() {
       this.num = this.$route.query.id;
@@ -228,16 +238,8 @@ export default {
         this.displaylanguage = "cpp";
         return;
       }
-      if (key === "rust") {
-        this.displaylanguage = "rust";
-        return;
-      }
       if (key === "python") {
         this.displaylanguage = "python";
-        return;
-      }
-      if (key === "node") {
-        this.displaylanguage = "node";
         return;
       }
       if (key === "merdog") {
@@ -245,6 +247,9 @@ export default {
         7455;
         return;
       }
+    },
+    editProblem(){
+      this.$router.push({ path: "/revise", query: { id: this.num } });
     },
     // 提交代码
     async sleep(ms) {

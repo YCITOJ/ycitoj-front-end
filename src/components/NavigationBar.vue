@@ -7,6 +7,7 @@
           :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
+          @select="handleSelect"
           router
           background-color="#545c64"
           text-color="#fff"
@@ -57,10 +58,15 @@ export default {
       }
       this.loginname = "in";
     },
-    /* // 获取图标
+    // 获取图标
     get_activeIndex() {
       this.activeIndex = window.localStorage.getItem("navigation_bar_activeIndex");
-    } */
+    },
+    // 处理选中
+    handleSelect(key,keyPath){
+      window.localStorage.setItem("navigation_bar_activeIndex",key);
+      // console.log(key,keyPath);
+    } 
   },
 };
 </script>

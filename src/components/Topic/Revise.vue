@@ -146,7 +146,7 @@ export default {
             trigger: "blur",
           },
         ],
-      },
+      }
     };
   },
   created() {
@@ -161,6 +161,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.form.num
       );
+      console.log(res.data);
       //console.log(res)
       this.form.content = res.data;
       this.form.num = res.info.num;
@@ -182,7 +183,7 @@ export default {
         return this.$message.error("修改失败！");
       }
       this.$message.success("修改成功");
-      this.$router.push('/topic')  
+      this.$router.go(-1);  
       })   
     },
   },

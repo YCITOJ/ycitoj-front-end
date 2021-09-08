@@ -106,6 +106,7 @@ export default {
         return this.$message.error("比赛创建失败！");
       }
       this.$message.success("比赛创建成功！");
+      this.$router.go(-1);  
     },
     async addProblemId() {
       const { data: res } = await this.$http.get(

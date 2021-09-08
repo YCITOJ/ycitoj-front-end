@@ -70,26 +70,33 @@ const routes = [
 				name: "addproblems",
 				component: Addproblems,
 			},
+			{ path: "/revise", name: "revise", component: Revise },
+			{
+				path: "/problemSubmit",
+				name: "problemSubmit",
+				component: ProblemSubmit,
+			},
 			// 题单页面
 			{ path: "/problemlist", name: "problemlist", component: ProblemList },
 			{ path: "/addproblemslist", name: "addproblemslist", component: AddProblemsList },
 			{ path: "/reviseproblemlist", name: "reviseproblemlistt", component: ReviseProblemList },
-			{ path: "/problemlisthome", 
-			  name: "problemlisthome", 
-			  component: ProblemListHome,
-			  children: [
-				{ path: "/", redirect: "/problemlisthomeinfo" },
-				{ path: "/problemlisthomeinfo", name: "problemlisthomeinfo", component: ProblemListHomeInfo },
-				{ path: "/problemlisthomelist", name: "problemlisthomelist", component: ProblemListHomeList },
-			  ]
-		    },
+			{
+				path: "/problemlisthome",
+				name: "problemlisthome",
+				component: ProblemListHome,
+				children: [
+					{ path: "/", redirect: "/problemlisthomeinfo" },
+					{ path: "/problemlisthomeinfo", name: "problemlisthomeinfo", component: ProblemListHomeInfo },
+					{ path: "/problemlisthomelist", name: "problemlisthomelist", component: ProblemListHomeList },
+				]
+			},
 
 			// 提交记录页面
 			{ path: "/usersubmit", name: "usersubmit", component: UserSubmit },
 			// 用户界面
 			{ path: "/user", component: User },
 			// 班级页面
-  			{ path: "/class", name: "class", component: Class },
+			{ path: "/class", name: "class", component: Class },
 			{ path: "/addclass", name: "addclass", component: AddClass },
 			{ path: "/classhome", name: "classhome", component: ClassHome },
 			{ path: "/reviseclass", name: "reviseclass", component: ReviseClass },
@@ -100,7 +107,7 @@ const routes = [
 			{ path: "/homework_rank_list", name: "homeworkranklist", component: HomeworkRankList },
 		],
 	},
-	 
+
 ];
 
 const router = new VueRouter({
