@@ -44,7 +44,7 @@ export default {
     return {
       form: {
         title: "",
-        problem_sets: "",
+        prob_set: "",
         info: "",
       },
       // 添加比赛题目编号
@@ -63,9 +63,9 @@ export default {
       }
 
       // 提交题目数组修改为 p001|p002|
-      this.form.problem_sets = `${this.problemlist[0].id}`;
+      this.form.prob_set = `${this.problemlist[0].id}`;
       for (var i = 1; i < this.problemlist.length; i++) {
-        this.form.problem_sets = `${this.form.problem_sets}|${this.problemlist[i].id}`;
+        this.form.prob_set = `${this.form.prob_set}|${this.problemlist[i].id}`;
       }
       //console.log(this.form);
       const { data: res } = await this.$http.post(
