@@ -22,6 +22,8 @@
             :scrollStyle="true"
             :ishljs="true"
             :boxShadow="false"
+            previewBackground="#ffffff"
+            boxShadowStyle="0 0 0 0"
           />
         </div>
       </div>
@@ -34,7 +36,7 @@
                 <img src="../../assets/img/codeforces.png" />
               </div>
             </a>
-            <p>codeforces</p>
+            <p>CF</p>
           </div>
           <div class="box">
             <a href="https://www.luogu.com.cn/">
@@ -121,7 +123,7 @@ export default {
         return this.$message.info("已取消删除");
       }
       console.log(`/announcement/del?id=${this.announcement.id}`);
-      const { data: res } = await this.$http.post(`/announcement/del?id=${this.announcement.id}`);
+      const { data: res } = await this.$http.post("/announcement/del",{id:this.announcement.id});
       console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -173,11 +175,11 @@ h4 {
 .card1-1_main_left {
   width: 40px;
   float: left;
-  margin-left: -50px;
+  margin-left: -60px;
 }
 .card1-1_main_left .el-button {
   float: right;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .card1-2 {
   margin-top: 20px;
@@ -185,8 +187,6 @@ h4 {
 }
 .card2-1 {
   height: 300px;
-}
-.card2-2 {
 }
 .card2-3 {
   margin-top: 20px;
