@@ -14,7 +14,7 @@
           active-text-color="#ffd04b"
         >
           <el-menu-item disabled index="1" class="log">YCITOJ</el-menu-item>
-          <!-- <el-menu-item index="home">首页</el-menu-item> -->
+          <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="topic">题库</el-menu-item>
           <el-menu-item index="problemlist">题单</el-menu-item>
           <el-menu-item index="compete">比赛</el-menu-item>

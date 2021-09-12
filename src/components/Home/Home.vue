@@ -3,31 +3,29 @@
     <div class="card1">
       <div class="card1-1 border_style">
         <div class="border_style_header">
-          <h4>公告</h4>
+          <h4>{{announcement.title}}</h4>
         </div>
-        <div class="main"></div>
+        <div class="card1-1_main_left" v-show="userlevel">
+            <el-button icon="el-icon-plus" circle @click="create_announcement"></el-button>
+            <el-button type="primary" icon="el-icon-edit" circle @click="update_announcement"></el-button>
+            <el-button type="danger" icon="el-icon-delete" circle @click="del_announcement"></el-button>
+        </div>
+        <!-- 公告内容 -->
+        <div class="main">
+          <mavon-editor
+            class="md"
+            v-model="announcement_value"
+            :subfield="false"
+            :defaultOpen="'preview'"
+            :toolbarsFlag="false"
+            :editable="false"
+            :scrollStyle="true"
+            :ishljs="true"
+            :boxShadow="false"
+          />
+        </div>
       </div>
-      <!-- <div class="card1-2 border_style">
-        <div class="border_style_header">
-          <h4>排名</h4>
-        </div>
-        <div class="main"></div>
-      </div> -->
-    </div>
-    <div class="card2">
-      <!-- <div class="card2-1 border_style">
-        <div class="border_style_header">
-          <h4>通知</h4>
-        </div>
-        <div class="main"></div>
-      </div>
-      <div class="card2-2 border_style">
-        <div class="border_style_header">
-          <h4>近期通知</h4>
-        </div>
-        <div class="main"></div>
-      </div> -->
-      <div class="card2-3 border_style">
+      <div class="card1-2 border_style">
         <div class="border_style_header">
           <h4>友情链接</h4>
           <div class="box">
@@ -50,8 +48,99 @@
         <div class="main"></div>
       </div>
     </div>
+    <div class="card2">
+      <div class="card2-2 border_style">
+        <div class="border_style_header">
+          <h4>近期公告</h4>
+        </div>
+        <!-- 近期公告内容 -->
+        <div class="main">
+          <el-table :data="announcement_list" style="width: 100%" height="620" @row-click="click_item">
+            <el-table-column prop="title" label="名称" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column prop="create_time" label="时间" show-overflow-tooltip>
+            </el-table-column>
+          </el-table>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      announcement_value: "",
+      announcement_list: [],
+      announcement: "",
+      userlevel: false
+    };
+  },
+  created() {
+    this.get_announcement_list()
+    this.getuserlevel()
+  },
+  methods: {
+    // 获取公告列表
+    async get_announcement_list() {
+      const { data: res } = await this.$http.get("announcement/list", {params:{ page_no:1 }});
+      //console.log(res);
+      if (res.meta.status === 400) {
+        return this.$message.error(res.meta.message);
+      }
+      this.announcement_list = res.data
+      this.announcement = res.data[0]
+      this.announcement_value = res.data[0].info
+    },
+    // 进入创建公告界面
+    create_announcement() {
+      this.$router.push("/createannouncement")
+    },
+    // 进入修改修改页面
+    update_announcement() {
+      this.$router.push({name:"updateannouncement", params: {data: this.announcement}})
+    },
+    // 删除公告
+    async del_announcement() {
+      // 弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该公告, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+
+      // 如果用户确认删除，则返回值为字符串 confirm
+      // 如果用户取消了删除，则返回值为字符串 cancel
+      // console.log(confirmResult)
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
+      console.log(`/announcement/del?id=${this.announcement.id}`);
+      const { data: res } = await this.$http.post(`/announcement/del?id=${this.announcement.id}`);
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success(res.meta.message);
+      this.get_announcement_list()
+    },
+    // 进入以前公告
+    click_item(row) {
+      this.announcement = row
+      this.announcement_value = row.info
+    },
+    // 获取用户等级
+    getuserlevel() {
+      if (window.localStorage.getItem("access") === "0") this.userlevel = true;
+    },
+  }
+};
+</script>
 
 <style scoped>
 .card1 {
@@ -74,7 +163,6 @@
 .border_style_header {
   border-bottom: 1px solid #d5d4d4;
   height: 50px;
-  background-color: #f5f3f3;
 }
 h4 {
   margin: 0;
@@ -82,22 +170,26 @@ h4 {
   line-height: 50px;
 }
 
-.card1-1 {
-  height: 400px;
+.card1-1_main_left {
+  width: 40px;
+  float: left;
+  margin-left: -50px;
+}
+.card1-1_main_left .el-button {
+  float: right;
+  margin-top: 10px;
 }
 .card1-2 {
   margin-top: 20px;
-  height: 800px;
+  height: 300px;
 }
-
 .card2-1 {
   height: 300px;
 }
 .card2-2 {
-  margin-top: 20px;
-  height: 300px;
 }
 .card2-3 {
+  margin-top: 20px;
   height: 400px;
 }
 

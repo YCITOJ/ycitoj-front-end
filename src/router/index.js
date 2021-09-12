@@ -1,7 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import NavigtionBar from "../components/NavigationBar.vue";
+
+/* 首页 */
 import Home from "../components/Home/Home.vue";
+import CreateAnnouncement from "../components/Home/CreateAnnouncement.vue"
+import UpdateAnnouncement from "../components/Home/UpdateAnnouncement.vue"
+
 import Compete from "../components/Compete/Compete.vue";
 import Competehome from "../components/Compete/Competehome.vue";
 import Topic from "../components/Topic/Topic.vue";
@@ -38,7 +43,7 @@ import ReviseProblemList from '../components/ProblemList/ReviseProblemList.vue'
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: "/", redirect: "/navigtionbar" },
+	{ path: "/", redirect: "/home" },
 	{ path: "/login", component: Login },
 	{ path: "/submit", name: "submit", component: Submit },
 	{ path: "/submitcompete", name: "submitcompete", component: SubmitCompete },
@@ -49,6 +54,8 @@ const routes = [
 			{ path: "/", redirect: "/topic" },
 			// 主页
 			{ path: "/home", name: "home", component: Home },
+			{ path: "/createannouncement", name: "createannouncement", component: CreateAnnouncement },
+			{ path: "/updateannouncement", name: "updateannouncement", component: UpdateAnnouncement },
 			// 比赛页面
 			{ path: "/compete", name: "compete", component: Compete },
 			{
