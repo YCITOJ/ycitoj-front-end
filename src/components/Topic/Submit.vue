@@ -204,7 +204,6 @@ export default {
   },
   methods: {
     check_access(){
-      console.log(window.localStorage.getItem("access"));
       if (window.localStorage.getItem("access") <= 1) 
         this.is_admin = true;
       else 
@@ -244,7 +243,6 @@ export default {
       }
       if (key === "merdog") {
         this.displaylanguage = "merdog";
-        7455;
         return;
       }
     },
@@ -284,7 +282,7 @@ export default {
       const { data: res } = await this.$http.get(
         "submit/submission_result?submission_id=" + this.submission_id
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }

@@ -161,7 +161,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.form.num
       );
-      console.log(res.data);
+      //console.log(res.data);
       //console.log(res)
       this.form.content = res.data;
       this.form.num = res.info.num;

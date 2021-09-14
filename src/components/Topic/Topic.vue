@@ -183,11 +183,11 @@ export default {
     },
     // 搜索题目
     async getproblemList() {
-      console.log(this.queryInfo.query);
+      //console.log(this.queryInfo.query);
       const { data: res } = await this.$http.get(
         "problems/find_problems/?title_or_num=" + this.queryInfo.query
       );
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
@@ -284,7 +284,7 @@ export default {
       const { data: res } = await this.$http.get(
         `problems/cases_list?num=${this.uploadnum}`
       );
-      console.log(res);
+      //console.log(res);
       this.file_form = res.data.map((str) => {
         return { point: str };
       });

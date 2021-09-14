@@ -64,7 +64,6 @@ export default {
   },
   created() {
     this.getRaceList();
-    this.checkUserRace();
     this.getuserlevel();
   },
   methods: {
@@ -74,7 +73,7 @@ export default {
       );
       //console.log(res);
       if (res.meta.status !== 200) {
-        return this.$message.error("获取题目列表失败！");
+        return this.$message.error(res.meta.message);
       }
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
@@ -90,14 +89,14 @@ export default {
       } else {
         this.checkUseraccess = false;
       }
-
+      this.checkUserRace();
     },
     // 检查用户报名情况
     async checkUserRace() {
       const { data: res } = await this.$http.get(`contest/check_reg?contest_id=${this.$route.query.id}`);
       //console.log(res);
       if (res.meta.status !== 200) {
-        return this.$message.error("获取题目列表失败！");
+        return this.$message.error(res.meta.message);
       }
       this.checkUserRaceFlang = res.verdict;
     },
