@@ -222,7 +222,7 @@ export default {
     },
     // 返回主页
     gotohome() {
-      this.$router.go(-1);
+      this.$router.back()
     },
     // 进去提交页面
     gotoproblemSubmit() {

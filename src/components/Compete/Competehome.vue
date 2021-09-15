@@ -26,7 +26,7 @@
             <el-button type="primary" @click="gotoRankList">排行榜</el-button>
             <el-button type="info" @click="gotoReviseRace" v-if="userlevel ==1">编辑</el-button>
             <el-button type="danger" @click="deleteRaceById"  v-if="userlevel ==1">删除</el-button>
-            <el-table :data="tableData" border style="width: 100%" v-if="checkUseraccess" @row-click="gotoSubmit">
+            <el-table :data="tableData" border style="width: 100%" @row-click="gotoSubmit">
               <el-table-column label="状态" width="80">
                 <template slot-scope="scope">
                    <i class="el-icon-check" v-if="scope.row.ac"></i>
@@ -71,24 +71,26 @@ export default {
       const { data: res } = await this.$http.get(
         `contest/contest?id=${this.$route.query.id}`
       );
-      //console.log(res);
+      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
+      /* 比赛题目公布 */
       if(window.localStorage.getItem("access") < 2) {
         this.checkUseraccess = true;
       } else if(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date()))){
         /* console.log(res.data.start_time)
         console.log(Date.parse(new Date(res.data.start_time)))
         console.log((new Date()).getTime())
-        console.log(Date.parse(new Date(res.data.start_time)) <=　Date.parse(new Date(new Date()))); */
+        console.log(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date()))); */
         this.checkUseraccess = true;
       } else {
         this.checkUseraccess = false;
       }
+      /* ********************* */
       this.checkUserRace();
     },
     // 检查用户报名情况
