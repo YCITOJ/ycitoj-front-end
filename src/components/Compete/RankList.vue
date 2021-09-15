@@ -2,6 +2,9 @@
   <div class="box">
     <el-header></el-header>
     <el-main>
+      <div class="my_rank">
+        您的排名：{{my_ranking}}/{{all_ranking}}
+      </div>
       <el-table :data="rank_list" center>
         <el-table-column fixed type="index" label="排名" width="100" align="center">
         </el-table-column>
@@ -68,6 +71,9 @@ export default {
       rank_list: [],
       headerlist: [],
       time: "",
+
+      my_ranking: '暂无数据',
+      all_ranking: ''
     };
   },
   created() {
@@ -85,10 +91,12 @@ export default {
       //console.log(res);
       this.rank_list = res.data;
       if (res.data.length != 0) this.headerlist = res.data[0].prob_list;
+
+      this.get_my_ranking()
     },
 
     formatTime(row, column) {
-      console.log(row[column.property]);
+      //console.log(row[column.property]);
       const penalty = row[column.property];
       if (penalty% 60 < 10) {
         return parseInt(penalty / 60) + ":0" + (penalty % 60);
@@ -96,6 +104,17 @@ export default {
         return parseInt(penalty / 60) + ":" + (penalty % 60);
       }
     },
+
+    // 获取自己的排名
+    get_my_ranking() {
+      this.all_ranking = this.rank_list.length
+      const my_name = window.localStorage.getItem("username")
+      for(var i=0; i<this.all_ranking; i++) {
+        if(this.rank_list[i].name == my_name) {
+          this.my_ranking = i+1;
+        }
+      }
+    }
   },
 };
 </script>
@@ -104,6 +123,8 @@ export default {
   width: 80%;
   padding-left: 10%;
 }
-</style>
-<style scoped>
+.my_rank {
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
 </style>
