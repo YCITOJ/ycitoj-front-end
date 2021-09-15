@@ -4,7 +4,6 @@
       <el-header>
         <!-- 导航栏 -->
         <el-menu
-          :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
           @select="handleSelect"
@@ -41,7 +40,7 @@ export default {
     return {
       loginname: "",
       username: "",
-      activeIndex: "topic"
+      activeIndex: "home"
     };
   },
   created() {

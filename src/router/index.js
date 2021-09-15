@@ -76,9 +76,6 @@ const routes = [
 				path: "/addproblems",
 				name: "addproblems",
 				component: Addproblems,
-				meta: {
-					keepAlive: true // 需要缓存
-				  }
 			},
 			{ path: "/revise", name: "revise", component: Revise },
 			{
