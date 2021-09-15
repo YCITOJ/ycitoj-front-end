@@ -20,9 +20,10 @@
           ></el-button>
         </div>
 
-        <el-table :data="problemlist" style="width: 40%">
+        <el-table :data="problemlist" style="width: 80%">
           <el-table-column prop="id" label="题目编号"> </el-table-column>
-          <el-table-column prop="score" label="题目数值"> </el-table-column>
+          <el-table-column prop="title" label="题目名称"> </el-table-column>
+          <el-table-column prop="score" label="题目分值"> </el-table-column>
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <!-- 删除按钮 -->
@@ -82,6 +83,7 @@ export default {
       },
       // 添加比赛题目编号
       problemid: "",
+      title: "",
       score: "",
       problemlist: [],
     };
@@ -122,9 +124,11 @@ export default {
       }
       let newlist = {
         id: "",
+        title: "",
         score: ""
       };
       newlist.id = this.problemid;
+      newlist.title  = res.title
       newlist.score = this.score;
       this.problemlist.push(newlist);
     },

@@ -2,7 +2,7 @@
   <div class="box">
     <el-container>
       <!-- 头部 -->
-      <h2>{{title}}</h2>
+      <h2>{{ title }}</h2>
       <el-header class="header_title" height="550px">
         <div>
           <mavon-editor
@@ -17,19 +17,48 @@
           />
         </div>
       </el-header>
+
       <el-main class="mainthins">
+        <div class="time">
+          <el-progress
+            :text-inside="true"
+            :stroke-width="30"
+            :percentage="percentage_count"
+            status="success"
+            :format="format"
+          ></el-progress>
+        </div>
         <!-- 比赛内容 -->
         <el-card class="main_card">
           <div>
-            <el-button type="primary" @click="registerRace" v-if="!checkUserRaceFlang">报名</el-button>
-            <el-button type="primary" disabled v-if="checkUserRaceFlang">已报名</el-button>
+            <el-button
+              type="primary"
+              @click="registerRace"
+              v-if="!checkUserRaceFlang"
+              >报名</el-button
+            >
+            <el-button type="primary" disabled v-if="checkUserRaceFlang"
+              >已报名</el-button
+            >
             <el-button type="primary" @click="gotoRankList">排行榜</el-button>
-            <el-button type="info" @click="gotoReviseRace" v-if="userlevel ==1">编辑</el-button>
-            <el-button type="danger" @click="deleteRaceById"  v-if="userlevel ==1">删除</el-button>
-            <el-table :data="tableData" border style="width: 100%" @row-click="gotoSubmit">
+            <el-button type="info" @click="gotoReviseRace" v-if="userlevel == 1"
+              >编辑</el-button
+            >
+            <el-button
+              type="danger"
+              @click="deleteRaceById"
+              v-if="userlevel == 1"
+              >删除</el-button
+            >
+            <el-table
+              :data="tableData"
+              border
+              style="width: 100%"
+              @row-click="gotoSubmit"
+            >
               <el-table-column label="状态" width="80">
                 <template slot-scope="scope">
-                   <i class="el-icon-check" v-if="scope.row.ac"></i>
+                  <i class="el-icon-check" v-if="scope.row.ac"></i>
                 </template>
               </el-table-column>
               <el-table-column prop="title" label="题目" width="800">
@@ -50,8 +79,8 @@ export default {
       value: "",
       title: "",
       raceid: {
-      del_contest_id: "",
-      id: ""
+        del_contest_id: "",
+        id: "",
       },
       // 检查用户报名情况参数
       checkUserRaceFlang: "",
@@ -59,12 +88,33 @@ export default {
       checkUseraccess: "",
       checkAc: "",
       // 用户等级
-      userlevel: ""
+      userlevel: "",
+
+      //剩余时间
+      rank_start_time: "",
+      rank_end_time: "",
+      down_time: "",
+      percentage_count: "0",
     };
   },
   created() {
     this.getRaceList();
     this.getuserlevel();
+  },
+  mounted() {
+    let timer = setInterval(() => {
+      // 比赛开始时间
+      var st = Date.parse(new Date(this.rank_start_time));
+      // 现在时间
+      var nt = Date.parse(new Date());
+      // 比赛结束时间
+      var et = Date.parse(new Date(this.rank_end_time));
+      this.timeDown()
+    }, 1000);
+ 
+    this.$once("hook:beforeDestroy", () => {
+      clearInterval(timer);
+    });
   },
   methods: {
     async getRaceList() {
@@ -78,24 +128,31 @@ export default {
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
+      this.rank_start_time = res.data.start_time;
+      this.rank_end_time = res.data.end_time;
       /* 比赛题目公布 */
-      if(window.localStorage.getItem("access") < 2) {
+      /* if (window.localStorage.getItem("access") < 2) {
         this.checkUseraccess = true;
-      } else if(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date()))){
-        /* console.log(res.data.start_time)
+      } else if (
+        Date.parse(new Date(res.data.start_time)) <
+        Date.parse(new Date(new Date()))
+      ) {
+        console.log(res.data.start_time)
         console.log(Date.parse(new Date(res.data.start_time)))
         console.log((new Date()).getTime())
-        console.log(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date()))); */
+        console.log(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date())));
         this.checkUseraccess = true;
       } else {
         this.checkUseraccess = false;
-      }
+      } */
       /* ********************* */
       this.checkUserRace();
     },
     // 检查用户报名情况
     async checkUserRace() {
-      const { data: res } = await this.$http.get(`contest/check_reg?contest_id=${this.$route.query.id}`);
+      const { data: res } = await this.$http.get(
+        `contest/check_reg?contest_id=${this.$route.query.id}`
+      );
       //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -118,8 +175,11 @@ export default {
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      this.raceid.id = this.$route.query.id
-      const { data: res } = await this.$http.post("contest/register",this.raceid);
+      this.raceid.id = this.$route.query.id;
+      const { data: res } = await this.$http.post(
+        "contest/register",
+        this.raceid
+      );
       //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -129,11 +189,17 @@ export default {
     },
     // 进入比赛排行榜
     gotoRankList() {
-      this.$router.push({path: "/ranklist",query: { id: this.$route.query.id }});
+      this.$router.push({
+        path: "/ranklist",
+        query: { id: this.$route.query.id },
+      });
     },
     // 修改题目
     gotoReviseRace() {
-      this.$router.push({path: "/revisecompete",query: { id: this.$route.query.id }});
+      this.$router.push({
+        path: "/revisecompete",
+        query: { id: this.$route.query.id },
+      });
     },
     // 删除比赛
     async deleteRaceById() {
@@ -152,8 +218,8 @@ export default {
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      this.raceid.del_contest_id=this.$route.query.id
-      const { data: res } = await this.$http.post("contest/del",this.raceid);
+      this.raceid.del_contest_id = this.$route.query.id;
+      const { data: res } = await this.$http.post("contest/del", this.raceid);
       //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("删除比赛失败！");
@@ -162,12 +228,48 @@ export default {
       this.$router.push({ path: "/compete" });
     },
     gotoSubmit(row) {
-      this.$router.push({ path: "/submitcompete", query: { id: row.num , competeid: this.$route.query.id } });
-    }, 
+      this.$router.push({
+        path: "/submitcompete",
+        query: { id: row.num, competeid: this.$route.query.id },
+      });
+    },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("access")<=1) this.userlevel = 1;
+      if (window.localStorage.getItem("access") <= 1) this.userlevel = 1;
     },
+
+    format(percentage) {
+        return percentage === 0 ? '已结束' : `${this.down_time}`;
+    },
+    timeDown() {
+      const startTime = new Date(this.rank_start_time)
+      const endTime = new Date(this.rank_end_time)
+      const nowTime = new Date()
+      let countTime = parseInt((endTime.getTime()-startTime.getTime())/1000)
+      let leftTime = parseInt((endTime.getTime()-nowTime.getTime())/1000)
+        if(leftTime<=0) {
+          this.down_time = `已结束`
+          this.percentage_count = 0
+          return
+        } else if(leftTime>countTime) {
+          this.down_time = `未开始`
+          this.percentage_count = 100
+          return
+        }
+      let h = parseInt(leftTime/(60*60))
+      let m = this.formate(parseInt(leftTime/60%60))
+      let s = this.formate(parseInt(leftTime%60))
+   
+      this.down_time  = `${h}:${m}:${s}`
+      this.percentage_count = leftTime/countTime*100
+    },
+    formate (time) {
+        if(time>=10){
+          return time
+        }else{
+          return `0${time}`
+        }
+    }
   },
 };
 </script>
@@ -180,12 +282,17 @@ export default {
   width: 80%;
   background-color: black;
 }
+
+.time {
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .md {
   height: 550px;
 }
-.mainthins {
-  padding-top: 50px;
-}
+
 .main_card {
   width: 80%;
 }

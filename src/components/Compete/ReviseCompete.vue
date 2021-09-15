@@ -14,6 +14,7 @@
         </el-input>
         <el-table :data="problemlist" style="width: 40%">
           <el-table-column prop="num" label="题目编号"> </el-table-column>
+          <el-table-column prop="title" label="题目名称"> </el-table-column>
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <!-- 删除按钮 -->
@@ -93,7 +94,7 @@ export default {
       const { data: res } = await this.$http.get(
         `contest/contest?id=${this.$route.query.id}`
       );
-      //console.log(res);
+      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -137,8 +138,10 @@ export default {
       }
       let newlist = {
         num: "",
+        title: ''
       };
       newlist.num = this.problemid;
+      newlist.title = res.title
       this.problemlist.push(newlist);
     },
 
