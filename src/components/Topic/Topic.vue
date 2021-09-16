@@ -99,6 +99,7 @@
         </el-table>
       </template>
     </el-dialog>
+    <el-backtop></el-backtop>
   </div>
 </template>
 
@@ -148,9 +149,9 @@ export default {
   methods: {
     async getUserList() {
       this.queryInfo.pagenum = Number(window.localStorage.getItem("topicPage"));
-      console.log(this.queryInfo.pagenum)
-      if(this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
-        this.queryInfo.pagenum = 1
+      console.log(this.queryInfo.pagenum);
+      if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
+        this.queryInfo.pagenum = 1;
       const { data: res } = await this.$http.get(
         "problems/list?page_no=" + this.queryInfo.pagenum
       );

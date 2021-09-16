@@ -39,7 +39,7 @@
       <el-form-item label="编辑题目">
         <mavon-editor v-model="form.content" :toolbars="markdownOption" />
       </el-form-item>
-      <el-button type="primary" @click="addpb">提交</el-button>
+      <el-button type="primary" @click="addpb" @keyup.enter="addpb">提交</el-button>
     </el-form>
   </div>
 </template>
@@ -139,6 +139,15 @@ export default {
           }
         ],
       },
+    };
+  },
+  created() {
+    var lett = this;
+    document.onkeydown = function (e) {
+      var key = window.event.keyCode;
+      if (key == 13) {
+        lett.addpb();
+      }
     };
   },
   methods: {

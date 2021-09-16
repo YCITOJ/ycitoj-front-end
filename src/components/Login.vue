@@ -36,7 +36,11 @@
         </el-form-item> -->
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="login" class="block"
+          <el-button
+            type="primary"
+            @click="login"
+            @keyup.enter="login"
+            class="block"
             >提交</el-button
           >
         </el-form-item>
@@ -88,6 +92,15 @@ export default {
       },
     };
   },
+  created() {
+    var lett = this;
+    document.onkeydown = function (e) {
+      var key = window.event.keyCode;
+      if (key == 13) {
+        lett.login();
+      }
+    };
+  },
   methods: {
     toggleMneu(data) {
       this.menuTab.forEach((elem) => {
@@ -112,8 +125,8 @@ export default {
           /* window.sessionStorage.setItem("token", res.data.token); */
           window.localStorage.setItem("token", res.data.token);
           window.localStorage.setItem("userid", res.data.id);
-          window.localStorage.setItem("username",res.data.username);
-          window.localStorage.setItem("access",res.data.access);
+          window.localStorage.setItem("username", res.data.username);
+          window.localStorage.setItem("access", res.data.access);
           //路由地址是 /home
           this.$router.push("/topic");
         });
