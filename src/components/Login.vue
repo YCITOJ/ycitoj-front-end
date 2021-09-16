@@ -21,29 +21,33 @@
         class="login_form"
       >
         <!-- 用户名 -->
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginForm.username"></el-input>
+        <el-form-item  prop="username">
+          <el-input v-model="loginForm.username" placeholder="username"></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="loginForm.password" type="password"></el-input>
+        <el-form-item prop="password">
+          <el-input v-model="loginForm.password" type="password" placeholder="password"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="邮箱" prop="email" v-show="model === 'register'">
-          <el-input v-model="loginForm.email" type="password"></el-input>
+        <el-form-item prop="email" v-show="model === 'register'">
+          <el-input v-model="loginForm.email" type="email" placeholder="email" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="手机" prop="mobil" v-show="model === 'register'">
-          <el-input v-model="loginForm.mobile" type="password"></el-input>
-        </el-form-item> -->
+        <el-form-item prop="mobil" v-show="model === 'register'">
+          <el-input v-model="loginForm.mobile" type="mobile" placeholder="mobile" :disabled="true"></el-input>
+        </el-form-item>
+
+        <el-checkbox v-model="checked" v-show="model === 'login'">记住密码</el-checkbox>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button
-            type="primary"
+           
             @click="login"
             @keyup.enter="login"
             class="block"
             >提交</el-button
           >
         </el-form-item>
+        <hr />
+        <el-link type="success" @click="toggleMneu(menuTab[1])" class="bottom_register">立即注册</el-link>
       </el-form>
     </div>
   </div>
@@ -60,6 +64,8 @@ export default {
         email: "",
         mobile: "",
       },
+      // 记住密码
+      checked: false,
       menuTab: [
         { txt: "登录", current: true, type: "login" },
         { txt: "注册", current: false, type: "register" },
@@ -103,6 +109,7 @@ export default {
   },
   methods: {
     toggleMneu(data) {
+      console.log(data)
       this.menuTab.forEach((elem) => {
         elem.current = false;
       });
@@ -117,7 +124,7 @@ export default {
             "signin/login",
             this.loginForm
           );
-          console.log(res);
+          //console.log(res);
           if (res.meta.status !== 200) return this.$message.error("登录失败！");
           this.$message.success("登录成功");
           this.userid = res.data.id;
@@ -153,7 +160,7 @@ export default {
 <style scoped>
 .login_container {
   /* background-color: #2b4b6b; */
-  background-image: url(../assets/img/1.png);
+  background-image: url(../assets/img/4.png);
   background-repeat: no-repeat;
   background-size: 100%;
   height: 100%;
@@ -192,9 +199,14 @@ li {
   padding: 0 10px;
   box-sizing: border-box;
 }
-
-.btns {
-  display: flex;
-  justify-content: flex-end;
+.login_form .el-checkbox {
+  margin-left: 20%;
+  margin-bottom: 5px;
+}
+.btns .el-button {
+  width: 100%;
+}
+.bottom_register {
+  float: right;
 }
 </style>
