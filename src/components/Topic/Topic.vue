@@ -110,7 +110,7 @@
         </el-table>
       </template>
     </el-dialog>
-    // 回到顶部插件
+     <!-- 回到顶部插件 -->
     <el-backtop></el-backtop>
   </div>
 </template>
@@ -161,7 +161,7 @@ export default {
   methods: {
     async getUserList() {
       this.queryInfo.pagenum = Number(window.localStorage.getItem("topicPage"));
-      console.log(this.queryInfo.pagenum);
+      //console.log(this.queryInfo.pagenum);
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
         this.queryInfo.pagenum = 1;
       const { data: res } = await this.$http.get(
@@ -171,7 +171,7 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.problemslist = res.data;
-      console.log(res)
+      //console.log(res)
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
