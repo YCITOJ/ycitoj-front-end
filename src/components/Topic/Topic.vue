@@ -53,6 +53,16 @@
       <!--  <el-table-column label="通过" prop="pass" width="70"></el-table-column>
       <el-table-column label="提交" prop="submit" width="70"></el-table-column>
       <el-table-column label="通过率" prop="role_name" width="70"></el-table-column> -->
+      <!-- <el-table-column label="状态" width="100" v-if="userlevel == 1">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.is_public"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          >
+          </el-switch>
+        </template>
+      </el-table-column> -->
       <el-table-column label="操作" width="400" v-if="userlevel == 1">
         <template slot-scope="scope">
           <!-- 修改按钮 -->
@@ -89,6 +99,7 @@
       :total="total"
     >
     </el-pagination>
+
     <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
       <p>压缩包不要包含文件夹</p>
       <input type="file" @change="getFile($event)" class="up_things" />
@@ -99,6 +110,7 @@
         </el-table>
       </template>
     </el-dialog>
+    // 回到顶部插件
     <el-backtop></el-backtop>
   </div>
 </template>
@@ -159,7 +171,7 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.problemslist = res.data;
-      //console.log(res)
+      console.log(res)
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
@@ -253,7 +265,7 @@ export default {
       this.getUserList();
       this.getPageinfo();
     },
-    // 上传文件
+   // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
       //console.log(this.uploadfile);
@@ -293,7 +305,7 @@ export default {
       this.file_form = res.data.map((str) => {
         return { point: str };
       });
-    },
+    }, 
 
     // 跳转到添加题目
     addDialogVisible() {

@@ -18,6 +18,7 @@
           >提交记录</el-menu-item
         >
         <el-menu-item index="3" v-if="is_admin" @click="editProblem">编辑</el-menu-item>
+        <el-menu-item index="4" v-if="is_admin" @click="upload">上传样例</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
@@ -96,6 +97,17 @@
         </div>
       </el-main>
     </el-container>
+
+    <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
+      <p>压缩包不要包含文件夹</p>
+      <input type="file" @change="getFile($event)" class="up_things" />
+      <el-button @click="uploadsubmit($event)">提交</el-button>
+      <template>
+        <el-table :data="file_form" style="width: 100%">
+          <el-table-column prop="point" label="样例点"> </el-table-column>
+        </el-table>
+      </template>
+    </el-dialog>
   </el-container>
 </template>
 <script>
@@ -161,6 +173,15 @@ export default {
         lang: "",
         data: "",
       },
+
+      // 控制上传文件对话框的关闭
+      dialogVisible: false,
+      // 上传附加数据
+      uploadfile: "",
+      uploadnum: "",
+      // 获取样例点
+      file_form: [],
+
       // 编辑器的设置
       cmOption: {
         tabSize: 2, // tab
@@ -313,6 +334,48 @@ export default {
         return this.$message.error("回答错误！");
       }
     },
+
+       // 上传文件
+    getFile(event) {
+      this.uploadfile = event.target.files[0];
+      //console.log(this.uploadfile);
+    },
+    async uploadsubmit(event) {
+      event.preventDefault(); //取消默认行为
+      //创建 formData 对象
+      var formData = new FormData();
+      // 向 formData 对象中添加文件
+      formData.set("num", this.uploadnum);
+      formData.append("file", this.uploadfile);
+      //console.log(formData)
+      const { data: res } = await this.$http.post(
+        "problems/upload_cases",
+        formData
+      );
+      //console.log(res)
+      if (res.meta.status !== 200) {
+        return this.$message.error("上传失败！");
+      }
+      this.$message.success("上传成功！");
+      this.get_file_form();
+    },
+    upload() {
+      this.uploadnum = this.$route.query.id;
+      this.dialogVisible = true;
+      this.file_form = [];
+      this.get_file_form();
+    },
+
+    // 获取样例点
+    async get_file_form() {
+      const { data: res } = await this.$http.get(
+        `problems/cases_list?num=${this.uploadnum}`
+      );
+      //console.log(res);
+      this.file_form = res.data.map((str) => {
+        return { point: str };
+      });
+    }, 
   },
 };
 </script>
