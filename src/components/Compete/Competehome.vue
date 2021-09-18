@@ -103,15 +103,9 @@ export default {
   },
   mounted() {
     let timer = setInterval(() => {
-      // 比赛开始时间
-      var st = Date.parse(new Date(this.rank_start_time));
-      // 现在时间
-      var nt = Date.parse(new Date());
-      // 比赛结束时间
-      var et = Date.parse(new Date(this.rank_end_time));
-      this.timeDown()
+      this.timeDown();
     }, 1000);
- 
+
     this.$once("hook:beforeDestroy", () => {
       clearInterval(timer);
     });
@@ -121,7 +115,6 @@ export default {
       const { data: res } = await this.$http.get(
         `contest/contest?id=${this.$route.query.id}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -130,22 +123,6 @@ export default {
       this.title = res.data.title;
       this.rank_start_time = res.data.start_time;
       this.rank_end_time = res.data.end_time;
-      /* 比赛题目公布 */
-      /* if (window.localStorage.getItem("access") < 2) {
-        this.checkUseraccess = true;
-      } else if (
-        Date.parse(new Date(res.data.start_time)) <
-        Date.parse(new Date(new Date()))
-      ) {
-        console.log(res.data.start_time)
-        console.log(Date.parse(new Date(res.data.start_time)))
-        console.log((new Date()).getTime())
-        console.log(Date.parse(new Date(res.data.start_time)) <　Date.parse(new Date(new Date())));
-        this.checkUseraccess = true;
-      } else {
-        this.checkUseraccess = false;
-      } */
-      /* ********************* */
       this.checkUserRace();
     },
     // 检查用户报名情况
@@ -237,39 +214,48 @@ export default {
     getuserlevel() {
       if (window.localStorage.getItem("access") <= 1) this.userlevel = 1;
     },
-
+    convertDateFromString(dateString) {
+      if (dateString) {
+        var arr1 = dateString.split(" ");
+        var sdate = arr1[0].split("-");
+        arr1=arr1[1].split(":");
+        var date = new Date(sdate[0], sdate[1] - 1, sdate[2],arr1[0],arr1[1],arr1[2]);
+        return date;
+      }
+      return new Date();
+    },
     format(percentage) {
-        return percentage === 0 ? '已结束' : `${this.down_time}`;
+      return percentage === 0 ? "已结束" : `${this.down_time}`;
     },
     timeDown() {
-      const startTime = new Date(this.rank_start_time)
-      const endTime = new Date(this.rank_end_time)
-      const nowTime = new Date()
-      let countTime = parseInt((endTime.getTime()-startTime.getTime())/1000)
-      let leftTime = parseInt((endTime.getTime()-nowTime.getTime())/1000)
-        if(leftTime<=0) {
-          this.down_time = `已结束`
-          this.percentage_count = 0
-          return
-        } else if(leftTime>countTime) {
-          this.down_time = `未开始`
-          this.percentage_count = 100
-          return
-        }
-      let h = parseInt(leftTime/(60*60))
-      let m = this.formate(parseInt(leftTime/60%60))
-      let s = this.formate(parseInt(leftTime%60))
-   
-      this.down_time  = `${h}:${m}:${s}`
-      this.percentage_count = leftTime/countTime*100
+      const startTime = this.convertDateFromString(this.rank_start_time);
+      const endTime = this.convertDateFromString(this.rank_end_time);
+      const nowTime = new Date();
+      let countTime = parseInt((endTime.getTime() - startTime.getTime()) / 1000);
+      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
+      if (leftTime <= 0) {
+        this.down_time = `已结束`;
+        this.percentage_count = 0;
+        return;
+      } else if (leftTime > countTime) {
+        this.down_time = `未开始`;
+        this.percentage_count = 100;
+        return;
+      }
+      let h = parseInt(leftTime / (60 * 60));
+      let m = this.formate(parseInt((leftTime / 60) % 60));
+      let s = this.formate(parseInt(leftTime % 60));
+
+      this.down_time = `${h}:${m}:${s}`;
+      this.percentage_count = (leftTime / countTime) * 100;
     },
-    formate (time) {
-        if(time>=10){
-          return time
-        }else{
-          return `0${time}`
-        }
-    }
+    formate(time) {
+      if (time >= 10) {
+        return time;
+      } else {
+        return `0${time}`;
+      }
+    },
   },
 };
 </script>
