@@ -215,6 +215,9 @@ export default {
     },
     out() {
       window.localStorage.setItem("token", "");
+      window.localStorage.setItem("userid", "");
+      window.localStorage.setItem("username", "");
+      window.localStorage.setItem("access", "");
       this.$router.push("/login");
     },
     // 提交修改密

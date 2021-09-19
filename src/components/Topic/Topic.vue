@@ -154,8 +154,6 @@ export default {
     };
   },
   created() {
-    this.getUserList();
-    this.getPageinfo();
     this.getuserlevel();
   },
   methods: {
@@ -196,7 +194,10 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("access") === "0") this.userlevel = 1;
+      console.log(window.localStorage.getItem("access"))
+      if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
+      this.getUserList();
+      this.getPageinfo();
     },
     // 搜索题目
     async getproblemList() {
