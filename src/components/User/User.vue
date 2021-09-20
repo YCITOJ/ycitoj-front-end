@@ -177,13 +177,13 @@ export default {
   },
   created() {
     this.get_stu_authorize();
+    this.get_user_form();
   },
   methods: {
     // 获取学生认证信息
     async get_stu_authorize() {
       const { data: res } = await this.$http.get("class/get_stu_authorize");
       if (res.meta.status !== 200) {
-        this.get_user_form();
         return this.$message.error(res.meta.message);
       }
       this.check_stu = false;

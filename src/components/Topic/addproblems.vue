@@ -157,7 +157,7 @@ export default {
         return this.$message.error("添加失败！");
       }
       this.$message.success("添加成功");
-      this.$router.push('/topic')  
+      this.$router.push({ path: "/submit", query: { id: this.form.num } });
       })   
     },
   },
