@@ -43,7 +43,6 @@ export default {
       const { data: res } = await this.$http.get(
         `class/myclass/stu_list?class_id=${this.$route.query.id}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -67,12 +66,10 @@ export default {
       }
       this.del_student_from.class_id = this.$route.query.id;
       this.del_student_from.usr_id = id;
-      // console.log(this.form.num);
       const { data: res } = await this.$http.post(
         "class/myclass/del_stu",
         this.del_student_from
       );
-       console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

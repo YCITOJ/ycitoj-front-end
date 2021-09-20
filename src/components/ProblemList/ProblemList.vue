@@ -81,7 +81,6 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.problemslist = res.data;
-      //console.log(res)
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
@@ -89,19 +88,16 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
-      //console.log(res);
       this.total = res.count;
       this.queryInfo.pagesize = res.show_per_page;
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      // console.log(newSize)
       this.queryInfo.pagesize = newSize;
       this.getProblemList();
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      // console.log(newPage);
       this.queryInfo.pagenum = newPage;
       this.getUserList();
     },
@@ -111,11 +107,9 @@ export default {
     },
     // 搜索题单
     async find_problem_list() {
-      //console.log(this.queryInfo.query);
       const { data: res } = await this.$http.get(
         "prob_collection/find?key=" + this.queryInfo.query
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
@@ -123,7 +117,6 @@ export default {
     },
     // 进入题单
     gotohome(row) {
-      //console.log(1)
       this.$router.push({ path: "/problemlisthome", query: { id: row.id } });
     },
     // 跳转到添加题单

@@ -52,14 +52,11 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
-      //console.log(`contest/rank_list?contest_id=${this.$route.query.id}`);
-      console.log(res);
       this.rank_list = res.rank_list;
       if (res.rank_list.length != 0) this.headerlist = res.rank_list[0].prob_list;
     },
 
     formatTime(row, column) {
-      console.log(row[column.property]);
       const penalty = row[column.property];
       if (penalty% 60 < 10) {
         return parseInt(penalty / 60) + ":0" + (penalty % 60);

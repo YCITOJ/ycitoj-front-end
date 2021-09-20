@@ -94,14 +94,11 @@ export default {
       for (var i = 1; i < this.problemlist.length; i++) {
         this.form.problem_sets = `${this.form.problem_sets}|${this.problemlist[i].id}`;
       }
-      //console.log(this.form.problem_sets);
       this.form.manager = window.localStorage.getItem("userid");
-      //console.log(this.form);
       const { data: res } = await this.$http.post(
         "contest/add_new_contest",
         this.form
       );
-      console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error("比赛创建失败！");
       }
@@ -125,9 +122,7 @@ export default {
     },
     // 输出当前问题编号
     deleteproblem(index) {
-      //console.log(index)
       this.problemlist.splice(index, 1);
-      //console.log(this.problemlist)
     },
   },
 };

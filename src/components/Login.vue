@@ -109,7 +109,6 @@ export default {
   },
   methods: {
     toggleMneu(data) {
-      console.log(data)
       this.menuTab.forEach((elem) => {
         elem.current = false;
       });
@@ -124,7 +123,6 @@ export default {
             "signin/login",
             this.loginForm
           );
-          //console.log(res);
           if (res.meta.status !== 200) return this.$message.error("登录失败！");
           //this.$message.success("登录成功");
           this.userid = res.data.id;
@@ -145,7 +143,6 @@ export default {
             "signup/register",
             this.loginForm
           );
-          //console.log(res)
           if (res.meta.status !== 200) {
             this.$message.error("注册失败！");
             return;

@@ -160,7 +160,6 @@ export default {
   methods: {
     async getUserList() {
       this.queryInfo.pagenum = Number(window.localStorage.getItem("topicPage"));
-      //console.log(this.queryInfo.pagenum);
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
         this.queryInfo.pagenum = 1;
       const { data: res } = await this.$http.get(
@@ -170,7 +169,6 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.problemslist = res.data;
-      //console.log(res)
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
@@ -183,30 +181,25 @@ export default {
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      // console.log(newSize)
       this.queryInfo.pagesize = newSize;
       this.getUserList();
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      //console.log(newPage);
       window.localStorage.setItem("topicPage", newPage);
       this.getUserList();
     },
     // 获取用户等级
     getuserlevel() {
-      console.log(window.localStorage.getItem("access"))
       if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
       this.getUserList();
       this.getPageinfo();
     },
     // 搜索题目
     async getproblemList() {
-      //console.log(this.queryInfo.query);
       const { data: res } = await this.$http.get(
         "problems/find_problems/?title_or_num=" + this.queryInfo.query
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
@@ -214,13 +207,11 @@ export default {
     },
     // 进入题目
     gotosubmit(row) {
-      //console.log(1)
       this.$router.push({ path: "/submit", query: { id: row.num } });
     },
 
     // 监听 switch 开关状态的改变
     /* async userStateChanged(userinfo) {
-      console.log(userinfo)
       const { data: res } = await this.$http.put(
         `users/${userinfo.id}/state/${userinfo.mg_state}`
       )
@@ -249,17 +240,14 @@ export default {
 
       // 如果用户确认删除，则返回值为字符串 confirm
       // 如果用户取消了删除，则返回值为字符串 cancel
-      // console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
       this.form.num = id;
-      // console.log(this.form.num);
       const { data: res } = await this.$http.post(
         "problems/del_problem",
         this.form
       );
-      // console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("删除题目失败！");
       }
@@ -270,7 +258,6 @@ export default {
    // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
-      //console.log(this.uploadfile);
     },
     async uploadsubmit(event) {
       event.preventDefault(); //取消默认行为
@@ -279,12 +266,10 @@ export default {
       // 向 formData 对象中添加文件
       formData.set("num", this.uploadnum);
       formData.append("file", this.uploadfile);
-      //console.log(formData)
       const { data: res } = await this.$http.post(
         "problems/upload_cases",
         formData
       );
-      //console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error("上传失败！");
       }
@@ -303,7 +288,6 @@ export default {
       const { data: res } = await this.$http.get(
         `problems/cases_list?num=${this.uploadnum}`
       );
-      //console.log(res);
       this.file_form = res.data.map((str) => {
         return { point: str };
       });

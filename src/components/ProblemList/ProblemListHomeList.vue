@@ -54,12 +54,10 @@ export default {
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
-      //console.log(res)
       this.problemslist = res.data.prob_set
     },
     // 进入题目
     gotosubmit(row) {
-      //console.log(1)
       this.$router.push({ path: "/submit", query: { id: row.num } });
     },
   },

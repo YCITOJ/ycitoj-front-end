@@ -237,7 +237,6 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      //console.log(res);
       this.value = res.data;
       this.info = res.info;
     },
@@ -282,7 +281,6 @@ export default {
         "submit/submit_code/",
         this.submitstring
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交题目失败,请登录！");
       }
@@ -299,11 +297,9 @@ export default {
       }
     },
     async outcome() {
-      //console.log(this.submission_id);
       const { data: res } = await this.$http.get(
         "submit/submission_result?submission_id=" + this.submission_id
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }
@@ -338,7 +334,6 @@ export default {
        // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
-      //console.log(this.uploadfile);
     },
     async uploadsubmit(event) {
       event.preventDefault(); //取消默认行为
@@ -347,12 +342,10 @@ export default {
       // 向 formData 对象中添加文件
       formData.set("num", this.uploadnum);
       formData.append("file", this.uploadfile);
-      //console.log(formData)
       const { data: res } = await this.$http.post(
         "problems/upload_cases",
         formData
       );
-      //console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error("上传失败！");
       }
@@ -371,7 +364,6 @@ export default {
       const { data: res } = await this.$http.get(
         `problems/cases_list?num=${this.uploadnum}`
       );
-      //console.log(res);
       this.file_form = res.data.map((str) => {
         return { point: str };
       });

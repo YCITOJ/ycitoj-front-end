@@ -39,7 +39,6 @@ export default {
         "announcement/update",
         this.form
       );
-      //console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }

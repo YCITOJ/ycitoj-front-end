@@ -99,7 +99,6 @@ export default {
     // 获取作业
     async getHomework() {
         const { data: res } = await this.$http.get(`homework/homework?id=${this.$route.query.homework_id}`);
-      console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
@@ -118,15 +117,12 @@ export default {
       for (var i = 1; i < this.problemlist.length; i++) {
         this.form.prob_list = `${this.form.prob_list}|${this.problemlist[i].id},${this.problemlist[i].score}`;
       }
-      //console.log(this.form.problem_sets);
       this.form.class_id = this.$route.query.class_id;
       this.form.homework_id = this.$route.query.homework_id;
-      console.log(this.form)
       const { data: res } = await this.$http.post(
         "homework/update_homework",
         this.form
       );
-      //console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
@@ -155,9 +151,7 @@ export default {
     },
     // 输出当前问题编号
     deleteproblem(index) {
-      //console.log(index)
       this.problemlist.splice(index, 1);
-      //console.log(this.problemlist)
     },
     //行拖拽
     rowDrop() {

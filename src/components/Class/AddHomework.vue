@@ -98,14 +98,11 @@ export default {
       for (var i = 1; i < this.problemlist.length; i++) {
         this.form.prob_list = `${this.form.prob_list}|${this.problemlist[i].id},${this.problemlist[i].score}`;
       }
-      //console.log(this.form.problem_sets);
       this.form.class_id = this.$route.query.id;
-      //console.log(this.form)
       const { data: res } = await this.$http.post(
         "homework/new_homework",
         this.form
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -134,9 +131,7 @@ export default {
     },
     // 输出当前问题编号
     deleteproblem(index) {
-      //console.log(index)
       this.problemlist.splice(index, 1);
-      //console.log(this.problemlist)
     },
   },
 };

@@ -205,7 +205,6 @@ export default {
         "class/stu_authorize",
         this.student_form
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

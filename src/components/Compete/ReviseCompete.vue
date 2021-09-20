@@ -98,7 +98,6 @@ export default {
       const { data: res } = await this.$http.get(
         `contest/contest?id=${this.$route.query.id}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -118,15 +117,12 @@ export default {
       for (var i = 1; i < this.problemlist.length; i++) {
         this.form.problem_sets = `${this.form.problem_sets}|${this.problemlist[i].num}`;
       }
-      //console.log(this.form.problem_sets);
       this.form.manager = window.localStorage.getItem("userid");
-      //console.log(this.form);
       this.form.id = this.$route.query.id
       const { data: res } = await this.$http.post(
         "contest/update_contest",
         this.form
       );
-      //console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error("比赛修改失败！");
       }
@@ -151,9 +147,7 @@ export default {
 
     // 输出当前问题编号
     deleteproblem(index) {
-      //console.log(index)
       this.problemlist.splice(index, 1);
-      //console.log(this.problemlist)
     },
 
     //行拖拽

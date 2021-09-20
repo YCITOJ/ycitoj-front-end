@@ -2,12 +2,13 @@
   <el-container class="page">
     <el-header>
       <el-row :gutter="20" class="Search">
-       <el-col>
+        <el-col>
           <el-input
             placeholder="请输入题目编号"
             v-model="formInline.problem"
             clearable
-            @clear="getSearch">
+            @clear="getSearch"
+          >
             <el-button
               slot="append"
               icon="el-icon-search"
@@ -26,7 +27,12 @@
             }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column label="题目编号" prop="prob_id" align="center" width="150">
+        <el-table-column
+          label="题目编号"
+          prop="prob_id"
+          align="center"
+          width="150"
+        >
           <template slot-scope="scope">
             <el-link type="info" @click="gotosubmit(scope.row)">{{
               scope.row.prob_id
@@ -55,9 +61,19 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="时间(ms)" width="150" prop="cpu_time" align="center">
+        <el-table-column
+          label="时间(ms)"
+          width="150"
+          prop="cpu_time"
+          align="center"
+        >
         </el-table-column>
-         <el-table-column label="内存(KB)" width="150" prop="memory" align="center">
+        <el-table-column
+          label="内存(KB)"
+          width="150"
+          prop="memory"
+          align="center"
+        >
         </el-table-column>
         <el-table-column label="语言" width="80" prop="lang" align="center">
         </el-table-column>
@@ -76,6 +92,19 @@
       </el-pagination>
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
+      <el-row :gutter="3">
+        <el-col :span="3"><h2 class="copy_title">源代码</h2></el-col>
+        <el-col :span="2">
+          <el-button
+            size="mini"
+            :data-clipboard-text="raw_value"
+            class="copy_css"
+            @click="copy"
+            id="copy_text"
+            >复制</el-button
+          >
+        </el-col>
+      </el-row>
       <div>
         <mavon-editor
           class="md"
@@ -93,6 +122,7 @@
   </el-container>
 </template>
 <script>
+import Clipboard from "clipboard";
 export default {
   data() {
     return {
@@ -119,6 +149,8 @@ export default {
       displayedcode: false,
       //代码内容
       value: "",
+      // 源代码，用于复制
+      raw_value: ""
     };
   },
   created() {
@@ -138,8 +170,10 @@ export default {
     },
     // 获取搜索页面数据
     getSearch() {
-      this.condition_group2.condition = "prob_id=\""+this.formInline.problem+"\" and who=";
-      this.condition_group2.condition = this.condition_group2.condition + window.localStorage.getItem("userid");
+      this.condition_group2.condition =
+        'prob_id="' + this.formInline.problem + '" and who=';
+      this.condition_group2.condition =
+        this.condition_group2.condition + window.localStorage.getItem("userid");
       //console.log(this.condition_group2.condition);
       this.getPageinfo();
       this.getshow_per_page();
@@ -199,7 +233,8 @@ export default {
     dialogcode(row) {
       //console.log(row);
       this.displayedcode = true;
-      this.value = "```"+row.lang+"\n" + row.code;
+      this.value = "```" + row.lang + "\n" + row.code;
+      this.raw_value = row.code;
       //console.log(this.value)
     },
     // 进去题目
@@ -207,6 +242,24 @@ export default {
       // console.log(row)
       this.$router.push({ path: "/submit", query: { id: row.prob_id } });
     },
+    // 复制代码
+    copy() {
+    var _this=this;
+    var clipboard=new Clipboard('#copy_text');
+    clipboard.on('success', e=> {
+        this.$message.success('复制成功');
+        // 释放内存
+        clipboard.destroy()
+    }),
+    clipboard.on('error', e=> {
+        // 不支持复制
+        Message( {
+        message: '该浏览器不支持自动复制', 
+        type: 'warning'
+        });
+        // 释放内存
+        clipboard.destroy()
+    })}
   },
 };
 </script>
@@ -218,5 +271,9 @@ export default {
   padding-top: 20px;
   padding-left: 15%;
   padding-right: 15%;
+}
+.copy_css {
+  margin-top: 18.5px;
+  margin-left: -10px;
 }
 </style>

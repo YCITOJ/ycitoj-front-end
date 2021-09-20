@@ -41,7 +41,6 @@ export default {
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
-      //console.log(res)
       this.value = res.data.info
       this.uploader = res.data.uploader
       await this.getuserlevel()
@@ -67,13 +66,10 @@ export default {
 
       // 如果用户确认删除，则返回值为字符串 confirm
       // 如果用户取消了删除，则返回值为字符串 cancel
-      // console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      // console.log(this.form.num);
       const { data: res } = await this.$http.post("prob_collection/del",{id:this.$route.query.id});
-      //console.log(res);
       if (res.meta.status != 200) {
         return this.$message.error("删除题目失败！");
       }

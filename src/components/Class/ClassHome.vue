@@ -92,7 +92,6 @@ export default {
       const { data: res } = await this.$http.get(
         `class/myclass?class_id=${this.$route.query.id}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -103,7 +102,6 @@ export default {
       const { data: res } = await this.$http.get(
         `class/myclass/list_homework?class_id=${this.$route.query.id}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -114,7 +112,6 @@ export default {
       const { data: res } = await this.$http.get(
         `class/myclass/generate_invite_code?class_id=${this.$route.query.id}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -158,14 +155,12 @@ export default {
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      // console.log(this.form.num);
       this.del_Homework_from.class_id = this.$route.query.id;
       this.del_Homework_from.homework_id = id;
       const { data: res } = await this.$http.post(
         "homework/del",
         this.del_Homework_from
       );
-       console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

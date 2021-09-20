@@ -96,10 +96,8 @@ export default {
         `contest/rank_list?contest_id=${this.$route.query.id}`
       );
       if (res.meta.status !== 200) {
-        return console.log("获取比赛列表失败！");
+        return;
       }
-      //console.log(`contest/rank_list?contest_id=${this.$route.query.id}`);
-      //console.log(res);
       this.rank_list = res.data;
       if (res.data.length != 0) this.headerlist = res.data[0].prob_list;
 
@@ -107,7 +105,6 @@ export default {
     },
 
     formatTime(row, column) {
-      //console.log(row[column.property]);
       const penalty = row[column.property];
       if (penalty% 60 < 10) {
         return parseInt(penalty / 60) + ":0" + (penalty % 60);

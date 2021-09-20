@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import axios from 'axios';
+import config from '../../../config.js'
 // import toastr from '../assets/toastr.min';
 // Vue.use(axios)
 
 
 let http = {};
 // let _baseURL = '/vpaas'
-//https://1.117.147.109:4001/
-let _baseURL = 'https://oj.merdog.cn:4001'
+let _baseURL = config.baseUrl
 let ContentType = "application/json";
 
 let uploadFileType = "multipart/form-data";

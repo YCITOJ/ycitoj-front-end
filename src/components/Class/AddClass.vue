@@ -76,7 +76,6 @@ export default {
           "class/create_class",
           this.form
         );
-        console.log(res);
         if (res.meta.status !== 200) {
           return this.$message.error("添加失败！");
         }

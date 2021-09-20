@@ -50,7 +50,6 @@ export default {
   methods: {
     pdlogin() {
       this.username=window.localStorage.getItem("username")
-      //console.log(window.localStorage.getItem("token") === null)
       if (window.localStorage.getItem("token")) {
         this.loginname = "out";
         return;
@@ -64,7 +63,6 @@ export default {
     // 处理选中
     handleSelect(key,keyPath){
       window.localStorage.setItem("navigation_bar_activeIndex",key);
-      // console.log(key,keyPath);
     } 
   },
 };

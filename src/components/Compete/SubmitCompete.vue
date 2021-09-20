@@ -190,7 +190,6 @@ export default {
   methods: {
     // 检查编辑权限
     check_access(){
-      console.log(window.localStorage.getItem("access"));
       if (window.localStorage.getItem("access") <= 1) 
         this.is_admin = true;
       else 
@@ -203,7 +202,6 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      //console.log(res);
       this.value = res.data;
       this.info = res.info;
     },
@@ -251,12 +249,10 @@ export default {
       this.submitstring.lang = this.displaylanguage;
       this.submitstring.code = this.item.content;
       this.submitstring.num = this.$route.query.id;
-      //console.log(this.submitstring);
       const { data: res } = await this.$http.post(
         "contest/submit_code",
         this.submitstring
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -275,9 +271,7 @@ export default {
       }
     },
     async outcome() {
-      //console.log(this.submission_id);
       const { data: res } = await this.$http.get("submit/submission_result?submission_id=" + this.submission_id);
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }

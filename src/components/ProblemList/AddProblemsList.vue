@@ -67,12 +67,10 @@ export default {
       for (var i = 1; i < this.problemlist.length; i++) {
         this.form.prob_set = `${this.form.prob_set}|${this.problemlist[i].id}`;
       }
-      //console.log(this.form);
       const { data: res } = await this.$http.post(
         "prob_collection/create",
         this.form
       );
-      console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
@@ -87,7 +85,6 @@ export default {
       if (res.meta.status === 400) {
         return this.$message.error("题目编号不存在！");
       }
-      console.log(res)
       let newlist = {
         id: "",
         title: ''
@@ -98,9 +95,7 @@ export default {
     },
     // 输出当前问题编号
     deleteproblem(index) {
-      //console.log(index)
       this.problemlist.splice(index, 1);
-      //console.log(this.problemlist)
     },
   },
 };

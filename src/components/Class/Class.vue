@@ -116,14 +116,12 @@ export default {
     async getClassList() {
       this.queryInfo.pagenum = Number(window.localStorage.getItem("classPage"));
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
-        this.queryInfo.pagenum = 1;
-      //console.log(this.queryInfo.pagenum);
+        this.queryInfo.pagenum = 1
       const { data: res } = await this.$http.get(
         "class/home?page_no=" + this.queryInfo.pagenum
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
-        return console.log("获取班级列表失败！");
+        return;
       }
 
       this.classlist = res.data;
@@ -134,13 +132,11 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
-      //console.log(res);
       this.total = res.count;
       this.queryInfo.pagesize = res.show_per_page;
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      //console.log(newPage);
       window.localStorage.setItem("classPage", newPage);
       this.getClassList();
     },
@@ -169,7 +165,6 @@ export default {
         "class/join_class",
         this.addourclass
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -194,13 +189,11 @@ export default {
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      // console.log(this.form.num);
       this.del_class_from.class_id = id;
       const { data: res } = await this.$http.post(
         "class/delete_class",
         this.del_class_from
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

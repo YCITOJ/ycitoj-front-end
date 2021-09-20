@@ -76,7 +76,6 @@ export default {
       // 获取班级信息
     async getClassList() {
         const { data: res } = await this.$http.get(`class/myclass?class_id=${this.$route.query.id}`);
-        console.log(res);
         if (res.meta.status !== 200) {
           return this.$message.error(res.meta.message);
         }
@@ -90,7 +89,6 @@ export default {
           "class/update_class",
           this.form
         );
-        console.log(res);
         if (res.meta.status !== 200) {
           return this.$message.error(res.meta.message);
         }

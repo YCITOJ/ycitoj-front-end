@@ -132,7 +132,6 @@ export default {
       const { data: res } = await this.$http.get(
         `contest/check_reg?contest_id=${this.$route.query.id}`
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -150,7 +149,6 @@ export default {
           type: "warning",
         }
       ).catch((err) => err);
-      // console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
@@ -159,7 +157,6 @@ export default {
         "contest/register",
         this.raceid
       );
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -193,13 +190,11 @@ export default {
         }
       ).catch((err) => err);
 
-      // console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
       this.raceid.del_contest_id = this.$route.query.id;
       const { data: res } = await this.$http.post("contest/del", this.raceid);
-      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("删除比赛失败！");
       }

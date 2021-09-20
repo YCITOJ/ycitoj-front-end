@@ -87,7 +87,6 @@ export default {
     // 获取公告列表
     async get_announcement_list() {
       const { data: res } = await this.$http.get("announcement/list", {params:{ page_no:1 }});
-      //console.log(res);
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
@@ -118,13 +117,10 @@ export default {
 
       // 如果用户确认删除，则返回值为字符串 confirm
       // 如果用户取消了删除，则返回值为字符串 cancel
-      // console.log(confirmResult)
       if (confirmResult !== "confirm") {
         return this.$message.info("已取消删除");
       }
-      console.log(`/announcement/del?id=${this.announcement.id}`);
       const { data: res } = await this.$http.post("/announcement/del",{id:this.announcement.id});
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

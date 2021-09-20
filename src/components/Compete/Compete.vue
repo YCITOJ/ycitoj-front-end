@@ -70,7 +70,6 @@ export default {
       const { data: res } = await this.$http.get(
         "contest/list?page_no=" + this.queryInfo.pagenum
       );
-      //console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -87,7 +86,6 @@ export default {
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      // console.log(newPage);
       this.queryInfo.pagenum = newPage;
       this.getRaceList();
     },
