@@ -28,12 +28,12 @@
         <el-form-item prop="password">
           <el-input v-model="loginForm.password" type="password" placeholder="password"></el-input>
         </el-form-item>
-        <el-form-item prop="email" v-show="model === 'register'">
+       <!--  <el-form-item prop="email" v-show="model === 'register'">
           <el-input v-model="loginForm.email" type="email" placeholder="email" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item prop="mobil" v-show="model === 'register'">
           <el-input v-model="loginForm.mobile" type="mobile" placeholder="mobile" :disabled="true"></el-input>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-checkbox v-model="checked" v-show="model === 'login'">记住密码</el-checkbox>
         <!-- 按钮区域 -->

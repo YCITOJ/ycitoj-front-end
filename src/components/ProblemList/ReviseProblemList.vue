@@ -12,7 +12,7 @@
             @click="addProblemId"
           ></el-button>
         </el-input>
-        <el-table :data="problemlist" style="width: 80%">
+        <el-table :data="problemlist" style="width: 80%" row-key="id">
           <el-table-column prop="num" label="题目编号"> </el-table-column>
           <el-table-column prop="title" label="题目名称"> </el-table-column>
           <el-table-column label="操作" width="180">
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import Sortable from 'sortablejs'
 export default {
   data() {
     return {
@@ -55,6 +56,9 @@ export default {
   },
   created() {
       this.get_problem_info()
+  },
+  mounted() {
+    this.rowDrop()
   },
   methods: {
     async get_problem_info() {
@@ -116,6 +120,17 @@ export default {
       //console.log(index)
       this.problemlist.splice(index, 1);
       //console.log(this.problemlist)
+    },
+    //行拖拽
+    rowDrop() {
+      const tbody = document.querySelector('.el-table__body-wrapper tbody')
+      const _this = this
+      Sortable.create(tbody, {
+        onEnd({ newIndex, oldIndex }) {
+          const currRow = _this.problemlist.splice(oldIndex, 1)[0]
+          _this.problemlist.splice(newIndex, 0, currRow)
+        }
+      })
     },
   },
 };

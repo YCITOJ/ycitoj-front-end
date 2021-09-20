@@ -122,6 +122,7 @@ export default {
     return {
       // 获取用户列表的参数对象
       queryInfo: {
+        // 搜索区域
         query: "",
         // 当前的页数
         pagenum: 1,

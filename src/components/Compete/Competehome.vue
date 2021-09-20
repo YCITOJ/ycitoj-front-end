@@ -17,7 +17,7 @@
           />
         </div>
       </el-header>
-
+      <!--  时间条 -->
       <el-main class="mainthins">
         <div class="time">
           <el-progress
@@ -56,14 +56,16 @@
               style="width: 100%"
               @row-click="gotoSubmit"
             >
-              <el-table-column label="状态" width="80">
+              <el-table-column label="状态" width="60">
                 <template slot-scope="scope">
                   <i class="el-icon-check" v-if="scope.row.ac"></i>
                 </template>
               </el-table-column>
-              <el-table-column prop="title" label="题目" width="800">
+              <el-table-column label="编号" type="index" :index="indexMethod" width="60" align="center">
+                </el-table-column>
+              <el-table-column prop="title" label="题目">
               </el-table-column>
-              <el-table-column prop="address" label="统计"> </el-table-column>
+              <!-- <el-table-column prop="address" label="统计"> </el-table-column> -->
             </el-table>
           </div>
         </el-card>
@@ -214,12 +216,20 @@ export default {
     getuserlevel() {
       if (window.localStorage.getItem("access") <= 1) this.userlevel = 1;
     },
+
     convertDateFromString(dateString) {
       if (dateString) {
         var arr1 = dateString.split(" ");
         var sdate = arr1[0].split("-");
-        arr1=arr1[1].split(":");
-        var date = new Date(sdate[0], sdate[1] - 1, sdate[2],arr1[0],arr1[1],arr1[2]);
+        arr1 = arr1[1].split(":");
+        var date = new Date(
+          sdate[0],
+          sdate[1] - 1,
+          sdate[2],
+          arr1[0],
+          arr1[1],
+          arr1[2]
+        );
         return date;
       }
       return new Date();
@@ -231,7 +241,9 @@ export default {
       const startTime = this.convertDateFromString(this.rank_start_time);
       const endTime = this.convertDateFromString(this.rank_end_time);
       const nowTime = new Date();
-      let countTime = parseInt((endTime.getTime() - startTime.getTime()) / 1000);
+      let countTime = parseInt(
+        (endTime.getTime() - startTime.getTime()) / 1000
+      );
       let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
       if (leftTime <= 0) {
         this.down_time = `已结束`;
@@ -256,6 +268,10 @@ export default {
         return `0${time}`;
       }
     },
+    // 题目编号
+    indexMethod(index) {
+        return String.fromCharCode(65+index);
+    }
   },
 };
 </script>

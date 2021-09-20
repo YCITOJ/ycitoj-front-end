@@ -20,7 +20,7 @@
           ></el-button>
         </div>
 
-        <el-table :data="problemlist" style="width: 80%">
+        <el-table :data="problemlist" style="width: 80%" row-key="id">
           <el-table-column prop="id" label="题目编号"> </el-table-column>
           <el-table-column prop="name" label="题目名称"> </el-table-column>
           <el-table-column prop="score" label="题目分值"> </el-table-column>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import Sortable from 'sortablejs'
 export default {
   data() {
     return {
@@ -90,6 +91,9 @@ export default {
   },
   created() {
     this.getHomework();
+  },
+  mounted() {
+    this.rowDrop()
   },
   methods: {
     // 获取作业
@@ -154,6 +158,17 @@ export default {
       //console.log(index)
       this.problemlist.splice(index, 1);
       //console.log(this.problemlist)
+    },
+    //行拖拽
+    rowDrop() {
+      const tbody = document.querySelector('.el-table__body-wrapper tbody')
+      const _this = this
+      Sortable.create(tbody, {
+        onEnd({ newIndex, oldIndex }) {
+          const currRow = _this.problemlist.splice(oldIndex, 1)[0]
+          _this.problemlist.splice(newIndex, 0, currRow)
+        }
+      })
     },
   },
 };

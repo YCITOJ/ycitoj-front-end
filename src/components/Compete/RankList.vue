@@ -29,19 +29,30 @@
           align="center"
         >
           <template slot-scope="scope">
+            <!-- 提交一次正确 -->
             <p
               class="submit_frequency"
               style="margin: 0; color: #67c23a"
-              v-if="scope.row.prob_list[index].ac == true"
+              v-if="scope.row.prob_list[index].ac == true&&scope.row.prob_list[index].tries==1"
             >
-              +{{ scope.row.prob_list[index].tries }}
+              +
             </p>
+            <!-- 提价n次 -->
+            <p
+              class="submit_frequency"
+              style="margin: 0; color: #67c23a"
+              v-if="scope.row.prob_list[index].ac == true&&scope.row.prob_list[index].tries!=1"
+            >
+              +{{ scope.row.prob_list[index].tries-1 }}
+            </p>
+            <!-- 时间分钟不补零 -->
             <p
               class="submit_times"
               style="margin: 0"
               v-if="scope.row.prob_list[index].ac == true&&scope.row.prob_list[index].time%60>=10">
               ({{ parseInt(scope.row.prob_list[index].time/60) }}:{{scope.row.prob_list[index].time%60}})
             </p>
+            <!-- 时间分钟补零 -->
             <p
               class="submit_times"
               style="margin: 0"

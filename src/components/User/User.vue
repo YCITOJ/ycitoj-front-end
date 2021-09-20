@@ -183,13 +183,13 @@ export default {
     async get_stu_authorize() {
       const { data: res } = await this.$http.get("class/get_stu_authorize");
       if (res.meta.status !== 200) {
+        this.get_user_form();
         return this.$message.error(res.meta.message);
       }
       this.check_stu = false;
       this.student.sid = res.sid;
       this.student.real_name = res.real_name;
       this.student.class_name = res.class_name;
-      this.get_user_form();
     },
     // 获取用户信息
     get_user_form() {
@@ -213,11 +213,14 @@ export default {
       this.dialogVisible = false;
       this.get_stu_authorize();
     },
+    // 退出
     out() {
       window.localStorage.setItem("token", "");
       window.localStorage.setItem("userid", "");
       window.localStorage.setItem("username", "");
       window.localStorage.setItem("access", "");
+      window.localStorage.setItem("topicPage", "");
+      window.localStorage.setItem("classPage", "");
       this.$router.push("/login");
     },
     // 提交修改密
