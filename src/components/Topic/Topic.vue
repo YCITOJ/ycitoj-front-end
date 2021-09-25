@@ -1,5 +1,8 @@
 <template>
-  <div class="topicbox">
+  <div class="topicbox"
+   v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading">
     <!-- 搜索与添加区域 -->
     <el-row :gutter="20">
       <el-col :span="8">
@@ -7,7 +10,7 @@
           placeholder="请输入题目编号或内容"
           v-model="queryInfo.query"
           clearable
-          @clear="getUserList"
+          @clear="getProblemList"
         >
           <el-button
             slot="append"
@@ -152,13 +155,15 @@ export default {
         { type: "danger", label: "较难" },
         { type: "warning", label: "困难" },
       ],
+
+      loading: true
     };
   },
   created() {
     this.getuserlevel();
   },
   methods: {
-    async getUserList() {
+    async getProblemList() {
       this.queryInfo.pagenum = Number(window.localStorage.getItem("topicPage"));
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
         this.queryInfo.pagenum = 1;
@@ -169,6 +174,7 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.problemslist = res.data;
+      this.loading = false
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
@@ -182,17 +188,17 @@ export default {
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize;
-      this.getUserList();
+      this.getProblemList();
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       window.localStorage.setItem("topicPage", newPage);
-      this.getUserList();
+      this.getProblemList();
     },
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
-      this.getUserList();
+      this.getProblemList();
       this.getPageinfo();
     },
     // 搜索题目
@@ -252,7 +258,7 @@ export default {
         return this.$message.error("删除题目失败！");
       }
       this.$message.success("删除题目成功！");
-      this.getUserList();
+      this.getProblemList();
       this.getPageinfo();
     },
    // 上传文件
@@ -297,6 +303,15 @@ export default {
     addDialogVisible() {
       this.$router.push("/Addproblems");
     },
+
+    // 页面加载
+   openFullScreen2() {
+       const loading=this.$loading( {
+           lock: true, text: 'Loading', spinner: 'el-icon-loading', background: 'rgba(0, 0, 0, 0.7)', target: document.querySelector(".topicbox")
+       }
+       );
+   }
+
   },
 };
 </script>

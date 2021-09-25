@@ -1,5 +1,8 @@
 <template>
-  <div class="topicbox">
+  <div class="topicbox"
+   v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading">
     <!-- 搜索与添加区域 -->
     <el-row :gutter="20">
       <el-col :span="8">
@@ -65,11 +68,11 @@ export default {
       userlevel: "0",
 
       isLoading: true,
+      // 页面加载
+      loading: true,
     };
   },
   created() {
-    this.getProblemList();
-    this.getPageinfo();
     this.getuserlevel();
   },
   methods: {
@@ -81,6 +84,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.problemslist = res.data;
+      this.loading = false
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
@@ -90,6 +94,7 @@ export default {
       }
       this.total = res.count;
       this.queryInfo.pagesize = res.show_per_page;
+      this.getProblemList();
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
@@ -104,6 +109,7 @@ export default {
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access") <= 1) this.userlevel = 1;
+      this.getPageinfo();
     },
     // 搜索题单
     async find_problem_list() {
