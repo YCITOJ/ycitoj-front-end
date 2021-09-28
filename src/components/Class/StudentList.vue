@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <template>
-      <el-table :data="studentlist" style="width: 100%">
+      <el-table :data="studentlist" style="width: 100%" :default-sort = "{prop: 'sid', order: 'ascending'}">
         <el-table-column type="index" width="50"> </el-table-column>
         <el-table-column prop="class_name" label="班级" width="180">
         </el-table-column>

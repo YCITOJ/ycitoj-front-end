@@ -2,7 +2,8 @@
   <div class="topicbox"
    v-loading="loading"
    element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading">
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <!-- 搜索与添加区域 -->
     <el-row :gutter="20">
       <el-col :span="8">

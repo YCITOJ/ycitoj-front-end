@@ -7,7 +7,7 @@
             placeholder="请输入题目编号"
             v-model="formInline.problem"
             clearable
-            @clear="getSearch"
+            @clear="getuserid"
           >
             <el-button
               slot="append"

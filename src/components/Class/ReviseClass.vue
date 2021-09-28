@@ -92,7 +92,7 @@ export default {
         if (res.meta.status !== 200) {
           return this.$message.error(res.meta.message);
         }
-        this.$message.success("添加成功");
+        this.$message.success(res.meta.message);
         this.$router.push("/class");
       });
     },

@@ -12,9 +12,9 @@
             @click="addProblemId"
           ></el-button>
         </el-input>
-        <el-table :data="problemlist" style="width: 40%" row-key="id">
-          <el-table-column prop="num" label="题目编号"> </el-table-column>
-          <el-table-column prop="title" label="题目名称"> </el-table-column>
+        <el-table :data="problemlist" style="width: 80%" row-key="id">
+          <el-table-column prop="num" label="题目编号" width="180"> </el-table-column>
+          <el-table-column prop="title" label="题目名称" show-overflow-tooltip> </el-table-column>
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <!-- 删除按钮 -->
@@ -167,7 +167,7 @@ export default {
 
 <style scoped>
 .box {
-  margin-left: 10%;
+  margin: auto;
   margin-top: 20px;
   width: 80%;
 }

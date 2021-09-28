@@ -61,6 +61,19 @@
       </el-pagination>
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
+      <el-row :gutter="3">
+        <el-col :span="3"><h2 class="copy_title">源代码</h2></el-col>
+        <el-col :span="2">
+          <el-button
+            size="mini"
+            :data-clipboard-text="raw_value"
+            class="copy_css"
+            @click="copy"
+            id="copy_text"
+            >复制</el-button
+          >
+        </el-col>
+      </el-row>
       <div>
         <mavon-editor
           class="md"
@@ -77,6 +90,7 @@
   </el-container>
 </template>
 <script>
+import Clipboard from "clipboard";
 export default {
   data() {
     return {
@@ -99,6 +113,8 @@ export default {
       displayedcode: false,
       //代码内容
       value: "",
+      // 源代码，用于复制
+      raw_value: ""
     };
   },
   created() {
@@ -161,12 +177,31 @@ export default {
     // 显示提交的代码
     dialogcode(row) {
       this.displayedcode = true;
-      this.value = "```"+row.lang+"\n" + row.code;
+      this.value = "```" + row.lang + "\n" + row.code;
+      this.raw_value = row.code;
     },
     // 进去题目
     gotosubmit(row) {
       this.$router.push({ path: "/submit", query: { id: row.prob_id } });
-    }
+    },
+    // 复制代码
+    copy() {
+    var _this=this;
+    var clipboard=new Clipboard('#copy_text');
+    clipboard.on('success', e=> {
+        this.$message.success('复制成功');
+        // 释放内存
+        clipboard.destroy()
+    }),
+    clipboard.on('error', e=> {
+        // 不支持复制
+        Message( {
+        message: '该浏览器不支持自动复制', 
+        type: 'warning'
+        });
+        // 释放内存
+        clipboard.destroy()
+    })}
   },
 };
 </script>
@@ -175,5 +210,9 @@ export default {
   padding-top: 20px;
   padding-left: 15%;
   padding-right: 15%;
+}
+.copy_css {
+  margin-top: 18.5px;
+  margin-left: -10px;
 }
 </style>

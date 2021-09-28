@@ -2,7 +2,8 @@
   <div class="topicbox"
    v-loading="loading"
    element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading">
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <!-- 搜索与添加区域 -->
     <el-row :gutter="20">
       <el-col :span="8">
@@ -10,7 +11,7 @@
           placeholder="请输入题目编号或内容"
           v-model="queryInfo.query"
           clearable
-          @clear="getProblemList"
+          @clear="getPageinfo"
         >
           <el-button
             slot="append"
@@ -184,6 +185,7 @@ export default {
       }
       this.total = res.count;
       this.queryInfo.pagesize = res.show_per_page;
+      this.getProblemList();
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
@@ -198,7 +200,6 @@ export default {
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
-      this.getProblemList();
       this.getPageinfo();
     },
     // 搜索题目
@@ -210,6 +211,7 @@ export default {
         return this.$message.error("搜索题目失败！");
       }
       this.problemslist = res.data;
+      this.total = this.problemslist.length
     },
     // 进入题目
     gotosubmit(row) {
