@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <template>
       <el-table :data="studentlist" style="width: 100%" :default-sort = "{prop: 'sid', order: 'ascending'}">
         <el-table-column type="index" width="50"> </el-table-column>
@@ -32,6 +36,8 @@ export default {
           class_id: "",
           usr_id: ""
       },
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -47,6 +53,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.studentlist = res.data;
+      this.loading = false
     },
     // 根据班级Id和学生ID删除对应的目=学生
     async del_student(id) {

@@ -23,6 +23,8 @@ export default {
         info: "",
         id: ""
       },
+      // 页面加载
+      loading: true,
     };
   },
   created() {

@@ -21,7 +21,9 @@ export default {
       form: {
         title: "",
         info: "",
-      }
+      },
+      // 页面加载
+      loading: true,
     };
   },
   methods: {

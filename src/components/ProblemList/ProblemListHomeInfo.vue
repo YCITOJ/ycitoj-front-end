@@ -27,7 +27,7 @@ export default {
       value: "",
       // 用户等级
       userlevel: false,
-      uploader: ""
+      uploader: "",
     };
   },
   created() {

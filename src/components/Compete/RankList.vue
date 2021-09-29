@@ -84,7 +84,7 @@ export default {
       time: "",
 
       my_ranking: '暂无数据',
-      all_ranking: ''
+      all_ranking: '',
     };
   },
   created() {

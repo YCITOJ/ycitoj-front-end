@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-header></el-header>
     <el-main>
       <el-table :data="rank_list" center>
@@ -39,6 +43,8 @@ export default {
       rank_list: [],
       headerlist: [],
       time: "",
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -54,6 +60,8 @@ export default {
       }
       this.rank_list = res.rank_list;
       if (res.rank_list.length != 0) this.headerlist = res.rank_list[0].prob_list;
+
+      this.loading = false
     },
 
     formatTime(row, column) {

@@ -65,7 +65,7 @@ export default {
         teacher_id: [
           { required: true, message: '请输入教师id', trigger: "blur" },
         ],
-       }
+       },
     };
   },
   methods: {

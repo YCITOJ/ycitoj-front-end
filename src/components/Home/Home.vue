@@ -76,11 +76,10 @@ export default {
       announcement_value: "",
       announcement_list: [],
       announcement: "",
-      userlevel: false
+      userlevel: false,
     };
   },
   created() {
-    this.get_announcement_list()
     this.getuserlevel()
   },
   methods: {
@@ -93,6 +92,7 @@ export default {
       this.announcement_list = res.data
       this.announcement = res.data[0]
       this.announcement_value = res.data[0].info
+      this.loading = false
     },
     // 进入创建公告界面
     create_announcement() {
@@ -135,6 +135,7 @@ export default {
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access") === "0") this.userlevel = true;
+      this.get_announcement_list()
     },
   }
 };

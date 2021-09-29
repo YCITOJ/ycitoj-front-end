@@ -1,5 +1,9 @@
 <template>
-  <el-container class="page">
+  <el-container class="page"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-header>
     </el-header>
     <el-main>
@@ -114,7 +118,9 @@ export default {
       //代码内容
       value: "",
       // 源代码，用于复制
-      raw_value: ""
+      raw_value: "",
+
+      loading: true,
     };
   },
   created() {
@@ -142,6 +148,8 @@ export default {
       }
       
       this.resultslist = res.data;
+
+      this.loading = false
     },
     // 提交页数以及提交数量
     async getPageinfo() {

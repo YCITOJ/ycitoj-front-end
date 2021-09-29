@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="作业名称">
         <el-input v-model="form.title"></el-input>
@@ -87,6 +91,8 @@ export default {
       problemid: "",
       score: "",
       problemlist: [],
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -107,6 +113,8 @@ export default {
       this.form.end= res.data.end_time;
       this.form.info= res.data.information;
       this.problemlist = res.data.prob_list;
+
+      this.loading = false
     },
     // 修改作业
     async putRace() {

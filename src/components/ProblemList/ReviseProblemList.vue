@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="题单名称">
         <el-input v-model="form.title"></el-input>
@@ -52,6 +56,8 @@ export default {
       // 添加比赛题目编号
       problemid: "",
       problemlist: [],
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -72,6 +78,7 @@ export default {
       this.problemlist = res.data.prob_set
       this.form.info = res.data.info
 
+      this.loading = false
     },
     // 提交题单
     async putRace() {

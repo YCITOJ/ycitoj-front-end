@@ -17,8 +17,12 @@
         <el-menu-item index="2" @click="gotoproblemSubmit"
           >提交记录</el-menu-item
         >
-        <el-menu-item index="3" v-if="is_admin" @click="editProblem">编辑</el-menu-item>
-        <el-menu-item index="4" v-if="is_admin" @click="upload">上传样例</el-menu-item>
+        <el-menu-item index="3" v-if="is_admin" @click="editProblem"
+          >编辑</el-menu-item
+        >
+        <el-menu-item index="4" v-if="is_admin" @click="upload"
+          >上传样例</el-menu-item
+        >
       </el-menu>
     </el-header>
     <div class="heng"></div>
@@ -77,21 +81,20 @@
               ></codemirror>
             </el-main>
             <el-footer class="submittijiao">
-                  <!-- <div class="submittijiao_ans">{{ ans }}</div> -->
-                  <el-button
-                    type="primary"
-                    @click="submitcode()"
-                    v-if="submittijiaoflag == 'true'"
-                    class="submittijiao_button"
-                    >提交代码</el-button
-                  >
-                  <el-button
-                    type="primary"
-                    icon="el-icon-loading"
-                    v-if="submittijiaoflag == 'false'"
-                    class="submittijiao_button"
-                    ></el-button
-                  >
+              <!-- <div class="submittijiao_ans">{{ ans }}</div> -->
+              <el-button
+                type="primary"
+                @click="submitcode()"
+                v-if="submittijiaoflag == 'true'"
+                class="submittijiao_button"
+                >提交代码</el-button
+              >
+              <el-button
+                type="primary"
+                icon="el-icon-loading"
+                v-if="submittijiaoflag == 'false'"
+                class="submittijiao_button"
+              ></el-button>
             </el-footer>
           </el-container>
         </div>
@@ -215,20 +218,20 @@ export default {
       submission_id: "",
       // 提交按钮是否可以点击
       submittijiaoflag: "true",
-      
-      is_admin:false
+
+      is_admin: false,
+
     };
   },
   created() {
     this.readproblem();
     this.check_access();
   },
+  mounted: {},
   methods: {
-    check_access(){
-      if (window.localStorage.getItem("access") <= 1) 
-        this.is_admin = true;
-      else 
-        this.is_admin = false;
+    check_access() {
+      if (window.localStorage.getItem("access") <= 1) this.is_admin = true;
+      else this.is_admin = false;
     },
     // 获取题目
     async readproblem() {
@@ -242,7 +245,7 @@ export default {
     },
     // 返回主页
     gotohome() {
-      this.$router.push('/topic')
+      this.$router.push("/topic");
     },
     // 进去提交页面
     gotoproblemSubmit() {
@@ -266,7 +269,7 @@ export default {
         return;
       }
     },
-    editProblem(){
+    editProblem() {
       this.$router.push({ path: "/revise", query: { id: this.num } });
     },
     // 提交代码
@@ -303,7 +306,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }
-      this.ans = true
+      this.ans = true;
       if (res.verdict === 0) {
         this.ans = false;
         return (this.ans = "评测中...");
@@ -321,7 +324,7 @@ export default {
         return this.$message.error("未知错误!");
       }
       if (res.verdict === 5) {
-       return this.$message.error("编译错误！");
+        return this.$message.error("编译错误！");
       }
       if (res.verdict === 6) {
         return this.$message.success("恭喜你，通过了！");
@@ -331,7 +334,7 @@ export default {
       }
     },
 
-       // 上传文件
+    // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
     },
@@ -367,7 +370,7 @@ export default {
       this.file_form = res.data.map((str) => {
         return { point: str };
       });
-    }, 
+    },
   },
 };
 </script>

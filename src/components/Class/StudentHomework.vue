@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-container>
       <!-- 头部 -->
       <h2>{{title}}</h2>
@@ -52,7 +56,9 @@ export default {
       // 检查用户报名情况参数
       checkUserRaceFlang: "",
       // 用户等级
-      userlevel: ""
+      userlevel: "",
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -70,6 +76,7 @@ export default {
       this.value = res.data.information;
       this.title = res.data.title;
 
+      this.loading = false
     },
     // 进入比赛排行榜
     goto_homework_rank_list() {

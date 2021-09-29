@@ -1,5 +1,9 @@
 <template>
-    <div>
+    <div
+    v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
         <!-- 题目列表区域 -->
     <el-table
       :data="problemslist"
@@ -41,6 +45,8 @@ export default {
         { type: "danger", label: "较难" },
         { type: "warning", label: "困难" },
       ],
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -55,6 +61,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.problemslist = res.data.prob_set
+      this.loading = false
     },
     // 进入题目
     gotosubmit(row) {

@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-container>
       <!-- 头部 -->
       <h2>{{ title }}</h2>
@@ -97,6 +101,8 @@ export default {
       rank_end_time: "",
       down_time: "",
       percentage_count: "0",
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -126,6 +132,7 @@ export default {
       this.rank_start_time = res.data.start_time;
       this.rank_end_time = res.data.end_time;
       this.checkUserRace();
+      this.loading = false
     },
     // 检查用户报名情况
     async checkUserRace() {

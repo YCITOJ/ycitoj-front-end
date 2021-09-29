@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-form :rules="rules" ref="form" :model="form" label-width="80px">
       <el-form-item label="班级名称" prop="class_name">
         <el-input v-model="form.class_name"></el-input>
@@ -66,7 +70,9 @@ export default {
         teacher_id: [
           { required: true, message: '请输入教师id', trigger: "blur" },
         ],
-       }
+      },
+      // 页面加载
+      loading: true,
     };
   },
   created() {
@@ -80,6 +86,7 @@ export default {
           return this.$message.error(res.meta.message);
         }
         this.form = res.data;
+        this.loading = false
     },
     reviseclass() {
       this.$refs.form.validate(async (valid) => {

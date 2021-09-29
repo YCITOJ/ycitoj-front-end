@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
       <el-col>
         <el-button
           type="primary"
@@ -57,13 +61,13 @@ export default {
         difficulty: "",
       },
       // 用户等级
-      userlevel: ""
+      userlevel: "",
+      // 页面加载
+      loading: true,
     };
   },
   created() {
     this.getuserlevel();
-    this.getRaceList();
-    this.getPageinfo();
   },
   methods: {
     async getRaceList() {
@@ -74,6 +78,7 @@ export default {
         return this.$message.error("获取题目列表失败！");
       }
       this.tableData = res.data;
+      this.loading = false
     },
     // 比赛个数以及每页比赛数量
     async getPageinfo() {
@@ -96,6 +101,8 @@ export default {
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access")<=1) this.userlevel = 1;
+      this.getPageinfo();
+      this.getRaceList();
     },
     // 添加比赛
     addRace() {

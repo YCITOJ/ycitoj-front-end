@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-form :rules="rules" ref="form" :model="form" label-width="80px">
       <el-form-item label="题目编号" prop="num">
         <el-input v-model="form.num" :disabled="true"></el-input>
@@ -146,7 +150,9 @@ export default {
             trigger: "blur",
           },
         ],
-      }
+      },
+
+      loading: true,
     };
   },
   created() {
@@ -168,6 +174,7 @@ export default {
       this.form.memory_limit = res.info.memory_limit;
       this.form.difficulty = res.info.difficulty+'';
       this.form.is_public = res.info.is_public.toString();
+      this.loading = false
     },
      addpb() {
     this.$refs.form.validate(async (valid) => {

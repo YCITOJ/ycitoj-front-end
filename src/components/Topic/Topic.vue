@@ -156,7 +156,6 @@ export default {
         { type: "danger", label: "较难" },
         { type: "warning", label: "困难" },
       ],
-
       loading: true
     };
   },
@@ -305,15 +304,6 @@ export default {
     addDialogVisible() {
       this.$router.push("/Addproblems");
     },
-
-    // 页面加载
-   openFullScreen2() {
-       const loading=this.$loading( {
-           lock: true, text: 'Loading', spinner: 'el-icon-loading', background: 'rgba(0, 0, 0, 0.7)', target: document.querySelector(".topicbox")
-       }
-       );
-   }
-
   },
 };
 </script>

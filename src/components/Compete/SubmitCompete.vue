@@ -180,7 +180,7 @@ export default {
       // 提交按钮是否可以点击
       submittijiaoflag: "true",
 
-      is_admin:false
+      is_admin:false,
     };
   },
   created() {

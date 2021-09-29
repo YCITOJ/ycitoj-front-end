@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <el-container>
       <!-- 头部 -->
       <h2>{{ classfrom.class_name }}</h2>
@@ -78,12 +82,12 @@ export default {
         class_id: ""
       },
       // 用户等级
-      userlevel: false
+      userlevel: false,
+      // 页面加载
+      loading: true,
     };
   },
   created() {
-    this.getClassList();
-    this.getHomeworkList();
     this.getuserlevel();
   },
   methods: {
@@ -96,6 +100,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.classfrom = res.data;
+      this.getHomeworkList();
     },
     // 获取班级作业信息
     async getHomeworkList() {
@@ -106,6 +111,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.homeworkfrom = res.data;
+      this.loading = false
     },
     // 生成邀请码
     async invitation_code() {
@@ -177,6 +183,7 @@ export default {
     // 用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access")<=2) this.userlevel = true;
+      this.getClassList();
     },
   },
 };

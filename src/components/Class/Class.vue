@@ -1,5 +1,9 @@
 <template>
-  <div class="box">
+  <div class="box"
+  v-loading="loading"
+   element-loading-text="拼命加载中"
+   element-loading-spinner="el-icon-loading"
+   element-loading-background="#ffffff">
     <!-- 搜索与添加区域 -->
     <el-row :gutter="20">
       <!-- <el-col :span="8">
@@ -104,12 +108,14 @@ export default {
       del_class_from: {
         class_id: "",
       },
+      // 页面加载
+      loading: true,
     };
   },
   created() {
-    this.getClassList();
     this.getuserlevel();
     this.getPageinfo();
+    this.getClassList();
   },
   methods: {
     // 获取班级列表
@@ -125,6 +131,7 @@ export default {
       }
 
       this.classlist = res.data;
+      this.loading = false
     },
     // 题目个数以及每页班级数量
     async getPageinfo() {
