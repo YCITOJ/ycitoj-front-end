@@ -17,7 +17,7 @@
           ></el-button>
         </el-input>
         <el-table :data="problemlist" style="width: 80%" row-key="id">
-          <el-table-column prop="num" label="题目编号" width="180"> </el-table-column>
+          <el-table-column prop="num" label="题目编号" width="80"> </el-table-column>
           <el-table-column prop="title" label="题目名称" show-overflow-tooltip> </el-table-column>
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
@@ -175,8 +175,12 @@ export default {
 
 <style scoped>
 .box {
-  margin: auto;
-  margin-top: 20px;
+  position: absolute;
   width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 </style>

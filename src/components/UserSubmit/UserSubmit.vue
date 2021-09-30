@@ -1,129 +1,138 @@
 <template>
-  <el-container class="page"
-  v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
-    <el-header>
-      <el-row :gutter="20" class="Search">
-        <el-col>
-          <el-input
-            placeholder="请输入题目编号"
-            v-model="formInline.problem"
-            clearable
-            @clear="getuserid"
+  <div class="box">
+    <el-container
+      class="page"
+      v-loading="loading"
+      element-loading-text="拼命加载中"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="#ffffff"
+    >
+      <el-header>
+        <el-row :gutter="20" class="Search">
+          <el-col>
+            <el-input
+              placeholder="请输入题目编号"
+              v-model="formInline.problem"
+              clearable
+              @clear="getuserid"
+            >
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+                @click="getSearch"
+              ></el-button>
+            </el-input>
+          </el-col>
+        </el-row>
+      </el-header>
+      <el-main>
+        <el-table :data="resultslist" style="width: 100%" border fit>
+          <el-table-column label="编号" width="60" prop="id" align="center">
+            <template slot-scope="scope">
+              <el-link type="primary" @click="dialogcode(scope.row)">{{
+                scope.row.id
+              }}</el-link>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="题目编号"
+            prop="prob_id"
+            align="center"
+            min-width="150"
           >
+            <template slot-scope="scope">
+              <el-link type="info" @click="gotosubmit(scope.row)">{{
+                scope.row.prob_id
+              }}</el-link>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="状态"
+            width="120"
+            prop="verdict"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <el-link
+                type="success"
+                :underline="false"
+                v-if="scope.row.verdict == 'AC'"
+                >{{ scope.row.verdict }}</el-link
+              >
+              <el-link
+                type="danger"
+                :underline="false"
+                v-if="scope.row.verdict == 'WA'"
+                >{{ scope.row.verdict }}</el-link
+              >
+              <el-link
+                type="warning"
+                :underline="false"
+                v-if="(scope.row.verdict != 'AC') & (scope.row.verdict != 'WA')"
+                >{{ scope.row.verdict }}</el-link
+              >
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="时间(ms)"
+            width="150"
+            prop="cpu_time"
+            align="center"
+          >
+          </el-table-column>
+          <el-table-column
+            label="内存(KB)"
+            width="150"
+            prop="memory"
+            align="center"
+          >
+          </el-table-column>
+          <el-table-column label="语言" width="80" prop="lang" align="center">
+          </el-table-column>
+          <el-table-column label="提交时间" prop="create_time" align="center" width="200">
+          </el-table-column>
+        </el-table>
+        <!-- 分页区域 -->
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="queryInfo.pagenum"
+          :page-size="queryInfo.pagesize"
+          layout="total, prev, pager, next, jumper"
+          :total="total"
+        >
+        </el-pagination>
+      </el-main>
+      <el-dialog title="代码" :visible.sync="displayedcode">
+        <el-row :gutter="3">
+          <el-col :span="3"><h2 class="copy_title">源代码</h2></el-col>
+          <el-col :span="2">
             <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="getSearch"
-            ></el-button>
-          </el-input>
-        </el-col>
-      </el-row>
-    </el-header>
-    <el-main>
-      <el-table :data="resultslist" style="width: 100%" border fit>
-        <el-table-column label="编号" width="60" prop="id" align="center">
-          <template slot-scope="scope">
-            <el-link type="primary" @click="dialogcode(scope.row)">{{
-              scope.row.id
-            }}</el-link>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="题目编号"
-          prop="prob_id"
-          align="center"
-          width="150"
-        >
-          <template slot-scope="scope">
-            <el-link type="info" @click="gotosubmit(scope.row)">{{
-              scope.row.prob_id
-            }}</el-link>
-          </template>
-        </el-table-column>
-        <el-table-column label="状态" width="120" prop="verdict" align="center">
-          <template slot-scope="scope">
-            <el-link
-              type="success"
-              :underline="false"
-              v-if="scope.row.verdict == 'AC'"
-              >{{ scope.row.verdict }}</el-link
+              size="mini"
+              :data-clipboard-text="raw_value"
+              class="copy_css"
+              @click="copy"
+              id="copy_text"
+              >复制</el-button
             >
-            <el-link
-              type="danger"
-              :underline="false"
-              v-if="scope.row.verdict == 'WA'"
-              >{{ scope.row.verdict }}</el-link
-            >
-            <el-link
-              type="warning"
-              :underline="false"
-              v-if="(scope.row.verdict != 'AC') & (scope.row.verdict != 'WA')"
-              >{{ scope.row.verdict }}</el-link
-            >
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="时间(ms)"
-          width="150"
-          prop="cpu_time"
-          align="center"
-        >
-        </el-table-column>
-        <el-table-column
-          label="内存(KB)"
-          width="150"
-          prop="memory"
-          align="center"
-        >
-        </el-table-column>
-        <el-table-column label="语言" width="80" prop="lang" align="center">
-        </el-table-column>
-        <el-table-column label="提交时间" prop="create_time" align="center">
-        </el-table-column>
-      </el-table>
-      <!-- 分页区域 -->
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="queryInfo.pagenum"
-        :page-size="queryInfo.pagesize"
-        layout="total, prev, pager, next, jumper"
-        :total="total"
-      >
-      </el-pagination>
-    </el-main>
-    <el-dialog title="代码" :visible.sync="displayedcode">
-      <el-row :gutter="3">
-        <el-col :span="3"><h2 class="copy_title">源代码</h2></el-col>
-        <el-col :span="2">
-          <el-button
-            size="mini"
-            :data-clipboard-text="raw_value"
-            class="copy_css"
-            @click="copy"
-            id="copy_text"
-            >复制</el-button
-          >
-        </el-col>
-      </el-row>
-      <div>
-        <mavon-editor
-          class="md"
-          v-model="value"
-          :subfield="false"
-          :defaultOpen="'preview'"
-          :toolbarsFlag="false"
-          :editable="false"
-          :scrollStyle="true"
-          :ishljs="true"
-        />
-      </div>
-    </el-dialog>
-    <el-backtop></el-backtop>
-  </el-container>
+          </el-col>
+        </el-row>
+        <div>
+          <mavon-editor
+            class="md"
+            v-model="value"
+            :subfield="false"
+            :defaultOpen="'preview'"
+            :toolbarsFlag="false"
+            :editable="false"
+            :scrollStyle="true"
+            :ishljs="true"
+          />
+        </div>
+      </el-dialog>
+      <el-backtop></el-backtop>
+    </el-container>
+  </div>
 </template>
 <script>
 import Clipboard from "clipboard";
@@ -155,7 +164,7 @@ export default {
       value: "",
       // 源代码，用于复制
       raw_value: "",
-      loading: true
+      loading: true,
     };
   },
   created() {
@@ -198,7 +207,7 @@ export default {
       }
       //console.log(res)
       this.resultslist = res.data;
-      this.loading = false
+      this.loading = false;
     },
     // 提交页数以及提交数量
     async getPageinfo() {
@@ -250,33 +259,38 @@ export default {
     },
     // 复制代码
     copy() {
-    var _this=this;
-    var clipboard=new Clipboard('#copy_text');
-    clipboard.on('success', e=> {
-        this.$message.success('复制成功');
+      var _this = this;
+      var clipboard = new Clipboard("#copy_text");
+      clipboard.on("success", (e) => {
+        this.$message.success("复制成功");
         // 释放内存
-        clipboard.destroy()
-    }),
-    clipboard.on('error', e=> {
-        // 不支持复制
-        Message( {
-        message: '该浏览器不支持自动复制', 
-        type: 'warning'
+        clipboard.destroy();
+      }),
+        clipboard.on("error", (e) => {
+          // 不支持复制
+          Message({
+            message: "该浏览器不支持自动复制",
+            type: "warning",
+          });
+          // 释放内存
+          clipboard.destroy();
         });
-        // 释放内存
-        clipboard.destroy()
-    })}
+    },
   },
 };
 </script>
 <style scoped>
+.box {
+  position: absolute;
+  width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 .Search {
   width: 30%;
-}
-.page {
-  padding-top: 20px;
-  padding-left: 15%;
-  padding-right: 15%;
 }
 .copy_css {
   margin-top: 18.5px;

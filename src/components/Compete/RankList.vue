@@ -128,8 +128,13 @@ export default {
 </script>
 <style scoped>
 .box {
+  position: absolute;
   width: 80%;
-  padding-left: 10%;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 .my_rank {
   margin-bottom: 10px;

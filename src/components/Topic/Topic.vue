@@ -42,7 +42,7 @@
         </template>
       </el-table-column>
       <el-table-column label="编号" prop="num" width="100"></el-table-column>
-      <el-table-column label="题目" prop="title"></el-table-column>
+      <el-table-column label="题目" prop="title" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column label="难度" width="100">
         <template slot-scope="scope">
           <!-- v-bind:color="difficulty_color_form[scope.row.difficulty]" -->
@@ -67,7 +67,7 @@
           </el-switch>
         </template>
       </el-table-column> -->
-      <el-table-column label="操作" width="400" v-if="userlevel == 1">
+      <el-table-column label="操作" width="210" v-if="userlevel == 1">
         <template slot-scope="scope">
           <!-- 修改按钮 -->
           <el-button
@@ -153,8 +153,8 @@ export default {
         { type: "", label: "入门" },
         { type: "success", label: "简单" },
         { type: "info", label: "中等" },
-        { type: "danger", label: "较难" },
-        { type: "warning", label: "困难" },
+        { type: "warning", label: "较难" },
+        { type: "danger", label: "困难" },
       ],
       loading: true
     };
@@ -310,9 +310,13 @@ export default {
 
 <style scoped>
 .topicbox {
+  position: absolute;
   width: 80%;
-  margin-top: 20px;
-  margin-left: 160px;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 
 .problemlist {

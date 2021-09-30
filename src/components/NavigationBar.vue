@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="box">
     <el-container>
-      <el-header>
+      <el-header width='100%'>
         <!-- 导航栏 -->
         <el-menu
           class="el-menu-demo"
@@ -77,5 +77,12 @@ export default {
 }
 .el-main {
   height: 100%;
+}
+.el-menu-demo {
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width:760px; */
 }
 </style>

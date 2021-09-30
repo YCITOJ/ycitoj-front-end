@@ -309,8 +309,13 @@ export default {
 </script>
 <style scoped>
 .box {
-  margin-left: 40px;
-  margin-right: 40px;
+  position: absolute;
+  width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 .el-menu-demo1 {
   position: relative;

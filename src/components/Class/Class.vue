@@ -26,18 +26,17 @@
       @row-click="gotoClassHome"
       class="classlist"
     >
-      <el-table-column prop="class_id" label="班级编号" width="180">
+      <el-table-column prop="class_id" label="班级编号" align="center" width="80">
       </el-table-column>
       <el-table-column prop="class_name" label="班级名称" width="180">
       </el-table-column>
       <el-table-column
         prop="intro"
         label="介绍"
-        width="500"
         :show-overflow-tooltip="true"
       >
       </el-table-column>
-      <el-table-column label="操作" v-if="userlevel">
+      <el-table-column label="操作" v-if="userlevel" width="150">
         <template slot-scope="scope">
           <!-- 修改按钮 -->
           <el-button
@@ -212,9 +211,13 @@ export default {
 </script>
 <style scoped>
 .box {
+  position: absolute;
   width: 80%;
-  margin-top: 40px;
-  margin-left: 160px;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 .classlist {
   margin-top: 40px;

@@ -246,9 +246,13 @@ export default {
 </script>
 <style scoped>
 .box {
+  position: absolute;
   width: 80%;
-  margin-left: 10%;
-  margin-top: 40px;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 .box_container {
   padding-left: 10%;

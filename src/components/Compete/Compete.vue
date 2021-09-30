@@ -13,17 +13,17 @@
           >添加比赛</el-button>
       </el-col>
     <el-table :data="tableData" style="width: 100%" @row-click="gotoracehome">
-      <el-table-column prop="title" label="比赛名称"></el-table-column>
-      <el-table-column label="状态" width="200">
+      <el-table-column prop="title" label="比赛名称" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column label="状态" width="100">
         <template slot-scope="scope">
           <el-link type="primary" disabled v-if="scope.row.state==1">未开始</el-link>
           <el-link type="success" disabled v-if="scope.row.state==2">进行中</el-link>
           <el-link type="info" disabled v-if="scope.row.state==3">已结束</el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="start_time" label="开始时间" width="270">
+      <el-table-column prop="start_time" label="开始时间" width="180">
       </el-table-column>
-      <el-table-column prop="end_time" label="结束时间" width="270">
+      <el-table-column prop="end_time" label="结束时间" width="180">
       </el-table-column>
     </el-table>
     <!-- 分页区域 -->
@@ -116,9 +116,13 @@ export default {
 </script>
 <style scoped>
 .box {
-  margin-top: 40px;
-  margin-left: 10%;
-  margin-right: 10%;
+  position: absolute;
+  width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 .addRacebutton {
   float: right;

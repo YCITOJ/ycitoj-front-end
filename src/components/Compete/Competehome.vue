@@ -67,7 +67,7 @@
               </el-table-column>
               <el-table-column label="编号" type="index" :index="indexMethod" width="60" align="center">
                 </el-table-column>
-              <el-table-column prop="title" label="题目">
+              <el-table-column prop="title" label="题目" :show-overflow-tooltip="true">
               </el-table-column>
               <!-- <el-table-column prop="address" label="统计"> </el-table-column> -->
             </el-table>
@@ -279,8 +279,13 @@ export default {
 </script>
 <style scoped>
 .box {
-  padding-left: 200px;
-  padding-top: 20px;
+  position: absolute;
+  width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 .header_title {
   width: 80%;

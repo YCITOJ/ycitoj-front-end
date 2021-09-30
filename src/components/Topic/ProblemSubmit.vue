@@ -215,9 +215,13 @@ export default {
 </script>
 <style scoped>
 .page {
-  padding-top: 20px;
-  padding-left: 15%;
-  padding-right: 15%;
+  position: absolute;
+  width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 .copy_css {
   margin-top: 18.5px;

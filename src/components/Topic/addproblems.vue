@@ -164,9 +164,13 @@ export default {
 </script>
 <style scoped>
 .box {
+  position: absolute;
   width: 80%;
-  padding-left: 10%;
-  padding-top: 20px;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 .text {
   font-size: 14px;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main_box">
     <div class="card1">
       <div class="card1-1 border_style">
         <div class="border_style_header">
@@ -142,6 +142,15 @@ export default {
 </script>
 
 <style scoped>
+.main_box {
+  position: absolute;
+  width: 80%;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
 .card1 {
   float: left;
   margin-top: 30px;

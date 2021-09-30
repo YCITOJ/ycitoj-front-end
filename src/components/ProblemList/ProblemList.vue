@@ -32,7 +32,7 @@
       @row-click="gotohome"
     >
       <el-table-column label="编号" prop="id" width="100"></el-table-column>
-      <el-table-column label="名称" prop="title"></el-table-column>
+      <el-table-column label="名称" prop="title" :show-overflow-tooltip="true"></el-table-column>
     </el-table>
     <!-- 分页区域 -->
     <el-pagination
@@ -136,9 +136,13 @@ export default {
 
 <style scoped>
 .topicbox {
+  position: absolute;
   width: 80%;
-  margin-top: 20px;
-  margin-left: 160px;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 .problemlist {
   margin-top: 20px;

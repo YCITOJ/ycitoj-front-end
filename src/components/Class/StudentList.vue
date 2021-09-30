@@ -89,8 +89,12 @@ export default {
 
 <style scoped>
 .box {
+  position: absolute;
   width: 80%;
-  margin-left: 10%;
-  margin-top: 100px;
+  top: 80px;
+  bottom: 0;
+  left: 10%;
+  right: 0;
+  margin: auto;
 }
 </style>
