@@ -32,6 +32,8 @@
     <!-- 题目列表区域 -->
     <el-table
       :data="problemslist"
+      :row-style="{height:'50px'}"
+      :cell-style="{padding:'0px'}"
       stripe
       class="problemlist"
       @row-click="gotosubmit"
