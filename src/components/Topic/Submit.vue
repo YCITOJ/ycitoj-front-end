@@ -36,6 +36,12 @@
           <div class="submitjshao_memory_limit">
             空间限制： {{ info.memory_limit }}MB
           </div>
+          <div class="submitjshao_ac_1">
+            通过：{{ info.ac_cnt }}
+          </div>
+          <div class="submitjshao_ac_2">
+            提交： {{ info.subm_cnt }}
+          </div>
         </div>
         <mavon-editor
           class="md"
@@ -240,6 +246,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
+      console.log(res)
       this.value = res.data;
       this.info = res.info;
     },
@@ -420,13 +427,9 @@ export default {
   padding-left: 20px;
   line-height: 60px;
 }
-.submitjshao_time_limit {
+.submitjshao_time_limit,.submitjshao_memory_limit,.submitjshao_ac_1,.submitjshao_ac_2 {
   float: left;
-  padding-left: 5%;
-}
-.submitjshao_memory_limit {
-  float: right;
-  padding-right: 20%;
+  margin-left: 8%;
 }
 .md {
   margin-top: 20px;

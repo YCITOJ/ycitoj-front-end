@@ -1,20 +1,35 @@
 <template>
-  <div class="box"
-  v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
+  <div
+    class="box"
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="#ffffff"
+  >
     <el-header></el-header>
     <el-main>
-      <el-table :data="rank_list" center>
+      <button @click="exportExcel">点击导出</button>
+      <el-table :data="rank_list" center id="out-table">
         <el-table-column fixed type="index" label="序号"></el-table-column>
-        <el-table-column fixed prop="class" label="班级" align="center" sortable>
+        <el-table-column
+          fixed
+          prop="class"
+          label="班级"
+          align="center"
+          sortable
+        >
         </el-table-column>
         <el-table-column fixed prop="name" label="姓名" align="center" sortable>
         </el-table-column>
         <el-table-column fixed prop="sno" label="学号" align="center" sortable>
         </el-table-column>
-        <el-table-column fixed prop="score" label="得分" align="center" sortable>
+        <el-table-column
+          fixed
+          prop="score"
+          label="得分"
+          align="center"
+          sortable
+        >
         </el-table-column>
         <el-table-column
           v-for="(item, index) in headerlist"
@@ -27,8 +42,9 @@
             <p
               class="submit_frequency"
               style="margin: 0; color: #67c23a"
-              v-if="scope.row.prob_list[index].ac == true">
-            +
+              v-if="scope.row.prob_list[index].ac == true"
+            >
+              +
             </p>
           </template>
         </el-table-column>
@@ -37,6 +53,10 @@
   </div>
 </template>
 <script>
+// 引入导出Excel表格依赖
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
+
 export default {
   data() {
     return {
@@ -58,19 +78,46 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
+      console.log(res)
       this.rank_list = res.rank_list;
-      if (res.rank_list.length != 0) this.headerlist = res.rank_list[0].prob_list;
-
-      this.loading = false
+      if (res.rank_list.length != 0)
+        this.headerlist = res.rank_list[0].prob_list;
+      this.loading = false;
     },
 
     formatTime(row, column) {
       const penalty = row[column.property];
-      if (penalty% 60 < 10) {
+      if (penalty % 60 < 10) {
         return parseInt(penalty / 60) + ":0" + (penalty % 60);
       } else {
         return parseInt(penalty / 60) + ":" + (penalty % 60);
       }
+    },
+
+    //定义导出Excel表格事件
+    exportExcel() {
+      /* 从表生成工作簿对象 */
+      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
+      /* 获取二进制字符串作为输出 */
+      var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array",
+      });
+      try {
+        FileSaver.saveAs(
+          //Blob 对象表示一个不可变、原始数据的类文件对象。
+          //Blob 表示的不一定是JavaScript原生格式的数据。
+          //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
+          //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
+          new Blob([wbout], { type: "application/octet-stream" }),
+          //设置导出文件名称
+          "作业成绩表.xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
+      }
+      return wbout;
     },
   },
 };
@@ -79,9 +126,9 @@ export default {
 .box {
   position: absolute;
   width: 80%;
-  top: 80px;
+  top: 40px;
   bottom: 0;
-  left: 10%;
+  left: 0;
   right: 0;
   margin: auto;
 }

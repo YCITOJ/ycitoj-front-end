@@ -59,6 +59,7 @@ export default {
     },
     // 处理选中
     handleSelect(key,keyPath){
+      window.sessionStorage.setItem("proList_activeIndex",'problemlisthomeinfo');
       window.sessionStorage.setItem("navigation_bar_activeIndex", key);
       this.activeIndex = key
       window.localStorage.setItem("navigation_bar_activeIndex",key);
