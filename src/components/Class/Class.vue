@@ -136,6 +136,7 @@ export default {
     async getPageinfo() {
       const { data: res } = await this.$http.get("class/page_info");
       if (res.meta.status !== 200) {
+        this.$router.push("/login");
         return this.$message.error("请登录！");
       }
       this.total = res.count;

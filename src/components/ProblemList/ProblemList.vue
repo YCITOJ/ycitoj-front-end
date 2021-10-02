@@ -91,6 +91,7 @@ export default {
     async getPageinfo() {
       const { data: res } = await this.$http.get("prob_collection/count");
       if (res.meta.status !== 200) {
+        this.$router.push("/login");
         return this.$message.error(res.meta.message);
       }
       this.total = res.count;

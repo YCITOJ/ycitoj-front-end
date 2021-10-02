@@ -215,6 +215,7 @@ export default {
         "submit/submission_info?condition=" + this.condition_group2.condition
       );
       if (res.meta.status === 403) {
+        this.$router.push("/login");
         return this.$message.error("请先登录！");
       }
       if (res.meta.status !== 200) {
