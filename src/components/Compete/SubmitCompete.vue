@@ -15,7 +15,6 @@
           @click="gotohome"
         ></el-menu-item>
         <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
-        <el-menu-item index="3" v-if="is_admin" @click="editProblem">编辑</el-menu-item>
       </el-menu>
     </el-header>
     <div class="heng"></div>
@@ -70,10 +69,20 @@
               ></codemirror>
             </el-main>
             <el-footer class="submittijiao">
-              <el-button type="primary" @click="submitcode()" v-if="submittijiaoflag=='true'" class="submittijiao_button">提交代码</el-button>
-              <el-card class="sumitcard">
-                <div>{{ ans }}</div>
-              </el-card>
+              <!-- <div class="submittijiao_ans">{{ ans }}</div> -->
+              <el-button
+                type="primary"
+                @click="submitcode()"
+                v-if="submittijiaoflag == 'true'"
+                class="submittijiao_button"
+                >提交代码</el-button
+              >
+              <el-button
+                type="primary"
+                icon="el-icon-loading"
+                v-if="submittijiaoflag == 'false'"
+                class="submittijiao_button"
+              ></el-button>
             </el-footer>
           </el-container>
         </div>
@@ -404,4 +413,10 @@ export default {
 .submittijiao_button {
   float: right;
 }
+
+.submittijiao_button {
+  float: left;
+  width: 20%;
+}
 </style>
+2FFFF911C348799

@@ -16,7 +16,7 @@
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="getproblemList"
+            @click="getSearch"
           ></el-button>
         </el-input>
       </el-col>
@@ -31,11 +31,12 @@
     </el-row>
     <!-- 题目列表区域 -->
     <el-table
-      :data="problemslist"
-      :row-style="{height:'50px'}"
+      :row-style="{height:'40px'}"
       :cell-style="{padding:'0px'}"
+      :data="problemslist"
       stripe
       class="problemlist"
+      
       @row-click="gotosubmit"
     >
       <el-table-column label="提交状态" prop="ac" width="100" align="center">
@@ -56,9 +57,9 @@
           </el-tag>
         </template>
       </el-table-column>
-      <!--  <el-table-column label="通过" prop="pass" width="70"></el-table-column>
-      <el-table-column label="提交" prop="submit" width="70"></el-table-column>
-      <el-table-column label="通过率" prop="role_name" width="70"></el-table-column> -->
+      <el-table-column label="通过" prop="ac_cnt" width="70" align="center"></el-table-column>
+      <el-table-column label="提交" prop="subm_cnt" width="70" align="center"></el-table-column>
+      <!-- <el-table-column label="通过率" v-model="AC_pr" width="70" align="center"></el-table-column> -->
       <!-- <el-table-column label="状态" width="100" v-if="userlevel == 1">
         <template slot-scope="scope">
           <el-switch
@@ -158,7 +159,7 @@ export default {
         { type: "warning", label: "较难" },
         { type: "danger", label: "困难" },
       ],
-      loading: true
+      loading: true,
     };
   },
   created() {
@@ -175,6 +176,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
+      //console.log(res)
       this.problemslist = res.data;
       this.loading = false
     },
@@ -204,13 +206,14 @@ export default {
       this.getPageinfo();
     },
     // 搜索题目
-    async getproblemList() {
+    async getSearch() {
       const { data: res } = await this.$http.get(
         "problems/find_problems/?title_or_num=" + this.queryInfo.query
       );
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
+      
       this.problemslist = res.data;
       this.total = this.problemslist.length
     },

@@ -70,6 +70,8 @@
               <el-table-column prop="title" label="题目" :show-overflow-tooltip="true">
               </el-table-column>
               <!-- <el-table-column prop="address" label="统计"> </el-table-column> -->
+              <el-table-column label="通过" prop="ac_cnt" width="70" align="center"></el-table-column>
+             <el-table-column label="提交" prop="subm_cnt" width="70" align="center"></el-table-column>
             </el-table>
           </div>
         </el-card>
@@ -100,7 +102,7 @@ export default {
       rank_start_time: "",
       rank_end_time: "",
       down_time: "",
-      percentage_count: "0",
+      percentage_count: 0,
       // 页面加载
       loading: true,
     };
@@ -126,6 +128,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
+      console.log(res)
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
@@ -237,7 +240,7 @@ export default {
       return new Date();
     },
     format(percentage) {
-      return percentage === 0 ? "已结束" : `${this.down_time}`;
+      return percentage == 0 ? "已结束" : `${this.down_time}`;
     },
     timeDown() {
       const startTime = this.convertDateFromString(this.rank_start_time);

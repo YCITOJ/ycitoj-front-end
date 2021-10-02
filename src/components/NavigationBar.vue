@@ -4,6 +4,7 @@
       <el-header width='100%'>
         <!-- 导航栏 -->
         <el-menu
+         :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
           @select="handleSelect"
@@ -45,7 +46,7 @@ export default {
   },
   created() {
     this.pdlogin();
-    this.get_activeIndex()
+    this.activeIndex = window.sessionStorage.getItem("navigation_bar_activeIndex");
   },
   methods: {
     pdlogin() {
@@ -56,12 +57,10 @@ export default {
       }
       this.loginname = "in";
     },
-    // 获取图标
-    get_activeIndex() {
-      this.activeIndex = window.localStorage.getItem("navigation_bar_activeIndex");
-    },
     // 处理选中
     handleSelect(key,keyPath){
+      window.sessionStorage.setItem("navigation_bar_activeIndex", key);
+      this.activeIndex = key
       window.localStorage.setItem("navigation_bar_activeIndex",key);
     } 
   },

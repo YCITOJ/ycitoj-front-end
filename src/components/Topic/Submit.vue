@@ -285,7 +285,7 @@ export default {
         this.submitstring
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("提交题目失败,请登录！");
+        return this.$message.error(res.meta.message);
       }
       this.submission_id = res.data;
       this.submittijiaoflag = "false";
