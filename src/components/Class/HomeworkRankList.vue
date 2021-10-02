@@ -78,7 +78,6 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
-      console.log(res)
       this.rank_list = res.rank_list;
       if (res.rank_list.length != 0)
         this.headerlist = res.rank_list[0].prob_list;
