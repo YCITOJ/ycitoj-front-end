@@ -104,7 +104,7 @@
                   <template slot="title">{{ displaylanguage }}</template>
                   <el-menu-item index="cpp">cpp</el-menu-item>
                   <el-menu-item index="python">python</el-menu-item>
-                  <el-menu-item index="node">node</el-menu-item>
+                  <el-menu-item index="merdog">merodg</el-menu-item>
                 </el-submenu>
               </el-menu>
             </el-header>
@@ -154,40 +154,10 @@
 // 引入codemirror
 import { codemirror } from "vue-codemirror";
 import "codemirror/lib/codemirror.css";
-// require active-line.js
-import "codemirror/addon/selection/active-line.js";
-// styleSelectedText
-import "codemirror/addon/selection/mark-selection.js";
-// hint
-import "codemirror/addon/hint/show-hint.js";
-import "codemirror/addon/hint/show-hint.css";
-import "codemirror/addon/hint/javascript-hint.js";
-// highlightSelectionMatches
-import "codemirror/addon/scroll/annotatescrollbar.js";
-import "codemirror/addon/search/matchesonscrollbar.js";
-import "codemirror/addon/search/match-highlighter.js";
-// keyMap
 import "codemirror/mode/clike/clike.js";
-import "codemirror/mode/sql/sql.js";
-import "codemirror/addon/edit/matchbrackets.js";
-import "codemirror/addon/comment/comment.js";
-import "codemirror/addon/dialog/dialog.js";
-import "codemirror/addon/dialog/dialog.css";
-import "codemirror/addon/search/searchcursor.js";
-import "codemirror/addon/search/search.js";
-import "codemirror/keymap/sublime.js";
-// foldGutter
-import "codemirror/addon/fold/foldgutter.css";
-import "codemirror/addon/fold/brace-fold.js";
-import "codemirror/addon/fold/comment-fold.js";
-import "codemirror/addon/fold/foldcode.js";
-import "codemirror/addon/fold/foldgutter.js";
-import "codemirror/addon/fold/indent-fold.js";
-import "codemirror/addon/fold/markdown-fold.js";
-import "codemirror/addon/fold/xml-fold.js";
-// 编辑的主题文件
-import "codemirror/theme/monokai.css";
-import "codemirror/theme/base16-light.css";
+// theme css
+import "codemirror/theme/base16-dark.css";
+import "codemirror/theme/eclipse.css";
 export default {
   components: {
     codemirror,
@@ -219,29 +189,17 @@ export default {
       uploadnum: "",
       // 获取样例点
       file_form: [],
-
-      // 编辑器的设置
       cmOption: {
-        tabSize: 4, // tab
+        // codemirror options
+        tabSize: 4,
         styleActiveLine: true, // 高亮选中行
-        lineNumbers: true, // 显示行号
-        //styleSelectedText: true,
-        line: true,
         foldGutter: true, // 块槽
         gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-        // highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true }, // 可以启用该选项来突出显示当前选中的内容的所有实例
-        mode: "text/x-c++",
-        // hint.js options
-        // hintOptions: {
-        //   // 当匹配只有一项的时候是否自动补全
-        //   completeSingle: true,
-        // },
-        // // 快捷键 可提供三种模式 sublime、emacs、vim
-        // keyMap: "sublime",
         matchBrackets: true,
-        // showCursorWhenSelecting: true,
-        theme: "eclipse", // 主题
-        // extraKeys: { Ctrl: "autocomplete" }, // 可以用于为编辑器指定额外的键绑定，以及keyMap定义的键绑定
+        mode: "text/x-csrc",
+        theme: "eclipse",
+        lineNumbers: true,
+        line: true,
       },
       // 显示选择了什么语言
       displaylanguage: "cpp",
@@ -273,7 +231,7 @@ export default {
       //console.log(res);
       this.value = res.data;
       this.info = res.info;
-      console.log(this.info.title.length)
+      console.log(this.info.title.length);
     },
     // 返回主页
     gotohome() {
