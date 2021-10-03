@@ -28,7 +28,7 @@
     <div class="heng"></div>
     <el-container>
       <el-aside width="800px" class="el-aside1">
-        <h3>{{ info.num }} {{ info.title }}</h3>
+        <!-- <h3>{{ info.num }} {{ info.title }}</h3>
         <div class="submitjshao">
           <div class="submitjshao_time_limit">
             时间限制： {{ info.time_limit }}ms
@@ -41,6 +41,39 @@
           </div>
           <div class="submitjshao_ac_2">
             提交： {{ info.subm_cnt }}
+          </div>
+        </div> -->
+        <div id="submit_problem_header">
+          <div class="top_header">
+            <h2>#{{ info.num }}. {{ info.title }}</h2>
+          </div>
+          <div class="left_header">
+            <div class="button_div">
+              <el-button type="danger" icon="el-icon-timer" size="mini"
+                >{{ info.time_limit }}ms</el-button
+              >
+              <el-button type="primary" icon="el-icon-cpu" size="mini"
+                >{{ info.memory_limit }}MB</el-button
+              >
+            </div>
+          </div>
+          <div class="right_header">
+            <!-- 通过区域 -->
+            <div class="first">
+              <!-- 通过区域数量 -->
+              <div>
+                <p class="count">{{ info.ac_cnt }}</p>
+                <p class="name">通过</p>
+              </div>
+            </div>
+            <!-- 提交区域 -->
+            <div class="secend">
+              <!-- 提交区域数量 -->
+              <div>
+                <p class="count">{{ info.subm_cnt }}</p>
+                <p class="name">提交</p>
+              </div>
+            </div>
           </div>
         </div>
         <mavon-editor
@@ -63,16 +96,14 @@
                 class="el-menu-demo"
                 mode="horizontal"
                 @select="handleSelect"
-                background-color="#545c64"
-                text-color="#fff"
+                background-color="#e9e9e9"
+                text-color="#000"
                 active-text-color="#ffd04b"
               >
                 <el-submenu index="1">
                   <template slot="title">{{ displaylanguage }}</template>
                   <el-menu-item index="cpp">cpp</el-menu-item>
-                  <el-menu-item index="rust">rust</el-menu-item>
                   <el-menu-item index="python">python</el-menu-item>
-                  <el-menu-item index="merdog">merdog</el-menu-item>
                   <el-menu-item index="node">node</el-menu-item>
                 </el-submenu>
               </el-menu>
@@ -122,7 +153,6 @@
 <script>
 // 引入codemirror
 import { codemirror } from "vue-codemirror";
-import "codemirror/mode/go/go";
 import "codemirror/lib/codemirror.css";
 // require active-line.js
 import "codemirror/addon/selection/active-line.js";
@@ -130,7 +160,6 @@ import "codemirror/addon/selection/active-line.js";
 import "codemirror/addon/selection/mark-selection.js";
 // hint
 import "codemirror/addon/hint/show-hint.js";
-import "codemirror/addon/hint/sql-hint.js";
 import "codemirror/addon/hint/show-hint.css";
 import "codemirror/addon/hint/javascript-hint.js";
 // highlightSelectionMatches
@@ -193,30 +222,26 @@ export default {
 
       // 编辑器的设置
       cmOption: {
-        tabSize: 2, // tab
+        tabSize: 4, // tab
         styleActiveLine: true, // 高亮选中行
         lineNumbers: true, // 显示行号
-        styleSelectedText: true,
+        //styleSelectedText: true,
         line: true,
         foldGutter: true, // 块槽
         gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-        highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true }, // 可以启用该选项来突出显示当前选中的内容的所有实例
-        mode: {
-          // 模式, 可查看 codemirror/mode 中的所有模式
-          name: "go",
-          json: true,
-        },
+        // highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true }, // 可以启用该选项来突出显示当前选中的内容的所有实例
+        mode: "text/x-c++",
         // hint.js options
-        hintOptions: {
-          // 当匹配只有一项的时候是否自动补全
-          completeSingle: false,
-        },
-        // 快捷键 可提供三种模式 sublime、emacs、vim
-        keyMap: "sublime",
+        // hintOptions: {
+        //   // 当匹配只有一项的时候是否自动补全
+        //   completeSingle: true,
+        // },
+        // // 快捷键 可提供三种模式 sublime、emacs、vim
+        // keyMap: "sublime",
         matchBrackets: true,
-        showCursorWhenSelecting: true,
-        theme: "monokai", // 主题
-        extraKeys: { Ctrl: "autocomplete" }, // 可以用于为编辑器指定额外的键绑定，以及keyMap定义的键绑定
+        // showCursorWhenSelecting: true,
+        theme: "eclipse", // 主题
+        // extraKeys: { Ctrl: "autocomplete" }, // 可以用于为编辑器指定额外的键绑定，以及keyMap定义的键绑定
       },
       // 显示选择了什么语言
       displaylanguage: "cpp",
@@ -226,7 +251,6 @@ export default {
       submittijiaoflag: "true",
 
       is_admin: false,
-
     };
   },
   created() {
@@ -246,9 +270,10 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      console.log(res)
+      //console.log(res);
       this.value = res.data;
       this.info = res.info;
+      console.log(this.info.title.length)
     },
     // 返回主页
     gotohome() {
@@ -427,9 +452,50 @@ export default {
   padding-left: 20px;
   line-height: 60px;
 }
-.submitjshao_time_limit,.submitjshao_memory_limit,.submitjshao_ac_1,.submitjshao_ac_2 {
+.submitjshao_time_limit,
+.submitjshao_memory_limit,
+.submitjshao_ac_1,
+.submitjshao_ac_2 {
   float: left;
   margin-left: 8%;
+}
+#submit_problem_header {
+  width: 100%;
+}
+#submit_problem_header .left_header {
+  float: left;
+  width: 40%;
+  height: 90px;
+}
+#submit_problem_header .top_header {
+  margin-left: 20px;
+}
+#submit_problem_header .left_header .button_div {
+  margin-left: 20px;
+}
+#submit_problem_header .left_header .button_div button {
+  padding: 6px 8px;
+}
+#submit_problem_header .right_header {
+  float: right;
+  width: 60%;
+  height: 90px;
+}
+#submit_problem_header .right_header p {
+  line-height: 0;
+  text-align: center;
+  margin-top: 5px;
+}
+#submit_problem_header .right_header .count {
+  font-size: 40px;
+}
+#submit_problem_header .right_header .first {
+  float: left;
+  width: 50%;
+}
+#submit_problem_header .right_header .secend {
+  float: right;
+  width: 50%;
 }
 .md {
   margin-top: 20px;

@@ -31,8 +31,6 @@
     </el-row>
     <!-- 题目列表区域 -->
     <el-table
-      :row-style="{height:'40px'}"
-      :cell-style="{padding:'0px'}"
       :data="problemslist"
       stripe
       class="problemlist"

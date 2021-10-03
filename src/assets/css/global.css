@@ -17,3 +17,9 @@ submittijiao {
   padding-right: 0;
   padding-top: 0;
 }
+
+/* 引入字体*/
+@font-face {
+  font-family: FiraCode;
+  src: url(../font/FiraCode-Regular-1.ttf);
+}

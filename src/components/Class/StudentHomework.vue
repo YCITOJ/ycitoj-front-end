@@ -1,12 +1,14 @@
 <template>
-  <div class="box"
-  v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
+  <div
+    class="box"
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="#ffffff"
+  >
     <el-container>
       <!-- 头部 -->
-      <h2>{{title}}</h2>
+      <h2>{{ title }}</h2>
       <el-header class="header_title" height="550px">
         <div>
           <mavon-editor
@@ -22,15 +24,24 @@
         </div>
       </el-header>
       <el-main class="mainthins">
-        <!-- 比赛内容 -->
+        <!-- 作业内容 -->
         <el-card class="main_card">
           <div>
-            <el-button type="primary" @click="goto_homework_rank_list">排行榜</el-button>
-            <el-table :data="tableData" border style="width: 100%" @row-click="gotoSubmit">
+            <el-button type="primary" @click="goto_homework_rank_list"
+              >排行榜</el-button
+            >
+            <el-table
+              :data="tableData"
+              border
+              style="width: 100%"
+              @row-click="gotoSubmit"
+            >
               <el-table-column label="状态" width="80" align="center">
                 <template slot-scope="scope">
-                   <i class="el-icon-check" v-if="scope.row.ac"></i>
+                  <i class="el-icon-check" v-if="scope.row.ac"></i>
                 </template>
+              </el-table-column>
+              <el-table-column label="编号" prop="id" width="100" align="center">
               </el-table-column>
               <el-table-column prop="name" label="题目" width="800">
               </el-table-column>
@@ -50,8 +61,8 @@ export default {
       value: "",
       title: "",
       raceid: {
-      del_contest_id: "",
-      id: ""
+        del_contest_id: "",
+        id: "",
       },
       // 检查用户报名情况参数
       checkUserRaceFlang: "",
@@ -72,22 +83,26 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
+      console.log(res)
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
-
-      this.loading = false
+      // 加载特效
+      this.loading = false;
     },
     // 进入比赛排行榜
     goto_homework_rank_list() {
-      this.$router.push({path: "/homework_rank_list",query: { id: this.$route.query.id }});
+      this.$router.push({
+        path: "/homework_rank_list",
+        query: { id: this.$route.query.id },
+      });
     },
     gotoSubmit(row) {
       this.$router.push({ path: "/submit", query: { id: row.id } });
-    }, 
+    },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("access")<=1) this.userlevel = 1;
+      if (window.localStorage.getItem("access") <= 1) this.userlevel = 1;
     },
   },
 };

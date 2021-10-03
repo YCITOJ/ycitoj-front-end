@@ -20,10 +20,38 @@
     <div class="heng"></div>
     <el-container>
       <el-aside width="800px" class="el-aside1">
-        <h3>{{info.num}} {{info.title}}</h3>
-        <div class="submitjshao">
-          <div class="submitjshao_time_limit">时间限制： {{info.time_limit}}ms </div>
-          <div class="submitjshao_memory_limit">空间限制： {{info.memory_limit}}MB </div>
+        <div id="submit_problem_header">
+          <div class="top_header">
+            <h2>#{{ info.num }}. {{ info.title }}</h2>
+          </div>
+          <div class="left_header">
+            <div class="button_div">
+              <el-button type="danger" icon="el-icon-timer" size="mini"
+                >{{ info.time_limit }}ms</el-button
+              >
+              <el-button type="primary" icon="el-icon-cpu" size="mini"
+                >{{ info.memory_limit }}MB</el-button
+              >
+            </div>
+          </div>
+          <div class="right_header">
+            <!-- 通过区域 -->
+            <div class="first">
+              <!-- 通过区域数量 -->
+              <div>
+                <p class="count">{{ info.ac_cnt }}</p>
+                <p class="name">通过</p>
+              </div>
+            </div>
+            <!-- 提交区域 -->
+            <div class="secend">
+              <!-- 提交区域数量 -->
+              <div>
+                <p class="count">{{ info.subm_cnt }}</p>
+                <p class="name">提交</p>
+              </div>
+            </div>
+          </div>
         </div>
         <mavon-editor
           class="md"
@@ -45,16 +73,14 @@
                 class="el-menu-demo"
                 mode="horizontal"
                 @select="handleSelect"
-                background-color="#545c64"
+                background-color="#e9e9e9"
                 text-color="#fff"
                 active-text-color="#ffd04b"
               >
                 <el-submenu index="1">
                   <template slot="title">{{ displaylanguage }}</template>
                   <el-menu-item index="cpp">cpp</el-menu-item>
-                  <el-menu-item index="rust">rust</el-menu-item>
                   <el-menu-item index="python">python</el-menu-item>
-                  <el-menu-item index="merdog">merdog</el-menu-item>
                   <el-menu-item index="node">node</el-menu-item>
                 </el-submenu>
               </el-menu>
@@ -179,7 +205,7 @@ export default {
         keyMap: "sublime",
         matchBrackets: true,
         showCursorWhenSelecting: true,
-        theme: "monokai", // 主题
+        theme: "eclipse", // 主题
         extraKeys: { Ctrl: "autocomplete" }, // 可以用于为编辑器指定额外的键绑定，以及keyMap定义的键绑定
       },
       // 显示选择了什么语言
@@ -370,6 +396,44 @@ export default {
   float: right;
   padding-right: 20%;
 }
+#submit_problem_header {
+  width: 100%;
+}
+#submit_problem_header .left_header {
+  float: left;
+  width: 40%;
+  height: 90px;
+}
+#submit_problem_header .top_header {
+  margin-left: 20px;
+}
+#submit_problem_header .left_header .button_div {
+  margin-left: 20px;
+}
+#submit_problem_header .left_header .button_div button {
+  padding: 6px 8px;
+}
+#submit_problem_header .right_header {
+  float: right;
+  width: 60%;
+  height: 90px;
+}
+#submit_problem_header .right_header p {
+  line-height: 0;
+  text-align: center;
+  margin-top: 5px;
+}
+#submit_problem_header .right_header .count {
+  font-size: 40px;
+}
+#submit_problem_header .right_header .first {
+  float: left;
+  width: 50%;
+}
+#submit_problem_header .right_header .secend {
+  float: right;
+  width: 50%;
+}
 .md {
   margin-top: 20px;
 }
@@ -419,4 +483,3 @@ export default {
   width: 20%;
 }
 </style>
-2FFFF911C348799
