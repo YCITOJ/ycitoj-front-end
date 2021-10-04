@@ -74,7 +74,7 @@
                 mode="horizontal"
                 @select="handleSelect"
                 background-color="#e9e9e9"
-                text-color="#fff"
+                text-color="#000"
                 active-text-color="#ffd04b"
               >
                 <el-submenu index="1">

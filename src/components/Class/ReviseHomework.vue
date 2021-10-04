@@ -67,7 +67,7 @@
         <mavon-editor v-model="form.info" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="putRace">立即创建</el-button>
+        <el-button type="primary" @click="putRace">立即修改</el-button>
       </el-form-item>
     </el-form>
   </div>
