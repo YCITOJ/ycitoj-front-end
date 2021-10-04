@@ -157,7 +157,7 @@ export default {
         foldGutter: true, // 块槽
         gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
         matchBrackets: true,
-        mode: "text/x-csrc",
+        mode: "text/c++src",
         theme: "eclipse",
         lineNumbers: true,
         line: true,
