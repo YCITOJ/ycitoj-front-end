@@ -55,8 +55,17 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="通过" prop="ac_cnt" width="70" align="center"></el-table-column>
-      <el-table-column label="提交" prop="subm_cnt" width="70" align="center"></el-table-column>
+      <el-table-column label="通过率" width="120" align="center">
+        <template slot-scope="scope" align="center">
+           <el-tooltip class="item" effect="dark" content="scope.row.subm_cnt" placement="top">
+             <div slot="content">
+              <span>{{scope.row.subm_cnt}}</span>
+              </div>
+          <el-progress :percentage="scope.row.ac_cnt" :show-text="false"></el-progress>
+           </el-tooltip>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column label="提交" prop="subm_cnt" width="70" align="center"></el-table-column> -->
       <!-- <el-table-column label="通过率" v-model="AC_pr" width="70" align="center"></el-table-column> -->
       <!-- <el-table-column label="状态" width="100" v-if="userlevel == 1">
         <template slot-scope="scope">
@@ -176,6 +185,14 @@ export default {
       }
       //console.log(res)
       this.problemslist = res.data;
+      for(var i=0;i<res.data.length;i++)
+      {
+        var data1,data2;
+        data1=res.data[i].ac_cnt;
+        data2=res.data[i].subm_cnt;
+        this.problemslist[i].ac_cnt = data1 <= 0 ? "0" : (Math.round(data1 / data2 * 10000) / 100.00);
+        this.problemslist[i].subm_cnt = data1+"/"+data2;
+      }
       this.loading = false
     },
     // 题目个数以及每页题目数量

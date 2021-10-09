@@ -43,9 +43,9 @@
               </el-table-column>
               <el-table-column label="编号" prop="id" width="100" align="center">
               </el-table-column>
-              <el-table-column prop="name" label="题目" width="800">
+              <el-table-column prop="name" label="题目">
               </el-table-column>
-              <el-table-column prop="score" label="分值"> </el-table-column>
+              <el-table-column prop="score" label="分值" width="50" align="center"> </el-table-column>
             </el-table>
           </div>
         </el-card>
