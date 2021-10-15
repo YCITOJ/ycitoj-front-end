@@ -22,7 +22,7 @@
       <el-aside width="800px" class="el-aside1">
         <div id="submit_problem_header">
           <div class="top_header">
-            <h2>#{{ info.num }}. {{ info.title }}</h2>
+            <h2>{{ num_A }}. {{ info.title }}</h2>
           </div>
           <div class="left_header">
             <div class="button_div">
@@ -136,6 +136,8 @@ export default {
       value: "",
       // 题目编号
       num: "",
+      // 题目编号转字母
+      num_A: "",
       // 题目名称
       title: "",
       ans: "保存提交后，这里会显示代码提交结果",
@@ -187,6 +189,7 @@ export default {
     // 获取题目
     async readproblem() {
       this.num = this.$route.query.id;
+      this.num_A = String.fromCharCode(65+Number(this.$route.query.index));
       this.title = this.$route.query.title;
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num

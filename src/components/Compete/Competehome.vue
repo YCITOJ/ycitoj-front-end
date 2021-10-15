@@ -59,6 +59,7 @@
               border
               style="width: 100%"
               @row-click="gotoSubmit"
+              :cell-class-name="tableCellClassName"
             >
               <el-table-column label="状态" width="60">
                 <template slot-scope="scope">
@@ -105,6 +106,8 @@ export default {
       percentage_count: 0,
       // 页面加载
       loading: true,
+      // 题目编号
+      pro_id: "",
     };
   },
   created() {
@@ -128,7 +131,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
-      console.log(res)
+      //console.log(res)
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
@@ -180,7 +183,7 @@ export default {
         query: { id: this.$route.query.id },
       });
     },
-    // 修改题目
+    // 修改比赛
     gotoReviseRace() {
       this.$router.push({
         path: "/revisecompete",
@@ -211,10 +214,14 @@ export default {
       this.$message.success("删除比赛成功！");
       this.$router.push({ path: "/compete" });
     },
+    tableCellClassName({row,rowIndex}){
+      //利用单元格的 className 的回调方法，给行列索引赋值
+      row.index=rowIndex
+    },
     gotoSubmit(row) {
       this.$router.push({
         path: "/submitcompete",
-        query: { id: row.num, competeid: this.$route.query.id },
+        query: { id: row.num, competeid: this.$route.query.id, index: row.index },
       });
     },
     // 获取用户等级

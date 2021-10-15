@@ -215,7 +215,6 @@ export default {
     this.readproblem();
     this.check_access();
   },
-  mounted: {},
   methods: {
     check_access() {
       if (window.localStorage.getItem("access") <= 1) this.is_admin = true;
@@ -231,11 +230,11 @@ export default {
       //console.log(res);
       this.value = res.data;
       this.info = res.info;
-      console.log(this.info.title.length);
+      //console.log(this.info.title.length);
     },
     // 返回主页
     gotohome() {
-      this.$router.push("/topic");
+      this.$router.go(-1);
     },
     // 进去提交页面
     gotoproblemSubmit() {
