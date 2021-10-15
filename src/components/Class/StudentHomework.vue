@@ -83,7 +83,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
-      console.log(res)
+      //console.log(res)
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;

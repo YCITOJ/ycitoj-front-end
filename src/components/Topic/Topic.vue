@@ -8,7 +8,7 @@
     <el-row :gutter="20">
       <el-col :span="8">
         <el-input
-          placeholder="请输入题目编号或内容"
+          placeholder="请输入题目编号或名称"
           v-model="queryInfo.query"
           clearable
           @clear="getPageinfo"
@@ -190,7 +190,7 @@ export default {
         var data1,data2;
         data1=res.data[i].ac_cnt;
         data2=res.data[i].subm_cnt;
-        this.problemslist[i].ac_cnt = data1 <= 0 ? "0" : (Math.round(data1 / data2 * 10000) / 100.00);
+        this.problemslist[i].ac_cnt = data1 <= 0 ? 0 : (Math.round(data1 / data2 * 10000) / 100.00);
         this.problemslist[i].subm_cnt = data1+"/"+data2;
       }
       this.loading = false
