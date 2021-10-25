@@ -259,10 +259,8 @@ export default {
     // 进入移动端或pc端
     gotosubmit(row) {
       if (this._isMobile()) {
-        alert("手机端");
         this.$router.push({ path: "/mobliesubmit", query: { id: row.num } });
       } else {
-        alert("pc端");
         this.$router.push({ path: "/submit", query: { id: row.num } });
       }
     },
@@ -368,7 +366,6 @@ export default {
   right: 0;
   margin: auto;
 }
-
 .problemlist {
   margin-top: 20px;
 }

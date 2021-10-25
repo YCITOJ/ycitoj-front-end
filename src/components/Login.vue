@@ -133,7 +133,7 @@ export default {
           window.localStorage.setItem("username", res.data.username);
           window.localStorage.setItem("access", res.data.access);
           //路由地址是 /home
-          this.$router.push("/home");
+          this.$router.push("/topic");
         });
       } else if (this.model === "register") {
         this.$refs.loginFormRef.validate(async (valid) => {

@@ -10,11 +10,9 @@ export default {
   name: 'app',
   /* mounted() {
     if (this._isMobile()) {
-      alert("手机端");
-      this.$router.replace('/MoblieHome');
+      this.$router.replace('/mblienavigationBar');
     } else {
-      alert("pc端");
-      this.$router.replace('/home');
+      this.$router.replace('/navigtionbar');
     }
   },
   methods: {
