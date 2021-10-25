@@ -1,9 +1,11 @@
 <template>
-  <div class="topicbox"
-   v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
+  <div
+    class="topicbox"
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="#ffffff"
+  >
     <!-- 搜索与添加区域 -->
     <el-row :gutter="20">
       <el-col :span="8">
@@ -34,7 +36,6 @@
       :data="problemslist"
       stripe
       class="problemlist"
-      
       @row-click="gotosubmit"
     >
       <el-table-column label="提交状态" prop="ac" width="100" align="center">
@@ -43,7 +44,11 @@
         </template>
       </el-table-column>
       <el-table-column label="编号" prop="num" width="100"></el-table-column>
-      <el-table-column label="题目" prop="title" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column
+        label="题目"
+        prop="title"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
       <el-table-column label="难度" width="100">
         <template slot-scope="scope">
           <!-- v-bind:color="difficulty_color_form[scope.row.difficulty]" -->
@@ -57,12 +62,20 @@
       </el-table-column>
       <el-table-column label="通过率" width="120" align="center">
         <template slot-scope="scope" align="center">
-           <el-tooltip class="item" effect="dark" content="scope.row.subm_cnt" placement="top">
-             <div slot="content">
-              <span>{{scope.row.subm_cnt}}</span>
-              </div>
-          <el-progress :percentage="scope.row.ac_cnt" :show-text="false"></el-progress>
-           </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="scope.row.subm_cnt"
+            placement="top"
+          >
+            <div slot="content">
+              <span>{{ scope.row.subm_cnt }}</span>
+            </div>
+            <el-progress
+              :percentage="scope.row.ac_cnt"
+              :show-text="false"
+            ></el-progress>
+          </el-tooltip>
         </template>
       </el-table-column>
       <!-- <el-table-column label="提交" prop="subm_cnt" width="70" align="center"></el-table-column> -->
@@ -124,7 +137,7 @@
         </el-table>
       </template>
     </el-dialog>
-     <!-- 回到顶部插件 -->
+    <!-- 回到顶部插件 -->
     <el-backtop></el-backtop>
   </div>
 </template>
@@ -174,7 +187,9 @@ export default {
   },
   methods: {
     async getProblemList() {
-      this.queryInfo.pagenum = Number(window.localStorage.getItem("topicPage"));
+      this.queryInfo.pagenum = Number(
+        window.sessionStorage.getItem("topicPage")
+      );
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
         this.queryInfo.pagenum = 1;
       const { data: res } = await this.$http.get(
@@ -185,15 +200,15 @@ export default {
       }
       //console.log(res)
       this.problemslist = res.data;
-      for(var i=0;i<res.data.length;i++)
-      {
-        var data1,data2;
-        data1=res.data[i].ac_cnt;
-        data2=res.data[i].subm_cnt;
-        this.problemslist[i].ac_cnt = data1 <= 0 ? 0 : (Math.round(data1 / data2 * 10000) / 100.00);
-        this.problemslist[i].subm_cnt = data1+"/"+data2;
+      for (var i = 0; i < res.data.length; i++) {
+        var data1, data2;
+        data1 = res.data[i].ac_cnt;
+        data2 = res.data[i].subm_cnt;
+        this.problemslist[i].ac_cnt =
+          data1 <= 0 ? 0 : Math.round((data1 / data2) * 10000) / 100.0;
+        this.problemslist[i].subm_cnt = data1 + "/" + data2;
       }
-      this.loading = false
+      this.loading = false;
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
@@ -212,7 +227,7 @@ export default {
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      window.localStorage.setItem("topicPage", newPage);
+      window.sessionStorage.setItem("topicPage", newPage);
       this.getProblemList();
     },
     // 获取用户等级
@@ -228,13 +243,28 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("搜索题目失败！");
       }
-      
+
       this.problemslist = res.data;
-      this.total = this.problemslist.length
+      this.total = this.problemslist.length;
     },
+
     // 进入题目
+    // 判断是否是移动端
+    _isMobile() {
+      let flag = navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      );
+      return flag;
+    },
+    // 进入移动端或pc端
     gotosubmit(row) {
-      this.$router.push({ path: "/submit", query: { id: row.num } });
+      if (this._isMobile()) {
+        alert("手机端");
+        this.$router.push({ path: "/mobliesubmit", query: { id: row.num } });
+      } else {
+        alert("pc端");
+        this.$router.push({ path: "/submit", query: { id: row.num } });
+      }
     },
 
     // 监听 switch 开关状态的改变
@@ -282,7 +312,7 @@ export default {
       this.getProblemList();
       this.getPageinfo();
     },
-   // 上传文件
+    // 上传文件
     getFile(event) {
       this.uploadfile = event.target.files[0];
     },
@@ -318,7 +348,7 @@ export default {
       this.file_form = res.data.map((str) => {
         return { point: str };
       });
-    }, 
+    },
 
     // 跳转到添加题目
     addDialogVisible() {
