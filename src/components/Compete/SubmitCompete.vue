@@ -259,30 +259,31 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }
+      this.ans = true;
       if (res.verdict === 0) {
-        return (this.ans = "Judging");
+        this.ans = false;
+        return (this.ans = "评测中...");
       }
       if (res.verdict === 1) {
-        return (this.ans = "Time Limit Exceeded.");
+        return this.$message.error("Time Limit Exceeded.");
       }
       if (res.verdict === 2) {
-        return (this.ans = "Memory Limit Exceeded.");
+        return this.$message.error("Memory Limit Exceeded.");
       }
       if (res.verdict === 3) {
-        return (this.ans = "RunTime Error.");
+        return this.$message.error("RunTime Error.");
       }
       if (res.verdict === 4) {
-        return (this.ans = "UKE");
+        return this.$message.error("未知错误!");
       }
       if (res.verdict === 5) {
-        return (this.ans = "Compile Error.");
+        return this.$message.error("编译错误！");
       }
       if (res.verdict === 6) {
-        this.$message.success("恭喜你，通过了！");
-        return (this.ans = "Accepted.");
+        return this.$message.success("恭喜你，通过了！");
       }
       if (res.verdict === 7) {
-        return (this.ans = "Wrong Answer.");
+        return this.$message.error("回答错误！");
       }
     },
     editProblem(){

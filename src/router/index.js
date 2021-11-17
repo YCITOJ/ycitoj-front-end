@@ -46,7 +46,7 @@ import MoblieSubmit from '../components/Mobile/MoblieSubmit.vue'
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: "/", redirect: "/home" },
+	{ path: "/", redirect: "/topic" },
 	{ path: "/login", component: Login },
 	{ path: "/submit", name: "submit", component: Submit },
 	// 移动端提交页面

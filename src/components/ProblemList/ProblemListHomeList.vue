@@ -63,10 +63,23 @@ export default {
       this.problemslist = res.data.prob_set
       this.loading = false
     },
-    // 进入题目
-    gotosubmit(row) {
-      this.$router.push({ path: "/submit", query: { id: row.num } });
+     // 进入题目
+    // 判断是否是移动端
+    _isMobile() {
+      let flag = navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      );
+      return flag;
     },
+    // 进入移动端或pc端
+    gotosubmit(row) {
+      if (this._isMobile()) {
+        this.$router.push({ path: "/mobliesubmit", query: { id: row.num } });
+      } else {
+        this.$router.push({ path: "/submit", query: { id: row.num } });
+      }
+    },
+
   },
 };
 </script>

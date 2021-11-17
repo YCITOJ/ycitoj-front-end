@@ -34,7 +34,7 @@
               :data="tableData"
               border
               style="width: 100%"
-              @row-click="gotoSubmit"
+              @row-click="gotosubmit"
             >
               <el-table-column label="状态" width="80" align="center">
                 <template slot-scope="scope">
@@ -83,7 +83,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
-      //console.log(res)
+      console.log(res)
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
@@ -97,9 +97,24 @@ export default {
         query: { id: this.$route.query.id },
       });
     },
-    gotoSubmit(row) {
-      this.$router.push({ path: "/submit", query: { id: row.id } });
+     // 进入题目
+    // 判断是否是移动端
+    _isMobile() {
+      let flag = navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      );
+      return flag;
     },
+    // 进入移动端或pc端
+    gotosubmit(row) {
+      console.log(row)
+      if (this._isMobile()) {
+        this.$router.push({ path: "/mobliesubmit", query: { id: row.id } });
+      } else {
+        this.$router.push({ path: "/submit", query: { id: row.id } });
+      }
+    },
+
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access") <= 1) this.userlevel = 1;
