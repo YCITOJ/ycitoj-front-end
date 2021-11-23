@@ -247,7 +247,7 @@ export default {
       {
         await this.sleep(1000);
         await this.outcome();
-        if(this.ans !== "Judging")
+        if(this.ans == true)
         {
           this.submittijiaoflag='true';
           break;
@@ -260,10 +260,12 @@ export default {
         return this.$message.error("提交反馈失败");
       }
       this.ans = true;
+      console.log(res)
       if (res.verdict === 0) {
         this.ans = false;
         return (this.ans = "评测中...");
       }
+      this.ans = true;
       if (res.verdict === 1) {
         return this.$message.error("Time Limit Exceeded.");
       }
