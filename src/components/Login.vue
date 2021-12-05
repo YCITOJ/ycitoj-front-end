@@ -1,6 +1,6 @@
 <template>
   <div class="login_container">
-    <div class="login_box">
+    <div v-bind:class="model == 'login'?'login_box1':'login_box2'">
       <ul class="menu-tab">
         <li
           v-for="item in menuTab"
@@ -17,37 +17,47 @@
         ref="loginFormRef"
         :model="loginForm"
         :rules="loginFormRules"
-        label-width="80px"
+        label-width="0px"
         class="login_form"
       >
         <!-- 用户名 -->
-        <el-form-item  prop="username">
-          <el-input v-model="loginForm.username" placeholder="username"></el-input>
+        <el-form-item prop="username">
+          <el-input
+            v-model="loginForm.username"
+            placeholder="username"
+          ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" type="password" placeholder="password"></el-input>
+          <el-input
+            v-model="loginForm.password"
+            type="password"
+            placeholder="password"
+          ></el-input>
         </el-form-item>
-       <!--  <el-form-item prop="email" v-show="model === 'register'">
+        <!--  <el-form-item prop="email" v-show="model === 'register'">
           <el-input v-model="loginForm.email" type="email" placeholder="email" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item prop="mobil" v-show="model === 'register'">
           <el-input v-model="loginForm.mobile" type="mobile" placeholder="mobile" :disabled="true"></el-input>
         </el-form-item> -->
 
-        <el-checkbox v-model="checked" v-show="model === 'login'">记住密码</el-checkbox>
+        <el-checkbox v-model="checked" v-show="model === 'login'"
+          >记住密码</el-checkbox
+        >
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button
-           
-            @click="login"
-            @keyup.enter="login"
-            class="block"
+          <el-button @click="login" @keyup.enter="login" class="block"
             >提交</el-button
           >
         </el-form-item>
         <hr />
-        <el-link type="success" @click="toggleMneu(menuTab[1])" class="bottom_register">立即注册</el-link>
+        <el-link
+          type="success"
+          @click="toggleMneu(menuTab[1])"
+          class="bottom_register"
+          >立即注册</el-link
+        >
       </el-form>
     </div>
   </div>
@@ -156,26 +166,36 @@ export default {
 </script>
 <style scoped>
 .login_container {
-  /* background-color: #2b4b6b; */
-  background-image: url(../assets/img/4.png);
-  background-repeat: no-repeat;
-  background-size: 100%;
+  background: linear-gradient(to right, #7bb7b7 50%, #e5cfaa 50%);
+  width: 100%;
   height: 100%;
+  position: fixed;
+  background-size: 100% 100%;
 }
 
-.login_box {
-  width: 450px;
+.login_box1 {
+  width: 400px;
   height: 400px;
-  /* background-color: #fff; */
-  border-radius: 3px;
+  background:#e5cfaa;
+  border-radius: 10%;
   position: absolute;
-  left: 50%;
+  left: 48.8%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.login_box2 {
+  width: 400px;
+  height: 400px;
+  background:#7bb7b7;
+  border-radius: 10%;
+  position: absolute;
+  left: 48.8%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 /* 选择登录注册样式 */
 .menu-tab {
-  text-align: center;
+  text-align: center; 
 }
 li {
   display: inline-block;
@@ -197,7 +217,6 @@ li {
   box-sizing: border-box;
 }
 .login_form .el-checkbox {
-  margin-left: 20%;
   margin-bottom: 5px;
 }
 .btns .el-button {

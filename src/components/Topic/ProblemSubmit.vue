@@ -7,7 +7,7 @@
     <el-header>
     </el-header>
     <el-main>
-      <el-table :data="resultslist" style="width: 100%" border fit>
+      <el-table :data="resultslist" style="width: 100%" fit>
         <el-table-column label="编号" width="60" prop="id" align="center">
           <template slot-scope="scope">
             <el-link type="primary" @click="dialogcode(scope.row)">{{
@@ -25,23 +25,35 @@
         <el-table-column label="状态" width="120" prop="verdict" align="center">
           <template slot-scope="scope">
             <el-link
-              type="success"
-              :underline="false"
-              v-if="scope.row.verdict == 'AC'"
-              >{{ scope.row.verdict }}</el-link
-            >
-            <el-link
-              type="danger"
-              :underline="false"
-              v-if="scope.row.verdict == 'WA'"
-              >{{ scope.row.verdict }}</el-link
-            >
-            <el-link
-              type="warning"
-              :underline="false"
-              v-if="(scope.row.verdict != 'AC') & (scope.row.verdict != 'WA')"
-              >{{ scope.row.verdict }}</el-link
-            >
+                type="success"
+                :underline="false"
+                v-if="scope.row.verdict == 'AC'"
+                ><i class="el-icon-check"></i> Accepted</el-link
+              >
+              <el-link
+                type="danger"
+                :underline="false"
+                v-if="scope.row.verdict == 'WA'"
+                ><i class="el-icon-close"></i> Wrong Answer</el-link
+              >
+              <el-link
+                type="warning"
+                :underline="false"
+                v-if="scope.row.verdict == 'TLE'"
+                ><i class="el-icon-time"></i> Time Limit Exceeded</el-link
+              >
+              <el-link
+                type="warning"
+                :underline="false"
+                v-if="scope.row.verdict == 'CE'"
+                ><i class="el-icon-document-delete"></i> Compile Error</el-link
+              >
+              <el-link
+                type="warning"
+                :underline="false"
+                v-if="(scope.row.verdict != 'AC') &(scope.row.verdict != 'WA') &(scope.row.verdict != 'TLE') &(scope.row.verdict != 'CE')"
+                >{{ scope.row.verdict }}</el-link
+              >
           </template>
         </el-table-column>
          <el-table-column label="时间(ms)" width="150" prop="cpu_time" align="center">
