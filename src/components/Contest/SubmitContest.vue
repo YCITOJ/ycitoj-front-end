@@ -14,15 +14,15 @@
           class="el-icon-house"
           @click="gotohome"
         ></el-menu-item>
-        <el-menu-item index="2" @click="gotoproblemSubmit">提交记录</el-menu-item>
+        <el-menu-item index="2" @click="gotoproblemSubmit"
+          >提交记录</el-menu-item
+        >
       </el-menu>
     </el-header>
-    <div class="heng"></div>
-    <el-container>
-      <el-aside width="800px" class="el-aside1">
-        <div id="submit_problem_header">
+    <el-main>
+      <div id="submit_problem_header">
           <div class="top_header">
-            <h2>{{ num_A }}. {{ info.title }}</h2>
+            <h2>#{{ info.num }}. {{ info.title }}</h2>
           </div>
           <div class="left_header">
             <div class="button_div">
@@ -63,11 +63,7 @@
           :scrollStyle="true"
           :ishljs="true"
         />
-      </el-aside>
-      <div class="line"></div>
-      <el-main class="el-main1">
-        <div class="box3box">
-          <el-container>
+        <el-container class="submit_box">
             <el-header height="60px">
               <el-menu
                 class="el-menu-demo"
@@ -111,9 +107,7 @@
               ></el-button>
             </el-footer>
           </el-container>
-        </div>
-      </el-main>
-    </el-container>
+    </el-main>
   </el-container>
 </template>
 <script>
@@ -199,7 +193,7 @@ export default {
     },
     // 返回主页
     gotohome() {
-      this.$router.push({path: '/competehome', query: {id: this.$route.query.competeid}});
+      this.$router.push({path: '/contesthome', query: {id: this.$route.query.competeid}});
     },
     // 进去提交页面
     gotoproblemSubmit() {
@@ -295,79 +289,34 @@ export default {
 };
 </script>
 <style scoped>
-.box {
-  position: absolute;
-  width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 10%;
-  right: 0;
-  margin: auto;
-}
 .el-menu-demo1 {
   position: relative;
   width: 100%;
   height: 60px;
 }
-.el-aside1 {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 70px;
-  bottom: 0;
-}
-.el-aside1 h3 {
-  padding-left: 4%;
-}
-.el-main1 {
-  position: absolute;
-  left: 820px;
-  right: 0;
-  top: 80px;
-  bottom: 0;
-  overflow-y: scroll;
-}
-.container_title {
-  padding-left: 20px;
-}
-
-.submitjshao {
-  background-color: #ebebeb;
-  height: 60px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 20px;
-  padding-left: 20px;
-  line-height: 60px;
-}
-.submitjshao_time_limit {
-  float: left;
-  padding-left: 5%;
-}
-.submitjshao_memory_limit{
-  float: right;
-  padding-right: 20%;
-}
-#submit_problem_header {
-  width: 100%;
+#submit_problem_header,
+.md,
+.submit_box{
+    width: 60%;
+    margin: auto;
 }
 #submit_problem_header .left_header {
   float: left;
-  width: 40%;
+  width: 50%;
   height: 90px;
 }
 #submit_problem_header .top_header {
-  margin-left: 20px;
+  margin-left: 5px;
 }
 #submit_problem_header .left_header .button_div {
-  margin-left: 20px;
+  margin-left: 5px;
 }
 #submit_problem_header .left_header .button_div button {
   padding: 6px 8px;
 }
 #submit_problem_header .right_header {
   float: right;
-  width: 60%;
+  width: 50%;
   height: 90px;
 }
 #submit_problem_header .right_header p {
@@ -386,52 +335,7 @@ export default {
   float: right;
   width: 50%;
 }
-.md {
+.submit_box {
   margin-top: 20px;
-}
-.heng {
-  width: 100%;
-  height: 10px;
-  background-color: #f4f5f6;
-}
-.line {
-  width: 4px;
-  height: 100%;
-}
-.box3box {
-  padding-top: 0;
-}
-.result_area {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-}
-
-/* codemirror */
-.CodeMirror-scroll {
-  overflow: scroll !important;
-  margin-bottom: 0;
-  margin-right: 0;
-  padding-bottom: 0;
-  height: 100%;
-  outline: none;
-  position: relative;
-  border: 1px solid #dddddd;
-}
-.code-mirror {            
-  font-size: 20px;
-  line-height: 150%;
-  text-align: left;
-  width: 100%;
-  height: 100%5;
-}
-
-.submittijiao_button {
-  float: right;
-}
-
-.submittijiao_button {
-  float: left;
-  width: 20%;
 }
 </style>

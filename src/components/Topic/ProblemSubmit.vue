@@ -22,7 +22,7 @@
             }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column label="状态" width="120" prop="verdict" align="center">
+        <el-table-column label="状态" prop="verdict" align="center">
           <template slot-scope="scope">
             <el-link
                 type="success"
@@ -62,7 +62,7 @@
         </el-table-column>
         <el-table-column label="语言" width="80" prop="lang" align="center">
         </el-table-column>
-        <el-table-column label="提交时间" prop="create_time" align="center">
+        <el-table-column label="提交时间" width="200" prop="create_time" align="center">
         </el-table-column>
       </el-table>
       <!-- 分页区域 -->

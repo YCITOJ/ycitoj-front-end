@@ -25,25 +25,8 @@
         >
       </el-menu>
     </el-header>
-    <div class="heng"></div>
-    <el-container>
-      <el-aside width="800px" class="el-aside1">
-        <!-- <h3>{{ info.num }} {{ info.title }}</h3>
-        <div class="submitjshao">
-          <div class="submitjshao_time_limit">
-            时间限制： {{ info.time_limit }}ms
-          </div>
-          <div class="submitjshao_memory_limit">
-            空间限制： {{ info.memory_limit }}MB
-          </div>
-          <div class="submitjshao_ac_1">
-            通过：{{ info.ac_cnt }}
-          </div>
-          <div class="submitjshao_ac_2">
-            提交： {{ info.subm_cnt }}
-          </div>
-        </div> -->
-        <div id="submit_problem_header">
+    <el-main>
+      <div id="submit_problem_header">
           <div class="top_header">
             <h2>#{{ info.num }}. {{ info.title }}</h2>
           </div>
@@ -86,11 +69,7 @@
           :scrollStyle="true"
           :ishljs="true"
         />
-      </el-aside>
-      <div class="line"></div>
-      <el-main class="el-main1">
-        <div class="box3box">
-          <el-container>
+        <el-container class="submit_box">
             <el-header height="60px">
               <el-menu
                 class="el-menu-demo"
@@ -134,20 +113,7 @@
               ></el-button>
             </el-footer>
           </el-container>
-        </div>
-      </el-main>
-    </el-container>
-
-    <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
-      <p>压缩包不要包含文件夹</p>
-      <input type="file" @change="getFile($event)" class="up_things" />
-      <el-button @click="uploadsubmit($event)">提交</el-button>
-      <template>
-        <el-table :data="file_form" style="width: 100%">
-          <el-table-column prop="point" label="样例点"> </el-table-column>
-        </el-table>
-      </template>
-    </el-dialog>
+    </el-main>
   </el-container>
 </template>
 <script>
@@ -364,78 +330,34 @@ export default {
 };
 </script>
 <style scoped>
-.box {
-  position: absolute;
-  width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 10%;
-  right: 0;
-  margin: auto;
-}
 .el-menu-demo1 {
   position: relative;
   width: 100%;
   height: 60px;
 }
-.el-aside1 {
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 70px;
-  bottom: 0;
-}
-.el-aside1 h3 {
-  padding-left: 4%;
-}
-.el-main1 {
-  position: absolute;
-  left: 820px;
-  right: 0;
-  top: 80px;
-  bottom: 0;
-  overflow-y: scroll;
-}
-.container_title {
-  padding-left: 20px;
-}
-
-.submitjshao {
-  background-color: #ebebeb;
-  height: 60px;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 20px;
-  padding-left: 20px;
-  line-height: 60px;
-}
-.submitjshao_time_limit,
-.submitjshao_memory_limit,
-.submitjshao_ac_1,
-.submitjshao_ac_2 {
-  float: left;
-  margin-left: 8%;
-}
-#submit_problem_header {
-  width: 100%;
+#submit_problem_header,
+.md,
+.submit_box{
+    width: 60%;
+    margin: auto;
 }
 #submit_problem_header .left_header {
   float: left;
-  width: 40%;
+  width: 50%;
   height: 90px;
 }
 #submit_problem_header .top_header {
-  margin-left: 20px;
+  margin-left: 5px;
 }
 #submit_problem_header .left_header .button_div {
-  margin-left: 20px;
+  margin-left: 5px;
 }
 #submit_problem_header .left_header .button_div button {
   padding: 6px 8px;
 }
 #submit_problem_header .right_header {
   float: right;
-  width: 60%;
+  width: 50%;
   height: 90px;
 }
 #submit_problem_header .right_header p {
@@ -454,48 +376,7 @@ export default {
   float: right;
   width: 50%;
 }
-.md {
+.submit_box {
   margin-top: 20px;
-}
-.heng {
-  width: 100%;
-  height: 10px;
-  background-color: #f4f5f6;
-}
-.line {
-  width: 4px;
-  height: 100%;
-}
-.box3box {
-  padding-top: 0;
-}
-.result_area {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-}
-
-/* codemirror */
-.CodeMirror-scroll {
-  overflow: scroll !important;
-  margin-bottom: 0;
-  margin-right: 0;
-  padding-bottom: 0;
-  height: 100%;
-  outline: none;
-  position: relative;
-  border: 1px solid #dddddd;
-}
-.code-mirror {
-  font-size: 20px;
-  line-height: 150%;
-  text-align: left;
-  width: 100%;
-  height: 100%5;
-}
-
-.submittijiao_button {
-  float: left;
-  width: 20%;
 }
 </style>

@@ -1,9 +1,5 @@
 <template>
-  <div class="box"
-  v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
+  <div class="box">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="比赛名称">
         <el-input v-model="form.title"></el-input>
@@ -16,8 +12,8 @@
             @click="addProblemId"
           ></el-button>
         </el-input>
-        <el-table :data="problemlist" style="width: 80%" row-key="id">
-          <el-table-column prop="num" label="题目编号" width="80"> </el-table-column>
+        <el-table :data="problemlist" style="width: 80%">
+          <el-table-column prop="id" label="题目编号" width="80"> </el-table-column>
           <el-table-column prop="title" label="题目名称" show-overflow-tooltip> </el-table-column>
           <el-table-column label="操作" width="180">
             <template slot-scope="scope">
@@ -64,14 +60,13 @@
         <mavon-editor v-model="form.info" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="putRace">更新比赛</el-button>
+        <el-button type="primary" @click="putRace">立即创建</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import Sortable from 'sortablejs'
 export default {
   data() {
     return {
@@ -81,62 +76,35 @@ export default {
         start: "",
         end: "",
         manager: "",
-        contest_type: "",
+        contest_type: "1",
         info: "",
-        id: ""
       },
       // 添加比赛题目编号
       problemid: "",
       problemlist: [],
-      // 页面加载
-      loading: true,
     };
   },
-  created() {
-    this.getRaceList();
-  },
-  mounted() {
-    this.rowDrop()
-  },
   methods: {
-    // 请求比赛数据
-    async getRaceList() {
-      const { data: res } = await this.$http.get(
-        `contest/contest?id=${this.$route.query.id}`
-      );
-      if (res.meta.status !== 200) {
-        return this.$message.error("获取题目列表失败！");
-      }
-      this.form.title = res.data.title;
-      this.problemlist = res.data.prob_list;
-      this.form.start = res.data.start_time;
-      this.form.end = res.data.end_time;
-      this.form.contest_type = res.data.contest_type.toString();
-      this.form.info = res.data.information;
-
-      this.loading = false
-    },
-    // 修改比赛
+    // 提交比赛
     async putRace() {
       if (this.problemlist.length <= 0) {
         return this.$message.error("请添加题目！");
       }
-      this.form.problem_sets = `${this.problemlist[0].num}`;
+      this.form.problem_sets = `${this.problemlist[0].id}`;
       for (var i = 1; i < this.problemlist.length; i++) {
-        this.form.problem_sets = `${this.form.problem_sets}|${this.problemlist[i].num}`;
+        this.form.problem_sets = `${this.form.problem_sets}|${this.problemlist[i].id}`;
       }
       this.form.manager = window.localStorage.getItem("userid");
-      this.form.id = this.$route.query.id
       const { data: res } = await this.$http.post(
-        "contest/update_contest",
+        "contest/add_new_contest",
         this.form
       );
       if (res.meta.status === 400) {
-        return this.$message.error("比赛修改失败！");
+        return this.$message.error("比赛创建失败！");
       }
-      this.$message.success("比赛修改成功！");
+      this.$message.success("比赛创建成功！");
+      this.$router.push("/contest");  
     },
-
     async addProblemId() {
       const { data: res } = await this.$http.get(
         `problems/prob_exists?num=${this.problemid}`
@@ -145,29 +113,16 @@ export default {
         return this.$message.error("题目编号不存在！");
       }
       let newlist = {
-        num: "",
+        id: "",
         title: ''
       };
-      newlist.num = this.problemid;
+      newlist.id = this.problemid;
       newlist.title = res.title
       this.problemlist.push(newlist);
     },
-
     // 输出当前问题编号
     deleteproblem(index) {
       this.problemlist.splice(index, 1);
-    },
-
-    //行拖拽
-    rowDrop() {
-      const tbody = document.querySelector('.el-table__body-wrapper tbody')
-      const _this = this
-      Sortable.create(tbody, {
-        onEnd({ newIndex, oldIndex }) {
-          const currRow = _this.problemlist.splice(oldIndex, 1)[0]
-          _this.problemlist.splice(newIndex, 0, currRow)
-        }
-      })
     },
   },
 };

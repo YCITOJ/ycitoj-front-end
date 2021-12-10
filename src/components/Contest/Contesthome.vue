@@ -163,7 +163,7 @@ export default {
         }
       ).catch((err) => err);
       if (confirmResult !== "confirm") {
-        return this.$message.info("已取消删除");
+        return this.$message.info("已取消报名");
       }
       this.raceid.id = this.$route.query.id;
       const { data: res } = await this.$http.post(
@@ -174,7 +174,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.$message.success("报名比赛成功！");
-      this.$router.push({ path: "/compete" });
+      this.getRaceList();
     },
     // 进入比赛排行榜
     gotoRankList() {
@@ -186,7 +186,7 @@ export default {
     // 修改比赛
     gotoReviseRace() {
       this.$router.push({
-        path: "/revisecompete",
+        path: "/revisecontest",
         query: { id: this.$route.query.id },
       });
     },
@@ -212,7 +212,7 @@ export default {
         return this.$message.error("删除比赛失败！");
       }
       this.$message.success("删除比赛成功！");
-      this.$router.push({ path: "/compete" });
+      this.$router.push({ path: "/contest" });
     },
     tableCellClassName({row,rowIndex}){
       //利用单元格的 className 的回调方法，给行列索引赋值
@@ -220,7 +220,7 @@ export default {
     },
     gotoSubmit(row) {
       this.$router.push({
-        path: "/submitcompete",
+        path: "/submitcontest",
         query: { id: row.num, competeid: this.$route.query.id, index: row.index },
       });
     },

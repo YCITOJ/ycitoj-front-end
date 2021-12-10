@@ -2,7 +2,7 @@
   <div class="box">
     <el-container>
       <el-header width='100px'>
-        <!-- 导航栏 -->
+        <!-- 导航栏Start -->
         <el-menu
          :default-active="activeIndex"
           class="el-menu-demo"
@@ -17,7 +17,7 @@
           <el-menu-item index="home" v-if="flag">首页</el-menu-item>
           <el-menu-item index="topic">题库</el-menu-item>
           <el-menu-item index="problemlist">题单</el-menu-item>
-          <el-menu-item index="compete" v-if="flag">比赛</el-menu-item>
+          <el-menu-item index="contest" v-if="flag">比赛</el-menu-item>
           <el-menu-item index="usersubmit" v-if="flag">提交记录</el-menu-item>
           <el-menu-item index="class">班级</el-menu-item>
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
@@ -26,11 +26,15 @@
             {{username}}
           </el-menu-item>
         </el-menu>
+        <!-- 导航栏End -->
       </el-header>
+
       <el-main>
+        <!-- 内容主体Start -->
         <div >
           <router-view></router-view>
         </div>
+        <!-- 内容主体End -->
       </el-main>
     </el-container>
   </div>
@@ -39,8 +43,11 @@
 export default {
   data() {
     return {
+      // 判断登录状态
       loginname: "",
+      // 用户名
       username: "",
+      // 导航栏位置
       activeIndex: "home",
       // 判断是否的移动端
       flag: true

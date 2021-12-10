@@ -7,8 +7,8 @@ import Home from "../components/Home/Home.vue";
 import CreateAnnouncement from "../components/Home/CreateAnnouncement.vue"
 import UpdateAnnouncement from "../components/Home/UpdateAnnouncement.vue"
 
-import Compete from "../components/Compete/Compete.vue";
-import Competehome from "../components/Compete/Competehome.vue";
+import Contest from "../components/Contest/Contest.vue";
+import Contesthome from "../components/Contest/Contesthome.vue";
 import Topic from "../components/Topic/Topic.vue";
 import Login from "../components/Login.vue";
 import Addproblems from "../components/Topic/Addproblems.vue";
@@ -17,10 +17,10 @@ import User from "../components/User/User.vue";
 import Revise from "../components/Topic/Revise.vue";
 import UserSubmit from "../components/UserSubmit/UserSubmit.vue";
 import ProblemSubmit from "../components/Topic/ProblemSubmit.vue";
-import AddCompete from "../components/Compete/AddCompete.vue";
-import ReviseCompete from "../components/Compete/ReviseCompete.vue";
-import SubmitCompete from "../components/Compete/SubmitCompete.vue";
-import RankList from "../components/Compete/RankList.vue";
+import AddContest from "../components/Contest/AddContest.vue";
+import ReviseContest from "../components/Contest/ReviseContest.vue";
+import SubmitContest from "../components/Contest/SubmitContest.vue";
+import RankList from "../components/Contest/RankList.vue";
 
 import Class from "../components/Class/Class.vue";
 import AddClass from "../components/Class/AddClass.vue"
@@ -46,12 +46,12 @@ import MoblieSubmit from '../components/Mobile/MoblieSubmit.vue'
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: "/", redirect: "/topic" },
+	{ path: "/", redirect: "/home" },
 	{ path: "/login", component: Login },
 	{ path: "/submit", name: "submit", component: Submit },
 	// 移动端提交页面
 	{ path: "/mobliesubmit", name: "MoblieSubmit", component: MoblieSubmit },
-	{ path: "/submitcompete", name: "submitcompete", component: SubmitCompete },
+	{ path: "/submitContest", name: "submitContest", component: SubmitContest },
 	{
 		path: "/navigtionbar",
 		component: NavigtionBar,
@@ -62,17 +62,17 @@ const routes = [
 			{ path: "/createannouncement", name: "createannouncement", component: CreateAnnouncement },
 			{ path: "/updateannouncement", name: "updateannouncement", component: UpdateAnnouncement },
 			// 比赛页面
-			{ path: "/compete", name: "compete", component: Compete },
+			{ path: "/contest", name: "contest", component: Contest },
 			{
-				path: "/competehome",
-				name: "competehome",
-				component: Competehome,
+				path: "/contesthome",
+				name: "contesthome",
+				component: Contesthome,
 			},
-			{ path: "/addcompete", name: "addcompete", component: AddCompete },
+			{ path: "/addcontest", name: "addcontest", component: AddContest },
 			{
-				path: "/revisecompete",
-				name: "revisecompete",
-				component: ReviseCompete,
+				path: "/revisecontest",
+				name: "revisecontest",
+				component: ReviseContest,
 			},
 			{ path: "/RankList", name: "RankList", component: RankList },
 			// 题库页面
