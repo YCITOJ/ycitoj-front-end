@@ -114,6 +114,18 @@
             </el-footer>
           </el-container>
     </el-main>
+
+    <!-- 上传文件页面 -->
+      <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
+      <p>压缩包不要包含文件夹</p>
+      <input type="file" @change="getFile($event)" class="up_things" />
+      <el-button @click="uploadsubmit($event)">提交</el-button>
+      <template>
+        <el-table :data="file_form" style="width: 100%">
+          <el-table-column prop="point" label="样例点"> </el-table-column>
+        </el-table>
+      </template>
+    </el-dialog>
   </el-container>
 </template>
 <script>
@@ -376,6 +388,26 @@ export default {
   float: right;
   width: 50%;
 }
+
+/* codemirror */
+.CodeMirror-scroll {
+  overflow: scroll !important;
+  margin-bottom: 0;
+  margin-right: 0;
+  padding-bottom: 0;
+  height: 100%;
+  outline: none;
+  position: relative;
+  border: 1px solid #dddddd;
+}
+.code-mirror {
+  font-size: 20px;
+  line-height: 150%;
+  text-align: left;
+  width: 100%;
+  height: 100%5;
+}
+
 .submit_box {
   margin-top: 20px;
 }

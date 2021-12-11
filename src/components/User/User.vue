@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+    <!-- 用户信息页面Start -->
     <el-card>
       <div>
         <el-descriptions title="用户信息" :column="2">
@@ -18,7 +19,8 @@
               class="word"
               size="small"
               @click="open_revise_password_dialog = true"
-              >修改密码</el-button
+            >
+              修改密码</el-button
             >
             <el-button
               type="primary"
@@ -48,6 +50,8 @@
         </el-descriptions>
       </div>
     </el-card>
+    <!-- 用户信息页面End -->
+
     <!-- 学生认证 -->
     <el-dialog title="学生认证" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="80px">
@@ -63,6 +67,7 @@
       </span>
     </el-dialog>
 
+    <!-- 修改密码 -->
     <el-dialog
       title="修改密码"
       :visible.sync="open_revise_password_dialog"
@@ -226,7 +231,8 @@ export default {
     update_pass(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.revise_password_form.username = window.localStorage.getItem("username");
+          this.revise_password_form.username =
+            window.localStorage.getItem("username");
           const { data: res } = await this.$http.post(
             "/signin/update_pass",
             this.revise_password_form

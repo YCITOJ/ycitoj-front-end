@@ -47,7 +47,7 @@ export default {
       loginname: "",
       // 用户名
       username: "",
-      // 导航栏位置
+      // 导航栏位置 
       activeIndex: "home",
       // 判断是否的移动端
       flag: true

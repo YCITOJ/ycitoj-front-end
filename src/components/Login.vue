@@ -1,6 +1,7 @@
 <template>
   <div class="login_container">
-    <div v-bind:class="model == 'login'?'login_box1':'login_box2'">
+    <div v-bind:class="model == 'login' ? 'login_box1' : 'login_box2'">
+      <!-- 登录界面头部 -->
       <ul class="menu-tab">
         <li
           v-for="item in menuTab"
@@ -11,8 +12,9 @@
           {{ item.txt }}
         </li>
       </ul>
+
       <!-- 表单区域 -->
-      <!-- 登录表单区域 -->
+      <!-- 登录表单区域Start -->
       <el-form
         ref="loginFormRef"
         :model="loginForm"
@@ -51,7 +53,9 @@
             >提交</el-button
           >
         </el-form-item>
+        <!-- 登录表单区域End -->
         <hr />
+
         <el-link
           type="success"
           @click="toggleMneu(menuTab[1])"
@@ -74,7 +78,7 @@ export default {
         email: "",
         mobile: "",
       },
-      // 记住密码
+      // 是否记住密码
       checked: false,
       menuTab: [
         { txt: "登录", current: true, type: "login" },
@@ -125,6 +129,7 @@ export default {
       data.current = true;
       this.model = data.type;
     },
+    // 登录
     login() {
       if (this.model === "login") {
         this.$refs.loginFormRef.validate(async (valid) => {
@@ -176,7 +181,7 @@ export default {
 .login_box1 {
   width: 400px;
   height: 400px;
-  background:#e5cfaa;
+  background: #e5cfaa;
   border-radius: 10%;
   position: absolute;
   left: 48.8%;
@@ -186,7 +191,7 @@ export default {
 .login_box2 {
   width: 400px;
   height: 400px;
-  background:#7bb7b7;
+  background: #7bb7b7;
   border-radius: 10%;
   position: absolute;
   left: 48.8%;
@@ -195,7 +200,7 @@ export default {
 }
 /* 选择登录注册样式 */
 .menu-tab {
-  text-align: center; 
+  text-align: center;
 }
 li {
   display: inline-block;

@@ -1,5 +1,6 @@
 <template>
   <div class="box">
+    <!-- 加载页面特效 -->
     <el-container
       class="page"
       v-loading="loading"
@@ -7,7 +8,10 @@
       element-loading-spinner="el-icon-loading"
       element-loading-background="#ffffff"
     >
+    <!-- ---------------------------------- -->
+    <!-- 头部Start -->
       <el-header>
+        <!-- 搜索区域 -->
         <el-row :gutter="20" class="Search">
           <el-col>
             <el-input
@@ -25,6 +29,8 @@
           </el-col>
         </el-row>
       </el-header>
+    <!-- 头部End -->
+    <!-- 页面数据主体start -->
       <el-main>
         <el-table :data="resultslist" style="width: 100%" fit>
           <el-table-column label="编号" width="60" prop="id" align="center">
@@ -114,6 +120,8 @@
         >
         </el-pagination>
       </el-main>
+      <!-- 页面数据主体End -->
+      
       <el-dialog title="代码" :visible.sync="displayedcode">
         <el-row :gutter="3">
           <el-col :span="3"><h2 class="copy_title">源代码</h2></el-col>

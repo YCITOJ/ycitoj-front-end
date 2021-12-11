@@ -22,7 +22,7 @@
     <el-main>
       <div id="submit_problem_header">
           <div class="top_header">
-            <h2>#{{ info.num }}. {{ info.title }}</h2>
+            <h2>{{ num_A }}. {{ info.title }}</h2>
           </div>
           <div class="left_header">
             <div class="button_div">
@@ -335,6 +335,25 @@ export default {
   float: right;
   width: 50%;
 }
+/* codemirror */
+.CodeMirror-scroll {
+  overflow: scroll !important;
+  margin-bottom: 0;
+  margin-right: 0;
+  padding-bottom: 0;
+  height: 100%;
+  outline: none;
+  position: relative;
+  border: 1px solid #dddddd;
+}
+.code-mirror {
+  font-size: 20px;
+  line-height: 150%;
+  text-align: left;
+  width: 100%;
+  height: 100%5;
+}
+
 .submit_box {
   margin-top: 20px;
 }
