@@ -33,7 +33,7 @@
     <!-- 页面数据主体start -->
       <el-main>
         <el-table :data="resultslist" style="width: 100%" fit>
-          <el-table-column label="编号" width="60" prop="id" align="center">
+          <el-table-column label="编号" width="100" prop="id" align="center">
             <template slot-scope="scope">
               <el-link type="primary" @click="dialogcode(scope.row)">{{
                 scope.row.id

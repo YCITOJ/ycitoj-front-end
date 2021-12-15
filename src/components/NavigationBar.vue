@@ -13,12 +13,12 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-menu-item disabled index="1" class="log" v-if="flag">YCITOJ</el-menu-item>
-          <el-menu-item index="home" v-if="flag">首页</el-menu-item>
+          <el-menu-item disabled index="1" class="log">YCITOJ</el-menu-item>
+          <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="topic">题库</el-menu-item>
           <el-menu-item index="problemlist">题单</el-menu-item>
-          <el-menu-item index="contest" v-if="flag">比赛</el-menu-item>
-          <el-menu-item index="usersubmit" v-if="flag">提交记录</el-menu-item>
+          <el-menu-item index="contest">比赛</el-menu-item>
+          <el-menu-item index="usersubmit">提交记录</el-menu-item>
           <el-menu-item index="class">班级</el-menu-item>
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
           <el-menu-item class="signin" index="user" v-show="loginname === 'out'">
@@ -48,15 +48,8 @@ export default {
       // 用户名
       username: "",
       // 导航栏位置 
-      activeIndex: "home",
-      // 判断是否的移动端
-      flag: true
+      activeIndex: "home"
     };
-  },
-   mounted() {
-    if (this._isMobile()) {
-      this.flag=false
-    }
   },
   created() {
     this.pdlogin();
@@ -78,11 +71,6 @@ export default {
       this.activeIndex = key
       window.localStorage.setItem("navigation_bar_activeIndex",key);
     },
-    // 移动端判定
-    _isMobile() {
-	 let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
-	 return flag;
-  }
   },
 };
 </script>

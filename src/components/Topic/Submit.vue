@@ -4,11 +4,11 @@
       <el-menu
         class="el-menu-demo1"
         mode="horizontal"
-        @select="handleSelect"
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
       >
+        <el-menu-item disabled index="1" class="log">YCITOJ</el-menu-item>
         <el-menu-item
           index="1"
           class="el-icon-house"
@@ -27,96 +27,90 @@
     </el-header>
     <el-main>
       <div id="submit_problem_header">
-          <div class="top_header">
-            <h2>#{{ info.num }}. {{ info.title }}</h2>
+        <div class="top_header">
+          <h2>#{{ info.num }}. {{ info.title }}</h2>
+        </div>
+        <div class="left_header">
+          <div class="button_div">
+            <el-button type="danger" icon="el-icon-timer" size="mini"
+              >{{ info.time_limit }}ms</el-button
+            >
+            <el-button type="primary" icon="el-icon-cpu" size="mini"
+              >{{ info.memory_limit }}MB</el-button
+            >
           </div>
-          <div class="left_header">
-            <div class="button_div">
-              <el-button type="danger" icon="el-icon-timer" size="mini"
-                >{{ info.time_limit }}ms</el-button
-              >
-              <el-button type="primary" icon="el-icon-cpu" size="mini"
-                >{{ info.memory_limit }}MB</el-button
-              >
+        </div>
+        <div class="right_header">
+          <!-- 通过区域 -->
+          <div class="first">
+            <!-- 通过区域数量 -->
+            <div>
+              <p class="count">{{ info.ac_cnt }}</p>
+              <p class="name">通过</p>
             </div>
           </div>
-          <div class="right_header">
-            <!-- 通过区域 -->
-            <div class="first">
-              <!-- 通过区域数量 -->
-              <div>
-                <p class="count">{{ info.ac_cnt }}</p>
-                <p class="name">通过</p>
-              </div>
-            </div>
-            <!-- 提交区域 -->
-            <div class="secend">
-              <!-- 提交区域数量 -->
-              <div>
-                <p class="count">{{ info.subm_cnt }}</p>
-                <p class="name">提交</p>
-              </div>
+          <!-- 提交区域 -->
+          <div class="secend">
+            <!-- 提交区域数量 -->
+            <div>
+              <p class="count">{{ info.subm_cnt }}</p>
+              <p class="name">提交</p>
             </div>
           </div>
         </div>
-        <mavon-editor
-          class="md"
-          v-model="value"
-          :subfield="false"
-          :defaultOpen="'preview'"
-          :toolbarsFlag="false"
-          :editable="false"
-          :scrollStyle="true"
-          :ishljs="true"
-        />
-        <el-container class="submit_box">
-            <el-header height="60px">
-              <el-menu
-                class="el-menu-demo"
-                mode="horizontal"
-                @select="handleSelect"
-                background-color="#e9e9e9"
-                text-color="#000"
-                active-text-color="#ffd04b"
-              >
-                <el-submenu index="1">
-                  <template slot="title">{{ displaylanguage }}</template>
-                  <el-menu-item index="cpp">cpp</el-menu-item>
-                  <el-menu-item index="python">python</el-menu-item>
-                  <el-menu-item index="merdog">merodg</el-menu-item>
-                </el-submenu>
-              </el-menu>
-            </el-header>
-            <el-main class="edit">
-              <codemirror
-                v-model="item.content"
-                :options="cmOption"
-                class="code-mirror"
-                @ready="onCmReady3"
-                ref="myCmGenerate"
-              ></codemirror>
-            </el-main>
-            <el-footer class="submittijiao">
-              <!-- <div class="submittijiao_ans">{{ ans }}</div> -->
-              <el-button
-                type="primary"
-                @click="submitcode()"
-                v-if="submittijiaoflag == 'true'"
-                class="submittijiao_button"
-                >提交代码</el-button
-              >
-              <el-button
-                type="primary"
-                icon="el-icon-loading"
-                v-if="submittijiaoflag == 'false'"
-                class="submittijiao_button"
-              ></el-button>
-            </el-footer>
-          </el-container>
+      </div>
+      <mavon-editor
+        class="md"
+        v-model="value"
+        :subfield="false"
+        :defaultOpen="'preview'"
+        :toolbarsFlag="false"
+        :editable="false"
+        :scrollStyle="true"
+        :ishljs="true"
+      />
+      <el-container class="submit_box" id="submit_box">
+        <el-header height="60px">
+          <!-- 下拉框选择语言start -->
+          <el-select v-model="displaylanguage">
+            <el-option
+              v-for="item in language"
+              :key="item.value"
+              :label="item.label"
+              :value="item.label"
+            ></el-option>
+          </el-select>
+          <!-- 下拉框选择语言end -->
+        </el-header>
+        <el-main class="edit">
+          <codemirror
+            v-model="item.content"
+            :options="cmOption"
+            class="code-mirror"
+            @ready="onCmReady3"
+            ref="myCmGenerate"
+          ></codemirror>
+        </el-main>
+        <el-footer class="submittijiao">
+          <!-- <div class="submittijiao_ans">{{ ans }}</div> -->
+          <el-button
+            type="primary"
+            @click="submitcode()"
+            v-if="submittijiaoflag == 'true'"
+            class="submittijiao_button"
+            >提交代码</el-button
+          >
+          <el-button
+            type="primary"
+            icon="el-icon-loading"
+            v-if="submittijiaoflag == 'false'"
+            class="submittijiao_button"
+          ></el-button>
+        </el-footer>
+      </el-container>
     </el-main>
-
-    <!-- 上传文件页面 -->
-      <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
+    <!-- 上传文件页面Start -->
+    <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
       <p>压缩包不要包含文件夹</p>
       <input type="file" @change="getFile($event)" class="up_things" />
       <el-button @click="uploadsubmit($event)">提交</el-button>
@@ -126,6 +120,18 @@
         </el-table>
       </template>
     </el-dialog>
+    <!-- 上传文件页面end -->
+    <!-- 滚动到提交区域 Start-->
+    <el-button
+      type="primary"
+      icon="el-icon-bottom"
+      id="find_submit_button"
+      @click="find_submit"
+      circle
+    ></el-button>
+    <!-- 滚动到提交区域 end-->
+    <!-- 回到顶部插件 -->
+    <el-backtop></el-backtop>
   </el-container>
 </template>
 <script>
@@ -179,6 +185,21 @@ export default {
         lineNumbers: true,
         line: true,
       },
+      // 可以选择的语言
+      language: [
+        {
+          value: "选项1",
+          label: "cpp",
+        },
+        {
+          value: "选项2",
+          label: "python",
+        },
+        {
+          value: "选项3",
+          label: "merdog",
+        },
+      ],
       // 显示选择了什么语言
       displaylanguage: "cpp",
       // 查询提交结果
@@ -218,24 +239,11 @@ export default {
     gotoproblemSubmit() {
       this.$router.push({ path: "/problemSubmit", query: { id: this.num } });
     },
+    // codemirror页面大小设置
     onCmReady3() {
       this.$refs.myCmGenerate.codemirror.setSize("100%", "500px");
     },
-    // 选择菜单的复制
-    handleSelect(key, keyPath) {
-      if (key === "cpp") {
-        this.displaylanguage = "cpp";
-        return;
-      }
-      if (key === "python") {
-        this.displaylanguage = "python";
-        return;
-      }
-      if (key === "merdog") {
-        this.displaylanguage = "merdog";
-        return;
-      }
-    },
+    // 进入编辑题目界面
     editProblem() {
       this.$router.push({ path: "/revise", query: { id: this.num } });
     },
@@ -244,27 +252,55 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
     async submitcode() {
-      this.submitstring.num = this.num;
-      this.submitstring.lang = this.displaylanguage;
-      this.submitstring.data = this.item.content;
-      const { data: res } = await this.$http.post(
-        "submit/submit_code/",
-        this.submitstring
-      );
-      if (res.meta.status !== 200) {
-        return this.$message.error(res.meta.message);
-      }
-      this.submission_id = res.data;
-      this.submittijiaoflag = "false";
-      this.ans = "评测中...";
-      for (var i = 0; i <= 30; i++) {
-        await this.sleep(1000);
-        await this.outcome();
-        if (this.ans == true) {
-          this.submittijiaoflag = "true";
-          break;
+      /* 判断题库提交和比赛提交Start */
+      if (this.$route.query.where == "topic") {
+        this.submitstring.num = this.num;
+        this.submitstring.lang = this.displaylanguage;
+        this.submitstring.data = this.item.content;
+        const { data: res } = await this.$http.post(
+          "submit/submit_code/",
+          this.submitstring
+        );
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.message);
+        }
+        this.submission_id = res.data;
+        this.submittijiaoflag = "false";
+        this.ans = "评测中...";
+        for (var i = 0; i <= 30; i++) {
+          await this.sleep(1000);
+          await this.outcome();
+          if (this.ans == true) {
+            this.submittijiaoflag = "true";
+            break;
+          }
+        }
+      } else if (this.$route.query.where == "contest") {
+        this.submitstring.contest_id = this.$route.query.competeid;
+        this.submitstring.who = window.localStorage.getItem("userid");
+        this.submitstring.lang = this.displaylanguage;
+        this.submitstring.code = this.item.content;
+        this.submitstring.num = this.$route.query.id;
+        const { data: res } = await this.$http.post(
+          "contest/submit_code",
+          this.submitstring
+        );
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.message);
+        }
+        this.submission_id = res.data;
+        this.submittijiaoflag = "false";
+        this.ans = "评测中...";
+        for (var i = 0; i <= 20; i++) {
+          await this.sleep(1000);
+          await this.outcome();
+          if (this.ans == true) {
+            this.submittijiaoflag = "true";
+            break;
+          }
         }
       }
+      /* 判断题库提交和比赛提交end */
     },
     async outcome() {
       const { data: res } = await this.$http.get(
@@ -338,6 +374,13 @@ export default {
         return { point: str };
       });
     },
+
+    // 滚动到提交区域
+    find_submit() {
+      document
+        .getElementById("submit_box")
+        .scrollIntoView({ behavior: "smooth" });
+    },
   },
 };
 </script>
@@ -347,11 +390,15 @@ export default {
   width: 100%;
   height: 60px;
 }
+.log {
+  padding-right: 11%;
+  font-size: 30px;
+}
 #submit_problem_header,
 .md,
-.submit_box{
-    width: 60%;
-    margin: auto;
+.submit_box {
+  width: 60%;
+  margin: auto;
 }
 #submit_problem_header .left_header {
   float: left;
@@ -410,5 +457,12 @@ export default {
 
 .submit_box {
   margin-top: 20px;
+}
+
+/* find_submit_button */
+#find_submit_button {
+  position: fixed;
+  top: 200px;
+  left: 16%;
 }
 </style>

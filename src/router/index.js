@@ -19,7 +19,6 @@ import UserSubmit from "../components/UserSubmit/UserSubmit.vue";
 import ProblemSubmit from "../components/Topic/ProblemSubmit.vue";
 import AddContest from "../components/Contest/AddContest.vue";
 import ReviseContest from "../components/Contest/ReviseContest.vue";
-import SubmitContest from "../components/Contest/SubmitContest.vue";
 import RankList from "../components/Contest/RankList.vue";
 
 import Class from "../components/Class/Class.vue";
@@ -40,18 +39,12 @@ import ProblemListHomeInfo from '../components/ProblemList/ProblemListHomeInfo.v
 import ProblemListHomeList from '../components/ProblemList/ProblemListHomeList.vue'
 import ReviseProblemList from '../components/ProblemList/ReviseProblemList.vue'
 
-/* 移动端 */
-import MoblieSubmit from '../components/Mobile/MoblieSubmit.vue'
-
 Vue.use(VueRouter);
 
 const routes = [
 	{ path: "/", redirect: "/home" },
 	{ path: "/login", component: Login },
 	{ path: "/submit", name: "submit", component: Submit },
-	// 移动端提交页面
-	{ path: "/mobliesubmit", name: "MoblieSubmit", component: MoblieSubmit },
-	{ path: "/submitContest", name: "submitContest", component: SubmitContest },
 	{
 		path: "/navigtionbar",
 		component: NavigtionBar,

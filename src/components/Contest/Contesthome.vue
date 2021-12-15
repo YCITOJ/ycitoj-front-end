@@ -220,8 +220,8 @@ export default {
     },
     gotoSubmit(row) {
       this.$router.push({
-        path: "/submitcontest",
-        query: { id: row.num, competeid: this.$route.query.id, index: row.index },
+        path: "/submit",
+        query: { id: row.num, competeid: this.$route.query.id, index: row.index,where: 'contest' },
       });
     },
     // 获取用户等级
