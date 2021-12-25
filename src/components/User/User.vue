@@ -51,7 +51,23 @@
       </div>
     </el-card>
     <!-- 用户信息页面End -->
-
+    <div class="main_box">
+      <div class="nav">
+        <el-menu
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+        >
+          <el-menu-item index="passlist">练习</el-menu-item>
+          <el-menu-item index="">比赛</el-menu-item>
+          <el-menu-item index="">作业</el-menu-item>
+          <el-menu-item index="userfavorite">收藏题单</el-menu-item>
+          <el-menu-item index="mycollection">我的题单</el-menu-item>
+        </el-menu>
+      </div>
+      <div><router-view></router-view></div>
+    </div>
     <!-- 学生认证 -->
     <el-dialog title="学生认证" :visible.sync="dialogVisible" width="30%">
       <el-form label-width="80px">
@@ -173,6 +189,8 @@ export default {
         new_password: "",
         check_new_password: "",
       },
+      // 链接
+      activeIndex: "passlist",
       rules: {
         password: [{ validator: check_old_pass, trigger: "blur" }],
         new_password: [{ validator: validate_pass, trigger: "blur" }],
@@ -183,6 +201,7 @@ export default {
   created() {
     this.get_stu_authorize();
     this.get_user_form();
+    this.activeIndex = window.sessionStorage.getItem("user_activeIndex");
   },
   methods: {
     // 获取学生认证信息
@@ -247,6 +266,12 @@ export default {
         }
       });
     },
+    //中间小导航栏
+    handleSelect(key, keyPath) {
+        window.sessionStorage.setItem("user_activeIndex", key);
+        this.activeIndex = key
+        this.$router.push('/'+ key);
+      }
   },
 };
 </script>
@@ -270,5 +295,9 @@ export default {
 .word {
   float: right;
   margin-right: 20px;
+}
+.el-menu-demo {
+  margin-top: 10px;
+  border: 1px solid #e6e6e6;
 }
 </style>

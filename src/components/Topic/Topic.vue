@@ -44,11 +44,13 @@
         </template>
       </el-table-column>
       <el-table-column label="编号" prop="num" width="100"></el-table-column>
-      <el-table-column
-        label="题目"
-        prop="title"
-        :show-overflow-tooltip="true"
-      ></el-table-column>
+      <el-table-column label="题目" prop="title" :show-overflow-tooltip="true">
+        <!-- 题目是否公开颜色判定 -->
+        <template slot-scope="scope">
+          <el-link v-show="scope.row.is_public==1">{{  scope.row.title }}</el-link>
+          <el-link type="danger" v-show="scope.row.is_public!==1">{{  scope.row.title }}</el-link>
+        </template>
+      </el-table-column>
       <el-table-column label="难度" width="100">
         <template slot-scope="scope">
           <!-- v-bind:color="difficulty_color_form[scope.row.difficulty]" -->
@@ -237,6 +239,9 @@ export default {
     },
     // 搜索题目
     async getSearch() {
+      if(this.queryInfo.query=='') {
+        return;
+      }
       const { data: res } = await this.$http.get(
         "problems/find_problems/?title_or_num=" + this.queryInfo.query
       );
@@ -245,6 +250,14 @@ export default {
       }
 
       this.problemslist = res.data;
+      for (var i = 0; i < res.data.length; i++) {
+        var data1, data2;
+        data1 = res.data[i].ac_cnt;
+        data2 = res.data[i].subm_cnt;
+        this.problemslist[i].ac_cnt =
+          data1 <= 0 ? 0 : Math.round((data1 / data2) * 10000) / 100.0;
+        this.problemslist[i].subm_cnt = data1 + "/" + data2;
+      }
       this.total = this.problemslist.length;
     },
 

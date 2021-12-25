@@ -1,5 +1,6 @@
 <template>
-  <div class="box">
+  <div class="submit-server-box">
+    <el-card>
     <!-- 加载页面特效 -->
     <el-container
       class="page"
@@ -151,6 +152,7 @@
       </el-dialog>
       <el-backtop></el-backtop>
     </el-container>
+    </el-card>
   </div>
 </template>
 <script>
@@ -308,14 +310,8 @@ export default {
 };
 </script>
 <style scoped>
-.box {
-  position: absolute;
-  width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+.submit-server-box {
+  margin: 20px;
 }
 .Search {
   width: 30%;

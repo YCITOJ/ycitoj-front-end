@@ -38,6 +38,9 @@
             <el-button type="primary" icon="el-icon-cpu" size="mini"
               >{{ info.memory_limit }}MB</el-button
             >
+            <el-button type="success" size="mini" icon="el-icon-s-promotion" v-if=" info.judge_type=='spj'"
+              >SPJ</el-button
+            >
           </div>
         </div>
         <div class="right_header">
@@ -272,7 +275,7 @@ export default {
           await this.outcome();
           if (this.ans == true) {
             this.submittijiaoflag = "true";
-            break;
+            return;
           }
         }
       } else if (this.$route.query.where == "contest") {
@@ -296,7 +299,7 @@ export default {
           await this.outcome();
           if (this.ans == true) {
             this.submittijiaoflag = "true";
-            break;
+            return;
           }
         }
       }
@@ -309,6 +312,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }
+      console.log(res);
       this.ans = true;
       if (res.verdict === 0) {
         this.ans = false;
@@ -335,6 +339,7 @@ export default {
       if (res.verdict === 7) {
         return this.$message.error("回答错误！");
       }
+      return this.$message.error("内部错误！");
     },
 
     // 上传文件
@@ -452,7 +457,8 @@ export default {
   line-height: 150%;
   text-align: left;
   width: 100%;
-  height: 100%5;
+  height: 100%;
+  border-top: 1px solid #000;
 }
 
 .submit_box {

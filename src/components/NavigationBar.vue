@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <el-container>
-      <el-header width='100px'>
+      <el-header width='200px'>
         <!-- 导航栏Start -->
         <el-menu
          :default-active="activeIndex"
@@ -20,6 +20,7 @@
           <el-menu-item index="contest">比赛</el-menu-item>
           <el-menu-item index="usersubmit">提交记录</el-menu-item>
           <el-menu-item index="class">班级</el-menu-item>
+          <el-menu-item index="admin">后台</el-menu-item>
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
           <el-menu-item class="signin" index="user" v-show="loginname === 'out'">
             <i class="el-icon-user-solid"></i>
@@ -31,9 +32,7 @@
 
       <el-main>
         <!-- 内容主体Start -->
-        <div >
           <router-view></router-view>
-        </div>
         <!-- 内容主体End -->
       </el-main>
     </el-container>
@@ -66,7 +65,10 @@ export default {
     },
     // 处理选中
     handleSelect(key,keyPath){
-      window.sessionStorage.setItem("proList_activeIndex",'problemlisthomeinfo');
+      //给个人信息页面导航栏赋值
+      if(key=='user'){
+        window.sessionStorage.setItem("user_activeIndex", 'passlist');
+      }
       window.sessionStorage.setItem("navigation_bar_activeIndex", key);
       this.activeIndex = key
       window.localStorage.setItem("navigation_bar_activeIndex",key);
@@ -81,8 +83,5 @@ export default {
 .log {
   padding-right: 100px;
   font-size: 30px;
-}
-.el-main {
-  height: 100%;
 }
 </style>

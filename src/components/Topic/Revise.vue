@@ -40,6 +40,12 @@
           </el-input>
         </el-form-item>
       </el-form>
+      <el-form-item label="题目类型" prop="judge_type">
+        <el-radio-group v-model="form.judge_type">
+          <el-radio label="common">传统</el-radio>
+          <el-radio label="spj">特判</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="是否公开" prop="is_public">
         <el-radio-group v-model="form.is_public">
           <el-radio label="1">公开</el-radio>
@@ -64,6 +70,7 @@ export default {
         memory_limit: "",
         time_limit: "",
         content: "",
+        judge_type:"",
         is_public: "0",
       },
       // 题目难度
@@ -174,6 +181,7 @@ export default {
       this.form.memory_limit = res.info.memory_limit;
       this.form.difficulty = res.info.difficulty+'';
       this.form.is_public = res.info.is_public.toString();
+      this.form.judge_type = res.info.judge_type;
       this.loading = false
     },
      addpb() {

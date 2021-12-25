@@ -78,7 +78,7 @@
     </el-main>
     <el-dialog title="代码" :visible.sync="displayedcode">
       <el-row :gutter="3">
-        <el-col :span="3"><h2 class="copy_title">源代码</h2></el-col>
+        <el-col :span="3"><h2 class="copy_title">测试信息</h2></el-col>
         <el-col :span="2">
           <el-button
             size="mini"
@@ -86,7 +86,7 @@
             class="copy_css"
             @click="copy"
             id="copy_text"
-            >复制</el-button
+            >复制代码</el-button
           >
         </el-col>
       </el-row>
@@ -158,7 +158,7 @@ export default {
       if (res.meta.status !== 200) {
         return;
       }
-      
+      console.log(res)
       this.resultslist = res.data;
 
       this.loading = false
@@ -196,9 +196,19 @@ export default {
     },
     // 显示提交的代码
     dialogcode(row) {
-      this.displayedcode = true;
+      //console.log(row)
       this.value = "```" + row.lang + "\n" + row.code;
+      //用于复制
       this.raw_value = row.code;
+      this.value +=  "\n```\n";
+      let t=1;
+      let check_log=JSON.parse(row.check_log);
+      // cases_info 每个测试点返回的信息
+      for(let cases_info of check_log)
+      {
+        this.value+=`##### 测试点 ${t++}, 用时:${cases_info.time_usage} ms, 内存用量:${cases_info.mem_usage} KB \n \`\`\`\n ${cases_info.msg}\n \`\`\`\n`;
+      }
+      this.displayedcode = true;
     },
     // 进去题目
     gotosubmit(row) {

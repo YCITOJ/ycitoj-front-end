@@ -125,6 +125,7 @@ export default {
     },
     // 进入题单
     gotohome(row) {
+      window.sessionStorage.setItem("proList_activeIndex",'problemlisthomeinfo');
       this.$router.push({ path: "/problemlisthome", query: { id: row.id } });
     },
     // 跳转到添加题单
