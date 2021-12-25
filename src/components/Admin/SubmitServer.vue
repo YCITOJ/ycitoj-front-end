@@ -1,157 +1,210 @@
 <template>
   <div class="submit-server-box">
     <el-card>
-    <!-- 加载页面特效 -->
-    <el-container
-      class="page"
-      v-loading="loading"
-      element-loading-text="拼命加载中"
-      element-loading-spinner="el-icon-loading"
-      element-loading-background="#ffffff"
-    >
-    <!-- ---------------------------------- -->
-    <!-- 头部Start -->
-      <el-header>
-        <!-- 搜索区域 -->
-        <el-row :gutter="20" class="Search">
-          <el-col>
-            <el-input
-              placeholder="请输入题目编号"
-              v-model="formInline.problem"
-              clearable
-              @clear="getuserid"
+      <!-- 加载页面特效 -->
+      <el-container
+        class="page"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="#ffffff"
+      >
+        <!-- ---------------------------------- -->
+        <!-- 头部Start -->
+        <el-header>
+          <!-- 搜索区域 -->
+          <el-row :gutter="6">
+            <el-col :span="4">
+              <el-input
+                v-model="formInline.num"
+                placeholder="题目编号"
+                clearable
+              ></el-input>
+            </el-col>
+            <el-col :span="4">
+              <el-input
+                v-model="formInline.who"
+                placeholder="提交者"
+                clearable
+              ></el-input>
+            </el-col>
+            <el-col :span="4">
+              <el-select v-model="formInline.lang" placeholder="请选择语言" clearable>
+                <el-option
+                  v-for="item in lang"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                  <span style="float: left">{{ item.label }}</span>
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4">
+              <el-select v-model="formInline.verdict" placeholder="请选择状态" clearable>
+                <el-option
+                  v-for="item in verdict"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                  <span style="float: left">{{ item.label }}</span>
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="4">
+              <el-button type="primary" @click="getresultslist()">查询</el-button>
+            </el-col>
+          </el-row>
+        </el-header>
+        <!-- 头部End -->
+        <!-- 页面数据主体start -->
+        <el-main>
+          <el-table :data="resultslist" style="width: 100%" fit>
+            <el-table-column label="编号" width="100" prop="id" align="center">
+              <template slot-scope="scope">
+                <el-link type="primary" @click="dialogcode(scope.row)">{{
+                  scope.row.id
+                }}</el-link>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="提交者"
+              width="150"
+              prop="username"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              label="题目编号"
+              prop="prob_id"
+              align="center"
+              min-width="150"
             >
+              <template slot-scope="scope">
+                <el-link type="info" @click="gotosubmit(scope.row)">{{
+                  scope.row.prob_id
+                }}</el-link>
+              </template>
+            </el-table-column>
+            <el-table-column label="状态" prop="verdict" align="center">
+              <template slot-scope="scope">
+                <el-link
+                  type="success"
+                  :underline="false"
+                  v-if="scope.row.verdict == '6'"
+                  ><i class="el-icon-check"></i> Accepted</el-link
+                >
+                <el-link
+                  type="danger"
+                  :underline="false"
+                  v-if="scope.row.verdict == '7'"
+                  ><i class="el-icon-close"></i> Wrong Answer</el-link
+                >
+                <el-link
+                  type="warning"
+                  :underline="false"
+                  v-if="scope.row.verdict == '1'"
+                  ><i class="el-icon-time"></i> Time Limit Exceeded</el-link
+                >
+                <el-link
+                  type="warning"
+                  :underline="false"
+                  v-if="scope.row.verdict == '5'"
+                  ><i class="el-icon-document-delete"></i> Compile
+                  Error</el-link
+                >
+                <el-link
+                  type="warning"
+                  :underline="false"
+                  v-if="scope.row.verdict == '0'"
+                  >正在测评</el-link
+                >
+                <el-link
+                  type="warning"
+                  :underline="false"
+                  v-if="scope.row.verdict == '2'"
+                  >Memory Limit Exceeded</el-link
+                >
+                <el-link
+                  type="warning"
+                  :underline="false"
+                  v-if="scope.row.verdict == '3'"
+                  >Runtime Error
+                </el-link>
+                <el-link
+                  type="warning"
+                  :underline="false"
+                  v-if="scope.row.verdict == '4'"
+                  >未知错误</el-link
+                >
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="时间(ms)"
+              width="150"
+              prop="cpu_time"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              label="内存(KB)"
+              width="150"
+              prop="memory"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column label="语言" width="80" prop="lang" align="center">
+            </el-table-column>
+            <el-table-column
+              label="提交时间"
+              prop="create_time"
+              align="center"
+              width="200"
+            >
+            </el-table-column>
+          </el-table>
+          <!-- 分页区域 -->
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="queryInfo.pagenum"
+            :page-size="queryInfo.pagesize"
+            layout="prev, next, jumper"
+            :total="total"
+          >
+          </el-pagination>
+        </el-main>
+        <!-- 页面数据主体End -->
+
+        <el-dialog title="代码" :visible.sync="displayedcode">
+          <el-row :gutter="3">
+            <el-col :span="3"><h2 class="copy_title">测试信息</h2></el-col>
+            <el-col :span="2">
               <el-button
-                slot="append"
-                icon="el-icon-search"
-                @click="getSearch"
-              ></el-button>
-            </el-input>
-          </el-col>
-        </el-row>
-      </el-header>
-    <!-- 头部End -->
-    <!-- 页面数据主体start -->
-      <el-main>
-        <el-table :data="resultslist" style="width: 100%" fit>
-          <el-table-column label="编号" width="100" prop="id" align="center">
-            <template slot-scope="scope">
-              <el-link type="primary" @click="dialogcode(scope.row)">{{
-                scope.row.id
-              }}</el-link>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="题目编号"
-            prop="prob_id"
-            align="center"
-            min-width="150"
-          >
-            <template slot-scope="scope">
-              <el-link type="info" @click="gotosubmit(scope.row)">{{
-                scope.row.prob_id
-              }}</el-link>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="状态"
-            prop="verdict"
-            align="center"
-          >
-            <template slot-scope="scope">
-              <el-link
-                type="success"
-                :underline="false"
-                v-if="scope.row.verdict == 'AC'"
-                ><i class="el-icon-check"></i> Accepted</el-link
+                size="mini"
+                :data-clipboard-text="raw_value"
+                class="copy_css"
+                @click="copy"
+                id="copy_text"
+                >复制代码</el-button
               >
-              <el-link
-                type="danger"
-                :underline="false"
-                v-if="scope.row.verdict == 'WA'"
-                ><i class="el-icon-close"></i> Wrong Answer</el-link
-              >
-              <el-link
-                type="warning"
-                :underline="false"
-                v-if="scope.row.verdict == 'TLE'"
-                ><i class="el-icon-time"></i> Time Limit Exceeded</el-link
-              >
-              <el-link
-                type="warning"
-                :underline="false"
-                v-if="scope.row.verdict == 'CE'"
-                ><i class="el-icon-document-delete"></i> Compile Error</el-link
-              >
-              <el-link
-                type="warning"
-                :underline="false"
-                v-if="(scope.row.verdict != 'AC') &(scope.row.verdict != 'WA') &(scope.row.verdict != 'TLE') &(scope.row.verdict != 'CE')"
-                >{{ scope.row.verdict }}</el-link
-              >
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="时间(ms)"
-            width="150"
-            prop="cpu_time"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            label="内存(KB)"
-            width="150"
-            prop="memory"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column label="语言" width="80" prop="lang" align="center">
-          </el-table-column>
-          <el-table-column label="提交时间" prop="create_time" align="center" width="200">
-          </el-table-column>
-        </el-table>
-        <!-- 分页区域 -->
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="queryInfo.pagenum"
-          :page-size="queryInfo.pagesize"
-          layout="total, prev, pager, next, jumper"
-          :total="total"
-        >
-        </el-pagination>
-      </el-main>
-      <!-- 页面数据主体End -->
-      
-      <el-dialog title="代码" :visible.sync="displayedcode">
-        <el-row :gutter="3">
-          <el-col :span="3"><h2 class="copy_title">测试信息</h2></el-col>
-          <el-col :span="2">
-            <el-button
-              size="mini"
-              :data-clipboard-text="raw_value"
-              class="copy_css"
-              @click="copy"
-              id="copy_text"
-              >复制代码</el-button
-            >
-          </el-col>
-        </el-row>
-        <div>
-          <mavon-editor
-            class="md"
-            v-model="value"
-            :subfield="false"
-            :defaultOpen="'preview'"
-            :toolbarsFlag="false"
-            :editable="false"
-            :scrollStyle="true"
-            :ishljs="true"
-          />
-        </div>
-      </el-dialog>
-      <el-backtop></el-backtop>
-    </el-container>
+            </el-col>
+          </el-row>
+          <div>
+            <mavon-editor
+              class="md"
+              v-model="value"
+              :subfield="false"
+              :defaultOpen="'preview'"
+              :toolbarsFlag="false"
+              :editable="false"
+              :scrollStyle="true"
+              :ishljs="true"
+            />
+          </div>
+        </el-dialog>
+        <el-backtop></el-backtop>
+      </el-container>
     </el-card>
   </div>
 </template>
@@ -162,7 +215,11 @@ export default {
     return {
       // 搜索列表
       formInline: {
-        problem: "",
+        page_no: 1,
+        who: "",
+        num: "",
+        lang: "",
+        verdict: "",
       },
       // 获取用户列表的参数对象
       queryInfo: {
@@ -173,12 +230,7 @@ export default {
         pagesize: 5,
       },
       resultslist: [],
-      total: 1,
-      // 获取提交页面的请求数据
-      condition_group2: {
-        page_no: 1,
-        condition: "who=",
-      },
+      total: 10000,
       //代码的显示
       displayedcode: false,
       //代码内容
@@ -186,59 +238,38 @@ export default {
       // 源代码，用于复制
       raw_value: "",
       loading: true,
+      //用于搜索选择语言
+      lang: [
+        {value: 'cpp',label: 'C++'},
+        {value: 'java',label: 'Java'},
+        {value: 'python',label: 'Python'},
+        {value: 'merdog',label: 'Merdog'}
+      ],
+      //用于搜索状态
+      verdict: [
+        {value: '6',label: 'Accepted'},
+        {value: '7',label: 'Wrong Answer'},
+        {value: '1',label: 'Time Limit Exceeded'},
+        {value: '2',label: 'Memory Limit Exceeded'},
+        {value: '0',label: '正在测评'},
+      ]
     };
   },
   created() {
-    this.getuserid();
+    this.getresultslist();
   },
   methods: {
-    // 获取请求页面数据
-    getuserid() {
-      this.condition_group2.condition =
-        this.condition_group2.condition +
-        window.localStorage.getItem("userid").toString();
-      this.getPageinfo();
-      this.getshow_per_page();
-      this.getresultslist();
-    },
-    // 获取搜索页面数据
-    getSearch() {
-      this.condition_group2.condition =
-        'prob_id="' + this.formInline.problem + '" and who=';
-      this.condition_group2.condition =
-        this.condition_group2.condition + window.localStorage.getItem("userid");
-      this.getPageinfo();
-      this.getshow_per_page();
-      this.getresultslist();
-    },
     // 获取提交列表
     async getresultslist() {
-      this.condition_group2.page_no = this.queryInfo.pagenum;
       const { data: res } = await this.$http.get(
-        "submit/get_submissions?page_no=" +
-          this.condition_group2.page_no +
-          "&condition=" +
-          this.condition_group2.condition
+        `submit/all_submissions?page_no=${this.formInline.page_no}&who=${this.formInline.who}&num=${this.formInline.num}&lang=${this.formInline.lang}&verdict=${this.formInline.verdict}`
       );
+      console.log(res);
       if (res.meta.status !== 200) {
-        return console.log("获取题目列表表失败！");
+        return this.$message.error(res.meta.message);
       }
       this.resultslist = res.data;
       this.loading = false;
-    },
-    // 提交页数以及提交数量
-    async getPageinfo() {
-      const { data: res } = await this.$http.get(
-        "submit/submission_info?condition=" + this.condition_group2.condition
-      );
-      if (res.meta.status === 403) {
-        this.$router.push("/login");
-        return this.$message.error("请先登录！");
-      }
-      if (res.meta.status !== 200) {
-        return console.log("获取提交表数量失败！");
-      }
-      this.total = res.data.sub_cnt;
     },
     // 提交每一页的题目数量
     async getshow_per_page() {
@@ -256,6 +287,7 @@ export default {
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage;
+      this.formInline.page_no = newPage;
       this.getresultslist();
     },
     // 显示提交的代码
@@ -263,13 +295,16 @@ export default {
       //console.log(row);
       this.value = "```" + row.lang + "\n" + row.code;
       this.raw_value = row.code;
-      this.value +=  "\n```\n";
-      let t=1;
-      let check_log=JSON.parse(row.check_log);
+      this.value += "\n```\n";
+      let t = 1;
+      let check_log = JSON.parse(row.check_log);
       // cases_info 每个测试点返回的信息
-      for(let cases_info of check_log)
-      {
-        this.value+=`##### 测试点 ${t++}, 用时:${cases_info.time_usage} ms, 内存用量:${cases_info.mem_usage} KB \n \`\`\`\n ${cases_info.msg}\n \`\`\`\n`;
+      for (let cases_info of check_log) {
+        this.value += `##### 测试点 ${t++}, 用时:${
+          cases_info.time_usage
+        } ms, 内存用量:${cases_info.mem_usage} KB \n \`\`\`\n ${
+          cases_info.msg
+        }\n \`\`\`\n`;
       }
       this.displayedcode = true;
       //console.log(this.value)
@@ -304,9 +339,6 @@ export default {
 <style scoped>
 .submit-server-box {
   margin: 20px;
-}
-.Search {
-  width: 30%;
 }
 .copy_css {
   margin-top: 18.5px;

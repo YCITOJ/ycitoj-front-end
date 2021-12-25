@@ -60,7 +60,7 @@ export default {
 <style scoped>
 .box {
   position: absolute;
-  height: 93.5%;
+  height: 91%;
   top: 60px;
   bottom: 0;
   left: 0;

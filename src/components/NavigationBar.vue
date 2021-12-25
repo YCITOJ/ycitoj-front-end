@@ -70,6 +70,7 @@ export default {
       //给个人信息页面导航栏赋值
       if(key=='user'){
         window.sessionStorage.setItem("user_activeIndex", 'passlist');
+        window.sessionStorage.setItem("proList_activeIndex",'problemlisthomeinfo');
       }
       window.sessionStorage.setItem("navigation_bar_activeIndex", key);
       this.activeIndex = key
