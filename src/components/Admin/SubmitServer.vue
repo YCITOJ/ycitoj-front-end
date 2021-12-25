@@ -194,11 +194,9 @@ export default {
   methods: {
     // 获取请求页面数据
     getuserid() {
-      //console.log(window.localStorage.getItem('userid'));
       this.condition_group2.condition =
         this.condition_group2.condition +
         window.localStorage.getItem("userid").toString();
-      //console.log(this.condition_group2.condition);
       this.getPageinfo();
       this.getshow_per_page();
       this.getresultslist();
@@ -209,7 +207,6 @@ export default {
         'prob_id="' + this.formInline.problem + '" and who=';
       this.condition_group2.condition =
         this.condition_group2.condition + window.localStorage.getItem("userid");
-      //console.log(this.condition_group2.condition);
       this.getPageinfo();
       this.getshow_per_page();
       this.getresultslist();
@@ -226,7 +223,6 @@ export default {
       if (res.meta.status !== 200) {
         return console.log("获取题目列表表失败！");
       }
-      console.log(res)
       this.resultslist = res.data;
       this.loading = false;
     },
@@ -242,7 +238,6 @@ export default {
       if (res.meta.status !== 200) {
         return console.log("获取提交表数量失败！");
       }
-      //console.log(res);
       this.total = res.data.sub_cnt;
     },
     // 提交每一页的题目数量
@@ -251,18 +246,15 @@ export default {
       if (res.meta.status !== 200) {
         return console.log("获取提交表题目失败！");
       }
-      //console.log(res);
       this.queryInfo.pagesize = res.data;
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      // console.log(newSize)
       //this.queryInfo.pagesize = newSize;
       //this.getUserList();
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      // console.log(newPage);
       this.queryInfo.pagenum = newPage;
       this.getresultslist();
     },

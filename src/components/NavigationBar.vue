@@ -20,7 +20,7 @@
           <el-menu-item index="contest">比赛</el-menu-item>
           <el-menu-item index="usersubmit">提交记录</el-menu-item>
           <el-menu-item index="class">班级</el-menu-item>
-          <el-menu-item index="admin">后台</el-menu-item>
+          <el-menu-item index="admin" v-show="userlevel==0">后台</el-menu-item>
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
           <el-menu-item class="signin" index="user" v-show="loginname === 'out'">
             <i class="el-icon-user-solid"></i>
@@ -47,7 +47,9 @@ export default {
       // 用户名
       username: "",
       // 导航栏位置 
-      activeIndex: "home"
+      activeIndex: "home",
+      // 用户等级
+      userlevel: ""
     };
   },
   created() {
@@ -72,6 +74,11 @@ export default {
       window.sessionStorage.setItem("navigation_bar_activeIndex", key);
       this.activeIndex = key
       window.localStorage.setItem("navigation_bar_activeIndex",key);
+    },
+    // 获取用户等级
+    getuserlevel() {
+      if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
+      this.getPageinfo();
     },
   },
 };

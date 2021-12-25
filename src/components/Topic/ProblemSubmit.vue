@@ -158,7 +158,6 @@ export default {
       if (res.meta.status !== 200) {
         return;
       }
-      console.log(res)
       this.resultslist = res.data;
 
       this.loading = false

@@ -224,7 +224,6 @@ export default {
       if (res.meta.status !== 200) {
         return console.log("获取题目列表表失败！");
       }
-      console.log(res)
       this.resultslist = res.data;
       this.loading = false;
     },

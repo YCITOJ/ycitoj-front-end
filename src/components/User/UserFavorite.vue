@@ -46,7 +46,6 @@ export default {
   methods: {
     async getProblemList() {
       const { data: res } = await this.$http.get(`prob_collection/user_favorite?page_no=${this.queryInfo.pagenum}`);
-      console.log(res)
        if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -55,7 +54,6 @@ export default {
     // 题单个数以及每页题单数量
     async getPageinfo() {
       const { data: res } = await this.$http.get("prob_collection/favorite_page_info");
-      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

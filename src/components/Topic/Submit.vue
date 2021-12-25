@@ -312,7 +312,6 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("提交反馈失败");
       }
-      console.log(res);
       this.ans = true;
       if (res.verdict === 0) {
         this.ans = false;

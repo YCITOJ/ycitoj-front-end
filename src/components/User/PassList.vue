@@ -38,7 +38,6 @@ export default {
                 return this.$message.error(res.meta.message);
             }
             this.PassList = res.data;
-            console.log(this.PassList.length)
         },
         //进入题目
         gotosubmit(row) {

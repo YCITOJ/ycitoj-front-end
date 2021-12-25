@@ -83,7 +83,6 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
-      console.log(res)
       this.tableData = res.data.prob_list;
       this.value = res.data.information;
       this.title = res.data.title;
@@ -107,7 +106,6 @@ export default {
     },
     // 进入移动端或pc端
     gotosubmit(row) {
-      console.log(row)
       if (this._isMobile()) {
         this.$router.push({ path: "/mobliesubmit", query: { id: row.id } });
       } else {

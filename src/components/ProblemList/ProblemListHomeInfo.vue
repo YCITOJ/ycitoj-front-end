@@ -60,7 +60,7 @@ export default {
     },
     //取消收藏
     async remove_favorite() {
-      const { data:res } =await this.$http.post('prob_collection/add_to_favorite',{id:this.$route.query.id});
+      const { data:res } =await this.$http.post('prob_collection/remove_favorite',{id:this.$route.query.id});
       if (res.meta.status === 400) {
         return this.$message.error(res.meta.message);
       }
