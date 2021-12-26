@@ -49,12 +49,30 @@ import ReviseProblemList from "../components/ProblemList/ReviseProblemList.vue";
 import Admin from "../components/Admin/Admin.vue"
 import JudgeServer from "../components/Admin/JudgeServer.vue"
 import SubmitServer from "../components/Admin/SubmitServer.vue"
+import InsertAuth from "../components/Admin/InsertAuth.vue"
+import AuthTab from "../components/Admin/AuthTab.vue"
+import UserList from "../components/Admin/UserList.vue"
 Vue.use(VueRouter);
 
 const routes = [
 	{ path: "/", redirect: "/home" },
 	{ path: "/login", component: Login },
 	{ path: "/submit", name: "submit", component: Submit },
+	//后台
+	{ path: "/admin", name: "admin", component: Admin, children: [
+		{ path: "/", redirect: "/judgeserver" },
+		//测评服务器
+		{ path: "/judgeserver", name: "judgeserver", component: JudgeServer },
+		//提交记录
+		{ path: "/submitserver", name: "submitserver", component: SubmitServer },
+		//添加用户认证
+		{ path: "/insertauth", name: "insertauth", component: InsertAuth },
+		//查看用户认证
+		{ path: "/authtab", name: "authtab", component: AuthTab },
+		//查看用户列表
+		{ path: "/userlist", name: "userlist", component: UserList },
+		]
+	},
 	{
 		path: "/navigtionbar",
 		component: NavigtionBar,
@@ -180,15 +198,6 @@ const routes = [
 				name: "homeworkranklist",
 				component: HomeworkRankList,
 			},
-			//后台
-			{ path: "/admin", name: "admin", component: Admin, children: [
-				{ path: "/", redirect: "/judgeserver" },
-				//测评服务器
-				{ path: "/judgeserver", name: "judgeserver", component: JudgeServer },
-				//提交记录
-				{ path: "/submitserver", name: "submitserver", component: SubmitServer },
-				]
-			}
 		],
 	},
 ];
