@@ -49,11 +49,12 @@ export default {
       // 导航栏位置 
       activeIndex: "home",
       // 用户等级
-      userlevel: ""
+      userlevel: "2"
     };
   },
   created() {
     this.pdlogin();
+    this.getuserlevel();
     this.activeIndex = window.sessionStorage.getItem("navigation_bar_activeIndex");
   },
   methods: {
@@ -78,7 +79,7 @@ export default {
     },
     // 获取用户等级
     getuserlevel() {
-      if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
+      if (window.localStorage.getItem("access") <= 0) this.userlevel = 1;
       this.getPageinfo();
     },
   },
