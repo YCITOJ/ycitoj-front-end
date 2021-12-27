@@ -27,8 +27,11 @@
     </el-header>
     <el-main>
       <div id="submit_problem_header">
-        <div class="top_header">
+        <div class="top_header" v-show="this.is_contest.where == 'topic'">
           <h2>#{{ info.num }}. {{ info.title }}</h2>
+        </div>
+        <div class="top_header" v-show="this.is_contest.where == 'contest'">
+          <h2>#{{ this.is_contest.index }}. {{ info.title }}</h2>
         </div>
         <div class="left_header">
           <div class="button_div">
@@ -211,16 +214,26 @@ export default {
       submittijiaoflag: "true",
 
       is_admin: false,
+
+      is_contest: {
+        where: '',
+        index: ''
+      }
     };
   },
   created() {
-    this.readproblem();
     this.check_access();
   },
   methods: {
     check_access() {
+      this.is_contest.where = this.$route.query.where;
+      if(this.is_contest.where == 'contest') {
+        this.is_contest.index = String.fromCharCode(Number(this.$route.query.index)+65);
+      }
+      console.log(this.is_contest);
       if (window.localStorage.getItem("access") <= 1) this.is_admin = true;
       else this.is_admin = false;
+      this.readproblem();
     },
     // 获取题目
     async readproblem() {
@@ -278,7 +291,7 @@ export default {
             return;
           }
         }
-      } else if (this.$route.query.where == "contest") {
+      } else {
         this.submitstring.contest_id = this.$route.query.competeid;
         this.submitstring.who = window.localStorage.getItem("userid");
         this.submitstring.lang = this.displaylanguage;

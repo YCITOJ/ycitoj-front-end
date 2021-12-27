@@ -1,9 +1,11 @@
 <template>
-  <div class="box"
-  v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
+  <div
+    class="box"
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="#ffffff"
+  >
     <el-container>
       <!-- 头部 -->
       <h2>{{ title }}</h2>
@@ -66,13 +68,33 @@
                   <i class="el-icon-check" v-if="scope.row.ac"></i>
                 </template>
               </el-table-column>
-              <el-table-column label="编号" type="index" :index="indexMethod" width="60" align="center">
-                </el-table-column>
-              <el-table-column prop="title" label="题目" :show-overflow-tooltip="true">
+              <el-table-column
+                label="编号"
+                type="index"
+                :index="indexMethod"
+                width="60"
+                align="center"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="title"
+                label="题目"
+                :show-overflow-tooltip="true"
+              >
               </el-table-column>
               <!-- <el-table-column prop="address" label="统计"> </el-table-column> -->
-              <el-table-column label="通过" prop="ac_cnt" width="70" align="center"></el-table-column>
-             <el-table-column label="提交" prop="subm_cnt" width="70" align="center"></el-table-column>
+              <el-table-column
+                label="通过"
+                prop="ac_cnt"
+                width="70"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                label="提交"
+                prop="subm_cnt"
+                width="70"
+                align="center"
+              ></el-table-column>
             </el-table>
           </div>
         </el-card>
@@ -138,7 +160,7 @@ export default {
       this.rank_start_time = res.data.start_time;
       this.rank_end_time = res.data.end_time;
       this.checkUserRace();
-      this.loading = false
+      this.loading = false;
     },
     // 检查用户报名情况
     async checkUserRace() {
@@ -214,15 +236,34 @@ export default {
       this.$message.success("删除比赛成功！");
       this.$router.push({ path: "/contest" });
     },
-    tableCellClassName({row,rowIndex}){
+    tableCellClassName({ row, rowIndex }) {
       //利用单元格的 className 的回调方法，给行列索引赋值
-      row.index=rowIndex
+      row.index = rowIndex;
     },
     gotoSubmit(row) {
-      this.$router.push({
-        path: "/submit",
-        query: { id: row.num, competeid: this.$route.query.id, index: row.index,where: 'contest' },
-      });
+      const nowTime = new Date();
+      const endTime = this.convertDateFromString(this.rank_end_time);
+      if (endTime.getTime() < nowTime.getTime()) {
+        this.$router.push({
+          path: "/submit",
+          query: {
+            id: row.num,
+            competeid: this.$route.query.id,
+            index: row.index,
+            where: "topic",
+          },
+        });
+      } else {
+        this.$router.push({
+          path: "/submit",
+          query: {
+            id: row.num,
+            competeid: this.$route.query.id,
+            index: row.index,
+            where: "contest",
+          },
+        });
+      }
     },
     // 获取用户等级
     getuserlevel() {
@@ -282,8 +323,8 @@ export default {
     },
     // 题目编号
     indexMethod(index) {
-        return String.fromCharCode(65+index);
-    }
+      return String.fromCharCode(65 + index);
+    },
   },
 };
 </script>

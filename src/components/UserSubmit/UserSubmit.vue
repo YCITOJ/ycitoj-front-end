@@ -248,7 +248,6 @@ export default {
       const { data: res } = await this.$http.get(
         `submit/submission_list?page_no=${this.formInline.page_no}&num=${this.formInline.num}&lang=${this.formInline.lang}&verdict=${this.formInline.verdict}`
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
