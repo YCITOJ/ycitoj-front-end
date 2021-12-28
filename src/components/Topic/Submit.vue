@@ -269,7 +269,7 @@ export default {
     },
     async submitcode() {
       /* 判断题库提交和比赛提交Start */
-      if (this.$route.query.where == "topic") {
+      if (this.$route.query.where != "contest") {
         this.submitstring.num = this.num;
         this.submitstring.lang = this.displaylanguage;
         this.submitstring.data = this.item.content;
