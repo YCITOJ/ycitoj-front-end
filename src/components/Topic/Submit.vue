@@ -27,7 +27,7 @@
     </el-header>
     <el-main>
       <div id="submit_problem_header">
-        <div class="top_header" v-show="this.is_contest.where == 'topic'">
+        <div class="top_header" v-show="this.is_contest.where != 'contest'">
           <h2>#{{ info.num }}. {{ info.title }}</h2>
         </div>
         <div class="top_header" v-show="this.is_contest.where == 'contest'">

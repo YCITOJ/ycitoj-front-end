@@ -14,7 +14,7 @@
             v-for="(item, index) in PassList"
             :key="index"
           >
-            <el-link type="primary" style="font-size:20px" @click="gotosubmit(item.num)">{{ item.num }}</el-link>
+            <el-link type="primary" style="font-size:15px" @click="gotosubmit(item.num)">{{ item.num }}</el-link>
           </el-col>
         </el-row>
     </el-card>
