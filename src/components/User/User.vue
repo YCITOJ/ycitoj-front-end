@@ -60,6 +60,7 @@
           @select="handleSelect"
         >
           <el-menu-item index="passlist">练习</el-menu-item>
+          <el-menu-item index="mycontests">参加发比赛</el-menu-item>
           <el-menu-item index="userfavorite">收藏题单</el-menu-item>
           <el-menu-item index="mycollection">我的题单</el-menu-item>
         </el-menu>

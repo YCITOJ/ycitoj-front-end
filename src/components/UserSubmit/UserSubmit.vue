@@ -156,7 +156,6 @@
             :current-page="queryInfo.pagenum"
             :page-size="queryInfo.pagesize"
             layout="prev, next, jumper"
-            :total="total"
           >
           </el-pagination>
         </el-main>
@@ -214,7 +213,6 @@ export default {
         pagesize: 5,
       },
       resultslist: [],
-      total: 10000,
       //代码的显示
       displayedcode: false,
       //代码内容

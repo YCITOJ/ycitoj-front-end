@@ -19,6 +19,7 @@ import User from "../components/User/User.vue";
 import PassList from "../components/User/PassList.vue"
 import UserFavorite from "../components/User/UserFavorite.vue"
 import MyCollection from "../components/User/MyCollection.vue"
+import MyContests from "../components/User/MyContests.vue"
 
 import Revise from "../components/Topic/Revise.vue";
 import UserSubmit from "../components/UserSubmit/UserSubmit.vue";
@@ -52,6 +53,7 @@ import SubmitServer from "../components/Admin/SubmitServer.vue"
 import InsertAuth from "../components/Admin/InsertAuth.vue"
 import AuthTab from "../components/Admin/AuthTab.vue"
 import UserList from "../components/Admin/UserList.vue"
+import AuthedUserList from "../components/Admin/AuthedUserList.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -71,6 +73,8 @@ const routes = [
 		{ path: "/authtab", name: "authtab", component: AuthTab },
 		//查看用户列表
 		{ path: "/userlist", name: "userlist", component: UserList },
+		//以认证用户列表
+		{ path: "/autheduserlist", name: "autheduserlist", component: AuthedUserList },
 		]
 	},
 	{
@@ -159,6 +163,8 @@ const routes = [
 				{ path: "/", redirect: "/passlist" },
 				//通过题目页面
 				{ path: "/passlist", name: "passlist", component: PassList },
+				//通过的比赛
+				{ path: "/mycontests", name: "mycontests", component: MyContests },
 				//收藏题单
 				{ path: "/userfavorite", name: "userfavorite", component: UserFavorite },
 				//我的题单

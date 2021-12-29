@@ -14,22 +14,22 @@
         <el-header>
           <!-- 搜索区域 -->
           <el-row :gutter="6">
-            <el-col :span="10">
+            <el-col :span="6">
               <el-input
-                v-model="formInline.id"
-                placeholder="用户编号"
+                v-model="formInline.sid"
+                placeholder="学号"
                 clearable
               ></el-input>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="6">
               <el-input
-                v-model="formInline.name"
-                placeholder="用户名"
+                v-model="formInline.class_name"
+                placeholder="班级"
                 clearable
               ></el-input>
             </el-col>
-            <el-col :span="4">
-              <el-button type="primary" @click="get_user_list()"
+            <el-col :span="6">
+              <el-button type="primary" @click="get_authed_user_list()"
                 >查询</el-button
               >
             </el-col>
@@ -39,17 +39,11 @@
         <!-- 页面数据主体start -->
         <el-main>
           <el-table :data="resultslist" style="width: 100%" fit>
-            <el-table-column
-              label="用户编号"
-              prop="id"
-              align="center"
-              width="210"
-            ></el-table-column>
-            <el-table-column
-              label="用户名"
-              prop="name"
-              align="center"
-            ></el-table-column>
+            <el-table-column label="学号" prop="sid" align="center"></el-table-column>
+            <el-table-column label="班级名称" width="150" prop="class_name" align="center"></el-table-column>
+            <el-table-column label="姓名" width="150" prop="real_name" align="center"></el-table-column>
+            <el-table-column label="用户id" prop="id" align="center"></el-table-column>
+            <el-table-column label="用户名" prop="name" align="center"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <!-- 修改按钮 -->
@@ -75,7 +69,6 @@
             :current-page="queryInfo.pagenum"
             :page-size="queryInfo.pagesize"
             layout="prev, next, jumper"
-            :total="total"
           >
           </el-pagination>
         </el-main>
@@ -92,8 +85,9 @@ export default {
     return {
       // 搜索列表
       formInline: {
-        id: "",
-        name: "",
+        class_name: "",
+        sid: "",
+        user_id: ""
       },
       // 获取用户列表的参数对象
       queryInfo: {
@@ -104,19 +98,19 @@ export default {
         pagesize: 5,
       },
       resultslist: [],
-      total: 10000,
       loading: true,
     };
   },
   created() {
-    this.get_user_list();
+    this.get_authed_user_list();
   },
   methods: {
     // 获取提交列表
-    async get_user_list() {
+    async get_authed_user_list() {
       const { data: res } = await this.$http.get(
-        `admin/user_list?page_no=${this.queryInfo.pagenum}&id=${this.formInline.id}&name=${this.formInline.name}`
+        `admin/authed_user_list?page_no=${this.queryInfo.pagenum}&class_name=${this.formInline.class_name}&sid=${this.formInline.sid}&user_id=${this.formInline.user_id}`
       );
+      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
@@ -134,11 +128,11 @@ export default {
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage;
-      this.get_user_list();
+      this.get_authed_user_list();
     },
     // 修改密码
     async user_password(id) {
-       // 弹框询问用户是否修改密码
+         // 弹框询问用户是否修改密码
       const confirmResult = await this.$confirm(
         "此操作将永久删除该题目, 是否继续?",
         "提示",
@@ -159,7 +153,7 @@ export default {
     },
     // 删除用户
     async del_user(id) {
-       // 弹框询问用户是否删除用户
+        // 弹框询问用户是否删除用户
       const confirmResult = await this.$confirm(
         "此操作将永久删除该题目, 是否继续?",
         "提示",
@@ -177,7 +171,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.$message.success(res.meta.message);
-      this.get_user_list()();
+      this.get_authed_user_list();
     },
   },
 };

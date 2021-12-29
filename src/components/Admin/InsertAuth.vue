@@ -58,7 +58,6 @@ export default {
         "admin/insert_auth_table",
         {data:this.table}
       );
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

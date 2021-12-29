@@ -360,7 +360,7 @@ export default {
 
 <style scoped>
 .topicbox {
-  position: absolute;
+  position: absolute; 
   width: 80%;
   top: 80px;
   bottom: 0;

@@ -39,12 +39,9 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="insertauth">添加用户认证信息</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
               <el-menu-item index="authtab">查看用户认证信息</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
               <el-menu-item index="userlist">查看用户列表</el-menu-item>
+              <el-menu-item index="autheduserlist">以认证用户列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
