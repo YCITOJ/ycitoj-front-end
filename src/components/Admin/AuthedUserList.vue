@@ -134,7 +134,7 @@ export default {
     async user_password(id) {
          // 弹框询问用户是否修改密码
       const confirmResult = await this.$confirm(
-        "此操作将永久删除该题目, 是否继续?",
+        "此操作将修改该用户密码, 是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
@@ -143,7 +143,7 @@ export default {
         }
       ).catch((err) => err);
       if (confirmResult !== "confirm") {
-        return this.$message.info("已取消删除");
+        return this.$message.info("已取消修改");
       }
       const { data: res } = await this.$http.post("admin/update/user_password",{user_id: id,n_pass: '123456'});
       if (res.meta.status !== 200) {
@@ -155,7 +155,7 @@ export default {
     async del_user(id) {
         // 弹框询问用户是否删除用户
       const confirmResult = await this.$confirm(
-        "此操作将永久删除该题目, 是否继续?",
+        "此操作将永久删除该用户, 是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
