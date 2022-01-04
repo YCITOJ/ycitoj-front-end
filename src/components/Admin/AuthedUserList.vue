@@ -16,6 +16,13 @@
           <el-row :gutter="6">
             <el-col :span="6">
               <el-input
+                v-model="formInline.user_id"
+                placeholder="用户id"
+                clearable
+              ></el-input>
+            </el-col>
+            <el-col :span="6">
+              <el-input
                 v-model="formInline.sid"
                 placeholder="学号"
                 clearable
@@ -110,7 +117,6 @@ export default {
       const { data: res } = await this.$http.get(
         `admin/authed_user_list?page_no=${this.queryInfo.pagenum}&class_name=${this.formInline.class_name}&sid=${this.formInline.sid}&user_id=${this.formInline.user_id}`
       );
-      console.log(res)
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }

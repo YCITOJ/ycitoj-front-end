@@ -231,4 +231,7 @@ export default {
 .box-card {
   width: 600px;
 }
+.el-button {
+  margin-left: 80px;
+}
 </style>
