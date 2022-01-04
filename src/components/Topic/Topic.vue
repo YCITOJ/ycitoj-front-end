@@ -198,7 +198,7 @@ export default {
         "problems/list?page_no=" + this.queryInfo.pagenum
       );
       if (res.meta.status !== 200) {
-        return this.$message.error("获取题目列表失败！");
+        return this.$message.error(res.meta.message);
       }
       //console.log(res)
       this.problemslist = res.data;

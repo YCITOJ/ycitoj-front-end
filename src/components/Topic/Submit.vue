@@ -326,7 +326,7 @@ export default {
         return this.$message.error("提交反馈失败");
       }
       this.ans = true;
-      if (res.verdict === 0) {
+      if (res.verdict === 0||res.verdict==null) {
         this.ans = false;
         return (this.ans = "评测中...");
       }

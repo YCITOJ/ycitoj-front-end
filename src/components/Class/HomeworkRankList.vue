@@ -84,15 +84,6 @@ export default {
       this.loading = false;
     },
 
-    formatTime(row, column) {
-      const penalty = row[column.property];
-      if (penalty % 60 < 10) {
-        return parseInt(penalty / 60) + ":0" + (penalty % 60);
-      } else {
-        return parseInt(penalty / 60) + ":" + (penalty % 60);
-      }
-    },
-
     //定义导出Excel表格事件
     exportExcel() {
       /* 从表生成工作簿对象 */
