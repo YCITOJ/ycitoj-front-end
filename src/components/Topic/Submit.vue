@@ -27,7 +27,7 @@
           index="5"
           v-if="is_admin"
           @click="dialogVisible_tag = true"
-          >班级标签</el-menu-item
+          >编辑标签</el-menu-item
         >
       </el-menu>
     </el-header>
