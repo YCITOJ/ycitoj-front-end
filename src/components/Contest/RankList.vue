@@ -201,9 +201,13 @@ export default {
       this.queryInfo.pagenum = newPage;
       this.getRankList();
     },
+    // 设置表格行格式
     cellStyle({ row, rowIndex }) {
       if (rowIndex == 0&&this.attend==true) {
-        return 'background:#d9f0c6'
+        return 'success-row'
+      }
+      if(rowIndex ==0 ) {
+        return 'color: #f2;'
       }
       return "";
     },
@@ -219,5 +223,6 @@ export default {
   left: 10%;
   right: 0;
   margin: auto;
+  color: red;
 }
 </style>

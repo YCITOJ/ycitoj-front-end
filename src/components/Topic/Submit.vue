@@ -23,6 +23,12 @@
         <el-menu-item index="4" v-if="is_admin" @click="upload"
           >上传样例</el-menu-item
         >
+        <el-menu-item
+          index="5"
+          v-if="is_admin"
+          @click="dialogVisible_tag = true"
+          >班级标签</el-menu-item
+        >
       </el-menu>
     </el-header>
     <el-main>
@@ -41,8 +47,35 @@
             <el-button type="primary" icon="el-icon-cpu" size="mini"
               >{{ info.memory_limit }}MB</el-button
             >
-            <el-button type="success" size="mini" icon="el-icon-s-promotion" v-if=" info.judge_type=='spj'"
+            <el-button
+              type="success"
+              size="mini"
+              icon="el-icon-s-promotion"
+              v-if="info.judge_type == 'spj'"
               >SPJ</el-button
+            >
+            <el-button
+              type="info"
+              size="mini"
+              v-show="show_tag_button == false"
+              @click="show_tag_button = true"
+              >显示标签</el-button
+            >
+            <el-button
+              type="info"
+              size="mini"
+              v-show="show_tag_button == true"
+              @click="show_tag_button = false"
+              >隐藏标签</el-button
+            >
+            <el-button
+              size="mini"
+              v-show="show_tag_button == true"
+              v-for="(item, index) in pro_tag"
+              :key="index"
+              :style="{ '--backgroundcolor': item.color }"
+              class="tag_button"
+              >{{ item.name }}</el-button
             >
           </div>
         </div>
@@ -127,6 +160,40 @@
       </template>
     </el-dialog>
     <!-- 上传文件页面end -->
+
+    <!-- 编辑标签Start -->
+    <el-dialog title="编辑标签" :visible.sync="dialogVisible_tag" width="30%">
+      <el-form ref="form" :model="add_tag" label-width="80px">
+        <el-form-item label="标签名">
+          <el-input v-model="add_tag.name"
+            ><el-button
+              slot="append"
+              icon="el-icon-plus"
+              @click="addTag"
+            ></el-button
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <el-table :data="pro_tag" style="width: 100%">
+        <el-table-column prop="id" label="编号" width="60">
+        </el-table-column>
+        <el-table-column prop="name" label="标签名">
+        </el-table-column>
+        <el-table-column label="操作" width="60">
+        <template slot-scope="scope">
+          <!-- 删除按钮 -->
+          <el-button
+            type="danger"
+            icon="el-icon-delete"
+            size="mini"
+            @click.native.stop="removeTagById(scope.row.id)"
+          ></el-button>
+        </template>
+      </el-table-column>
+      </el-table>
+    </el-dialog>
+    <!--  添加标签end -->
+
     <!-- 滚动到提交区域 Start-->
     <el-button
       type="primary"
@@ -216,9 +283,17 @@ export default {
       is_admin: false,
 
       is_contest: {
-        where: '',
-        index: ''
-      }
+        where: "",
+        index: "",
+      },
+
+      // 添加标签id
+      add_tag: {
+        name: "",
+      },
+      pro_tag: [],
+      dialogVisible_tag: false,
+      show_tag_button: false,
     };
   },
   created() {
@@ -227,13 +302,15 @@ export default {
   methods: {
     check_access() {
       this.is_contest.where = this.$route.query.where;
-      if(this.is_contest.where == 'contest') {
-        this.is_contest.index = String.fromCharCode(Number(this.$route.query.index)+65);
+      if (this.is_contest.where == "contest") {
+        this.is_contest.index = String.fromCharCode(
+          Number(this.$route.query.index) + 65
+        );
       }
-      console.log(this.is_contest);
       if (window.localStorage.getItem("access") <= 1) this.is_admin = true;
       else this.is_admin = false;
       this.readproblem();
+      this.getTag();
     },
     // 获取题目
     async readproblem() {
@@ -326,7 +403,7 @@ export default {
         return this.$message.error("提交反馈失败");
       }
       this.ans = true;
-      if (res.verdict === 0||res.verdict==null) {
+      if (res.verdict === 0 || res.verdict == null) {
         this.ans = false;
         return (this.ans = "评测中...");
       }
@@ -382,6 +459,42 @@ export default {
       this.get_file_form();
     },
 
+    //添加标签
+    async addTag() {
+      const { data: res } = await this.$http.post("tag/add_prob_tag", {
+        num: this.$route.query.id,
+        name: this.add_tag.name,
+      });
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success(res.meta.message);
+      this.getTag();
+    },
+    //删除标签
+    async removeTagById(id) {
+      const { data: res } = await this.$http.post("tag/del_prob_tag", {
+        num: this.$route.query.id,
+        tag_id: id,
+      });
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success(res.meta.message);
+      this.getTag();
+    },
+    //获取标签
+    async getTag() {
+      const { data: res } = await this.$http.get(
+        `tag/prob_tag?num=${this.$route.query.id}`
+      );
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.pro_tag = res.data;
+    },
+
     // 获取样例点
     async get_file_form() {
       const { data: res } = await this.$http.get(
@@ -419,7 +532,7 @@ export default {
 }
 #submit_problem_header .left_header {
   float: left;
-  width: 50%;
+  width: 60%;
   height: 90px;
 }
 #submit_problem_header .top_header {
@@ -430,10 +543,15 @@ export default {
 }
 #submit_problem_header .left_header .button_div button {
   padding: 6px 8px;
+  margin-bottom: 2px;
+}
+.tag_button {
+  background-color: var(--backgroundcolor);
+  color: #fff;
 }
 #submit_problem_header .right_header {
   float: right;
-  width: 50%;
+  width: 40%;
   height: 90px;
 }
 #submit_problem_header .right_header p {

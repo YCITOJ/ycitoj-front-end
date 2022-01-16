@@ -19,3 +19,7 @@ submittijiao {
   font-family: FiraCode;
   src: url(../font/FiraCode-Regular-1.ttf);
 }
+
+.el-table .success-row {
+  background:#d9f0c6;
+}

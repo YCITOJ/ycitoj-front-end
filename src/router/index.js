@@ -54,6 +54,7 @@ import InsertAuth from "../components/Admin/InsertAuth.vue"
 import AuthTab from "../components/Admin/AuthTab.vue"
 import UserList from "../components/Admin/UserList.vue"
 import AuthedUserList from "../components/Admin/AuthedUserList.vue"
+import Tag from "../components/Admin/Tag.vue"
 Vue.use(VueRouter);
 
 const routes = [
@@ -75,6 +76,8 @@ const routes = [
 		{ path: "/userlist", name: "userlist", component: UserList },
 		//以认证用户列表
 		{ path: "/autheduserlist", name: "autheduserlist", component: AuthedUserList },
+		//标签页面
+		{ path: "/tag", name: "tag", component: Tag },
 		]
 	},
 	{

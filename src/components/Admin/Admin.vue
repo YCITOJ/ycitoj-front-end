@@ -44,6 +44,10 @@
               <el-menu-item index="autheduserlist">已认证用户列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+           <el-menu-item index="tag">
+            <i class="el-icon-price-tag"></i>
+            <span slot="title">管理Tag</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>

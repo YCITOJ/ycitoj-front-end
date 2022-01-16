@@ -22,15 +22,38 @@
           ></el-button>
         </el-input>
       </el-col>
+      <el-col :span="1">
+        <el-button
+          icon="el-icon-price-tag"
+          circle
+          @click="openTagBox()"
+        ></el-button>
+      </el-col>
       <el-col :span="4">
         <el-button
-          type="primary"
+          icon="el-icon-plus"
           @click="addDialogVisible"
           v-if="userlevel == 1"
-          >添加题目</el-button
-        >
+          circle
+        ></el-button>
       </el-col>
     </el-row>
+    <!-- 标签区域Start -->
+    <div class="tag_box" v-if="tag_box_show">
+      <ul>
+        <li v-for="(item, index) of tag_box" :key="index">
+          <el-button
+            size="mini"
+            round
+            :style="{ '--backgroundcolor': item.color }"
+            class="tag_button"
+            @click="getProblemsByTag(item.id)"
+            >{{ item.name }}</el-button
+          >
+        </li>
+      </ul>
+    </div>
+    <!-- 标签区域End -->
     <!-- 题目列表区域 -->
     <el-table
       :data="problemslist"
@@ -47,8 +70,12 @@
       <el-table-column label="题目" prop="title" :show-overflow-tooltip="true">
         <!-- 题目是否公开颜色判定 -->
         <template slot-scope="scope">
-          <el-link v-show="scope.row.is_public==1">{{  scope.row.title }}</el-link>
-          <el-link type="danger" v-show="scope.row.is_public!==1">{{  scope.row.title }}</el-link>
+          <el-link v-show="scope.row.is_public == 1">{{
+            scope.row.title
+          }}</el-link>
+          <el-link type="danger" v-show="scope.row.is_public !== 1">{{
+            scope.row.title
+          }}</el-link>
         </template>
       </el-table-column>
       <el-table-column label="难度" width="100">
@@ -120,15 +147,23 @@
     </el-table>
     <!-- 分页区域 -->
     <el-pagination
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="queryInfo.pagenum"
       :page-size="queryInfo.pagesize"
       layout="total, prev, pager, next, jumper"
       :total="total"
+      v-show="queryInfoFlag == true"
     >
     </el-pagination>
-
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page="queryInfoTag.pagenum"
+      :page-size="queryInfoTag.pagesize"
+      layout="prev,next, jumper"
+      v-show="queryInfoFlag == false"
+    >
+    </el-pagination>
+    <!-- 分页区域end -->
     <el-dialog title="上传文件" :visible.sync="dialogVisible" width="30%">
       <p>压缩包不要包含文件夹</p>
       <input type="file" @change="getFile($event)" class="up_things" />
@@ -149,7 +184,7 @@ import "../Topic/style.js";
 export default {
   data() {
     return {
-      // 获取用户列表的参数对象
+      // 获取题目列表的参数对象
       queryInfo: {
         // 搜索区域
         query: "",
@@ -158,8 +193,20 @@ export default {
         // 当前每页显示多少条数据
         pagesize: 2,
       },
-      problemslist: [],
       total: 0,
+      // 获取标签列表的参数对象
+      queryInfoTag: {
+        // 搜索区域
+        query: "",
+        // 当前的页数
+        pagenum: 1,
+        // 当前每页显示多少条数据
+        pagesize: 2,
+      },
+      // 当前页面页码 true题目页面 false 标签页面
+      queryInfoFlag: true,
+      problemslist: [],
+      
       form: {
         num: "",
       },
@@ -182,6 +229,12 @@ export default {
         { type: "danger", label: "困难" },
       ],
       loading: true,
+      //控制标签区域是否显示
+      tag_box_show: false,
+      tag_box: {},
+      tagcolor: "red",
+      //当前点击的标签
+      nowtag: "",
     };
   },
   created() {
@@ -192,6 +245,7 @@ export default {
       this.queryInfo.pagenum = Number(
         window.sessionStorage.getItem("topicPage")
       );
+      console.log(this.queryInfo.pagenum)
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
         this.queryInfo.pagenum = 1;
       const { data: res } = await this.$http.get(
@@ -222,24 +276,25 @@ export default {
       this.queryInfo.pagesize = res.show_per_page;
       this.getProblemList();
     },
-    // 监听 pagesize 改变的事件
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize;
-      this.getProblemList();
-    },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
-      window.sessionStorage.setItem("topicPage", newPage);
-      this.getProblemList();
+      if (this.queryInfoFlag == true) {
+        window.sessionStorage.setItem("topicPage", newPage);
+        this.getProblemList();
+      } else {
+        this.queryInfoTag.pagenum = newPage;
+        this.getProblemsByPagenum(this.nowtag);
+      }
     },
     // 获取用户等级
     getuserlevel() {
       if (window.localStorage.getItem("access") == "0") this.userlevel = 1;
       this.getPageinfo();
+      this.getTagList();
     },
     // 搜索题目
     async getSearch() {
-      if(this.queryInfo.query=='') {
+      if (this.queryInfo.query == "") {
         return;
       }
       const { data: res } = await this.$http.get(
@@ -260,11 +315,51 @@ export default {
       }
       this.total = this.problemslist.length;
     },
-
-    // 进入题目
+    // 获取标签
+    async getTagList() {
+      const { data: res } = await this.$http.get("tag/tag_list?page_no=1");
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.tag_box = res.data;
+    },
+    // 获取标签题目
+    async getProblemsByTag(id) {
+      this.queryInfoTag.pagenum = 1;
+      this.nowtag = id;
+      const { data: res } = await this.$http.get(
+        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${id}`
+      );
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.queryInfoFlag = false;
+      this.problemslist = res.data;
+    },
+    async getProblemsByPagenum(id) {
+      const { data: res } = await this.$http.get(
+        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${id}`
+      );
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.queryInfoFlag = false;
+      this.problemslist = res.data;
+    },
+    // 打开标签盒子
+    openTagBox() {
+      if (this.tag_box_show == true) {
+        this.queryInfoFlag = true;
+      }
+      this.tag_box_show = !this.tag_box_show;
+      this.getProblemList();
+    },
     // 进入移动端或pc端
     gotosubmit(row) {
-        this.$router.push({ path: "/submit", query: { id: row.num,where: 'topic' } });
+      this.$router.push({
+        path: "/submit",
+        query: { id: row.num, where: "topic" },
+      });
     },
 
     // 监听 switch 开关状态的改变
@@ -360,7 +455,7 @@ export default {
 
 <style scoped>
 .topicbox {
-  position: absolute; 
+  position: absolute;
   width: 80%;
   top: 80px;
   bottom: 0;
@@ -377,5 +472,21 @@ export default {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+}
+/* 标签区域 */
+.tag_box {
+  width: 100%;
+  margin-top: 10px;
+}
+.tag_box ul li {
+  float: left;
+  list-style: none;
+  margin-left: 10px;
+}
+.tag_button {
+  background-color: var(--backgroundcolor);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
 }
 </style>

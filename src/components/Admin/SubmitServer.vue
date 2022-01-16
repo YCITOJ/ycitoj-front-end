@@ -169,7 +169,7 @@
             @current-change="handleCurrentChange"
             :current-page="queryInfo.pagenum"
             :page-size="queryInfo.pagesize"
-            layout="prev, next, jumper"
+            layout="prev,next, jumper"
           >
           </el-pagination>
         </el-main>
