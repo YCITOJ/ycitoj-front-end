@@ -40,18 +40,28 @@
     </el-row>
     <!-- 标签区域Start -->
     <div class="tag_box" v-if="tag_box_show">
-      <ul>
-        <li v-for="(item, index) of tag_box" :key="index">
+      <div class="search">
+        <span>搜索条件:</span>
+            <el-button
+              size="mini"
+              :style="{ '--backgroundcolor': item.color }"
+              class="tag_button"
+              v-for="(item, index) of search_tag_box"
+              :key="index"
+              @click="removeTag(index)"
+              >{{ item.name }}&nbsp;&nbsp;<i class="el-icon-close"></i></el-button>
+
+      </div>
+      <div class="show_tag">
           <el-button
             size="mini"
-            round
             :style="{ '--backgroundcolor': item.color }"
             class="tag_button"
-            @click="getProblemsByTag(item.id)"
+            @click="getProblemsByTag(item)"
+            v-for="(item, index) of tag_box" :key="index"
             >{{ item.name }}</el-button
           >
-        </li>
-      </ul>
+      </div>
     </div>
     <!-- 标签区域End -->
     <!-- 题目列表区域 -->
@@ -206,7 +216,7 @@ export default {
       // 当前页面页码 true题目页面 false 标签页面
       queryInfoFlag: true,
       problemslist: [],
-      
+
       form: {
         num: "",
       },
@@ -231,7 +241,11 @@ export default {
       loading: true,
       //控制标签区域是否显示
       tag_box_show: false,
-      tag_box: {},
+      tag_box: [],
+      //搜索标签内容
+      search_tag_box: [],
+      // 标签的id传给后端
+      tags: [],
       tagcolor: "red",
       //当前点击的标签
       nowtag: "",
@@ -245,7 +259,6 @@ export default {
       this.queryInfo.pagenum = Number(
         window.sessionStorage.getItem("topicPage")
       );
-      console.log(this.queryInfo.pagenum)
       if (this.queryInfo.pagenum == null || this.queryInfo.pagenum == 0)
         this.queryInfo.pagenum = 1;
       const { data: res } = await this.$http.get(
@@ -254,7 +267,6 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
-      //console.log(res)
       this.problemslist = res.data;
       for (var i = 0; i < res.data.length; i++) {
         var data1, data2;
@@ -322,13 +334,23 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.tag_box = res.data;
+      this.tag_box.sort(function (x, y) {
+        if (x.color > y.color) {
+          return 1;
+        } else if (x.color < y.color) {
+          return -1;
+        } else return 0;
+      });
     },
     // 获取标签题目
-    async getProblemsByTag(id) {
+    async getProblemsByTag(row) {
       this.queryInfoTag.pagenum = 1;
-      this.nowtag = id;
+      this.nowtag = row.id;
+      // 放入搜索条件
+      this.search_tag_box.push(row);
+      this.tags.push(row.id)
       const { data: res } = await this.$http.get(
-        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${id}`
+        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tags=${this.tags}`
       );
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -336,6 +358,7 @@ export default {
       this.queryInfoFlag = false;
       this.problemslist = res.data;
     },
+    // 搜索标签
     async getProblemsByPagenum(id) {
       const { data: res } = await this.$http.get(
         `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${id}`
@@ -345,6 +368,11 @@ export default {
       }
       this.queryInfoFlag = false;
       this.problemslist = res.data;
+    },
+    // 删除搜索标签
+    removeTag(index) {
+      this.search_tag_box.splice(index,1);
+      this.tags.splice(index,1);
     },
     // 打开标签盒子
     openTagBox() {
@@ -478,15 +506,28 @@ export default {
   width: 100%;
   margin-top: 10px;
 }
-.tag_box ul li {
-  float: left;
-  list-style: none;
+.tag_box .el-button {
   margin-left: 10px;
+  border-radius: 8px;
+}
+.tag_box .search {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.tag_box .search .el-button {
+  padding-right: 4px;
+}
+.tag_box .search span {
+  font-weight: 700;
+}
+.tag_box .show_tag {
+  width: 100%;
 }
 .tag_button {
   background-color: var(--backgroundcolor);
   color: #fff;
   font-weight: 700;
   font-size: 14px;
+  margin-bottom: 5px;
 }
 </style>
