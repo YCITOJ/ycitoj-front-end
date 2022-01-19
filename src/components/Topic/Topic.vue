@@ -42,25 +42,27 @@
     <div class="tag_box" v-if="tag_box_show">
       <div class="search">
         <span>搜索条件:</span>
-            <el-button
-              size="mini"
-              :style="{ '--backgroundcolor': item.color }"
-              class="tag_button"
-              v-for="(item, index) of search_tag_box"
-              :key="index"
-              @click="removeTag(index)"
-              >{{ item.name }}&nbsp;&nbsp;<i class="el-icon-close"></i></el-button>
-
+        <button
+          size="mini"
+          :style="{ '--backgroundcolor': item.color }"
+          class="tag_button"
+          v-for="(item, index) of search_tag_box"
+          :key="index"
+          >{{ item.name }}&nbsp;&nbsp;
+          <el-button size="mini" type="text" icon="el-icon-close" class="close_button" @click="removeTag(index)"></el-button
+        ></button>
       </div>
       <div class="show_tag">
-          <el-button
-            size="mini"
-            :style="{ '--backgroundcolor': item.color }"
-            class="tag_button"
-            @click="getProblemsByTag(item)"
-            v-for="(item, index) of tag_box" :key="index"
-            >{{ item.name }}</el-button
-          >
+        <el-button
+          size="mini"
+          :style="{ '--backgroundcolor': item.color }"
+          class="tag_button"
+          plain
+          @click="getProblemsByTag(item)"
+          v-for="(item, index) of tag_box"
+          :key="index"
+          >{{ item.name }}</el-button
+        >
       </div>
     </div>
     <!-- 标签区域End -->
@@ -342,26 +344,28 @@ export default {
         } else return 0;
       });
     },
-    // 获取标签题目
+    // 搜索标签题目1
     async getProblemsByTag(row) {
       this.queryInfoTag.pagenum = 1;
       this.nowtag = row.id;
       // 放入搜索条件
       this.search_tag_box.push(row);
-      this.tags.push(row.id)
+      this.tags.push(row.id);
+      
       const { data: res } = await this.$http.get(
-        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tags=${this.tags}`
+        'tag/problems_by_tag',{params:{page_no:this.queryInfoTag.pagenum,tags:this.tags}}
       );
+      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
       this.queryInfoFlag = false;
       this.problemslist = res.data;
     },
-    // 搜索标签
+    // 搜索标签2
     async getProblemsByPagenum(id) {
       const { data: res } = await this.$http.get(
-        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${id}`
+        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${this.tags}`
       );
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -371,8 +375,8 @@ export default {
     },
     // 删除搜索标签
     removeTag(index) {
-      this.search_tag_box.splice(index,1);
-      this.tags.splice(index,1);
+      this.search_tag_box.splice(index, 1);
+      this.tags.splice(index, 1);
     },
     // 打开标签盒子
     openTagBox() {
@@ -382,7 +386,7 @@ export default {
       this.tag_box_show = !this.tag_box_show;
       this.getProblemList();
     },
-    // 进入移动端或pc端
+    // 进入题目
     gotosubmit(row) {
       this.$router.push({
         path: "/submit",
@@ -514,8 +518,16 @@ export default {
   width: 100%;
   margin-bottom: 10px;
 }
-.tag_box .search .el-button {
-  padding-right: 4px;
+.tag_box .search button {
+  border: 0;
+  border-radius: 8px;
+  margin-left: 10px;
+  padding-left: 15px;
+}
+.tag_box .search button .el-button {
+  margin-left: 0;
+  padding-left: 0;
+  color: #000;
 }
 .tag_box .search span {
   font-weight: 700;

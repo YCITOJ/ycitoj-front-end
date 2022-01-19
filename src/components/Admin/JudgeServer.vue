@@ -23,7 +23,7 @@
         <el-table-column label="地址" prop="host"></el-table-column>
         <el-table-column label="端口" prop="port"></el-table-column>
         <el-table-column label="任务数" prop="remain_tasks"></el-table-column>
-        <el-table-column label="以完成任务数" prop="finished_tasks"></el-table-column>
+        <el-table-column label="已完成任务数" prop="finished_tasks"></el-table-column>
         <el-table-column label="操作" width="180px">
           <template slot-scope="scope">
             <!-- 删除按钮 -->
