@@ -51,6 +51,10 @@
       </div>
     </div>
     <div class="card2">
+      <div class="card2-1 border_style">
+        <el-calendar v-model="calendar">
+        </el-calendar>
+      </div>
       <div class="card2-2 border_style">
         <div class="border_style_header">
           <h4>近期公告</h4>
@@ -77,6 +81,7 @@ export default {
       announcement_list: [],
       announcement: "",
       userlevel: false,
+      calendar: new Date()
     };
   },
   created() {
@@ -154,14 +159,14 @@ export default {
 .card1 {
   float: left;
   margin-top: 30px;
-  margin-left: 17%;
+  margin-left: 10%;
   width: 51%;
 }
 .card2 {
   float: right;
   margin-top: 30px;
   margin-right: 8%;
-  width: 23%;
+  width: 30%;
 }
 /* 边框样式 */
 .border_style {
@@ -192,7 +197,8 @@ h4 {
   height: 300px;
 }
 .card2-1 {
-  height: 300px;
+  height: 700px;
+  margin-bottom: 20px;
 }
 .card2-3 {
   margin-top: 20px;

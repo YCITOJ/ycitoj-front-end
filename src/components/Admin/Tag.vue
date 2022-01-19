@@ -4,7 +4,7 @@
       <el-button type="primary" @click="dialogVisible = true"
         >添加标签</el-button
       >
-      <el-table :data="tag_box" style="width: 100%">
+      <el-table :data="tag_box" style="width: 100%" :cell-style="styleBack">
         <el-table-column prop="id" label="编号" width="180">
         </el-table-column>
         <el-table-column prop="name" label="名称">
@@ -101,6 +101,12 @@ export default {
       }
       this.$message.success(res.meta.message);
       this.getTagList();
+    },
+
+    styleBack({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex == 2) {
+        return { backgroundColor: row.color };
+      }
     },
   },
 };

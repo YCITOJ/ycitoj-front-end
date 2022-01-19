@@ -365,7 +365,7 @@ export default {
     // 搜索标签2
     async getProblemsByPagenum(id) {
       const { data: res } = await this.$http.get(
-        `tag/problems_by_tag?page_no=${this.queryInfoTag.pagenum}&tag_id=${this.tags}`
+        'tag/problems_by_tag',{params:{page_no:this.queryInfoTag.pagenum,tags:this.tags}}
       );
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -377,14 +377,23 @@ export default {
     removeTag(index) {
       this.search_tag_box.splice(index, 1);
       this.tags.splice(index, 1);
+      if(this.search_tag_box=='') {
+        this.getProblemList();
+        this.queryInfoFlag = true;
+      }
     },
     // 打开标签盒子
     openTagBox() {
+      // 标签盒子已经打开或没有打开
       if (this.tag_box_show == true) {
+        this.search_tag_box=[];
+        this.tags = [];
         this.queryInfoFlag = true;
+        this.tag_box_show = !this.tag_box_show;
+        this.getProblemList();
+        return;
       }
       this.tag_box_show = !this.tag_box_show;
-      this.getProblemList();
     },
     // 进入题目
     gotosubmit(row) {
@@ -393,18 +402,6 @@ export default {
         query: { id: row.num, where: "topic" },
       });
     },
-
-    // 监听 switch 开关状态的改变
-    /* async userStateChanged(userinfo) {
-      const { data: res } = await this.$http.put(
-        `users/${userinfo.id}/state/${userinfo.mg_state}`
-      )
-      if (res.meta.status !== 200) {
-        userinfo.mg_state = !userinfo.mg_state
-        return this.$message.error('更新用户状态失败！')
-      }
-      this.$message.success('更新用户状态成功！')
-    }, */
     // 修改题目
     showEditDialog(num) {
       this.$router.push({ path: "/revise", query: { id: num } });

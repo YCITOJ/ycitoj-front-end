@@ -11,17 +11,11 @@
       <button @click="exportExcel">点击导出</button>
       <el-table :data="rank_list" center id="out-table">
         <el-table-column fixed type="index" label="序号"></el-table-column>
-        <el-table-column
-          fixed
-          prop="class"
-          label="班级"
-          align="center"
-          sortable
-        >
+        <el-table-column fixed prop="class" label="班级" align="center" sortable width="150">
         </el-table-column>
-        <el-table-column fixed prop="name" label="姓名" align="center" sortable>
+        <el-table-column fixed prop="name" label="姓名" align="center">
         </el-table-column>
-        <el-table-column fixed prop="sno" label="学号" align="center" sortable>
+        <el-table-column fixed prop="sno" label="学号" align="center" sortable width="150">
         </el-table-column>
         <el-table-column
           fixed

@@ -89,7 +89,7 @@ export default {
   float: right;
 }
 .log {
-  padding-right: 100px;
+  padding-right: 180px;
   font-size: 30px;
 }
 </style>
