@@ -4,8 +4,6 @@
    element-loading-text="拼命加载中"
    element-loading-spinner="el-icon-loading"
    element-loading-background="#ffffff">
-    <el-header>
-    </el-header>
     <el-main>
       <el-table :data="resultslist" style="width: 100%" fit>
         <el-table-column label="编号" width="100" prop="id" align="center">
@@ -236,13 +234,8 @@ export default {
 </script>
 <style scoped>
 .page {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 10%;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .copy_css {
   margin-top: 18.5px;

@@ -344,6 +344,18 @@ export default {
         } else return 0;
       });
     },
+    //搜索标签题目0
+    async getProblemsTag() {
+      this.queryInfoTag.pagenum = 1;
+      const { data: res } = await this.$http.get(
+        'tag/problems_by_tag',{params:{page_no:this.queryInfoTag.pagenum,tags:this.tags}}
+      );
+      console.log(res);
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.problemslist = res.data;
+    },
     // 搜索标签题目1
     async getProblemsByTag(row) {
       this.queryInfoTag.pagenum = 1;
@@ -380,6 +392,10 @@ export default {
       if(this.search_tag_box=='') {
         this.getProblemList();
         this.queryInfoFlag = true;
+      } else 
+      {
+        console.log(1);
+        this.getProblemsTag();
       }
     },
     // 打开标签盒子
@@ -484,13 +500,8 @@ export default {
 
 <style scoped>
 .topicbox {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .problemlist {
   margin-top: 20px;

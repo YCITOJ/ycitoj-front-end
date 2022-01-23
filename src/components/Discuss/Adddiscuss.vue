@@ -1,20 +1,13 @@
 <template>
-  <div class="box"
-  v-loading="loading"
-   element-loading-text="拼命加载中"
-   element-loading-spinner="el-icon-loading"
-   element-loading-background="#ffffff">
-    <el-form :rules="rules" ref="form" :model="form" label-width="80px">
-      <el-form-item label="班级名称" prop="class_name">
-        <el-input v-model="form.class_name"></el-input>
+  <div class="box">
+    <el-form  ref="form" :model="form" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="form.title"></el-input>
       </el-form-item>
-      <el-form-item label="教师id" prop="teacher_id">
-        <el-input v-model="form.teacher_id" :disabled="true"></el-input>
+      <el-form-item label="内容">
+        <mavon-editor v-model="form.content" :toolbars="markdownOption" />
       </el-form-item>
-      <el-form-item label="介绍">
-        <mavon-editor v-model="form.intro" :toolbars="markdownOption" />
-      </el-form-item>
-      <el-button type="primary" @click="reviseclass" class="button">提交</el-button>
+      <el-button type="primary" @click="addclass" class="button">提交</el-button>
     </el-form>
   </div>
 </template>
@@ -23,10 +16,8 @@ export default {
   data() {
     return {
       form: {
-        class_id: "",
-        intro: "",
-        teacher_id: "",
-        class_name: ""
+        title: '',
+        content: '',
       },
       markdownOption: {
         bold: true, // 粗体
@@ -63,45 +54,20 @@ export default {
         subfield: true, // 单双栏模式
         preview: true, // 预览
       },
-       rules: {
-        class_name: [
-          { required: true, message: '请输入教室名称', trigger: "blur" },
-        ],
-        teacher_id: [
-          { required: true, message: '请输入教师id', trigger: "blur" },
-        ],
-      },
-      // 页面加载
-      loading: true,
     };
   },
-  created() {
-    this.getClassList();
-  },
   methods: {
-      // 获取班级信息
-    async getClassList() {
-        const { data: res } = await this.$http.get(`class/myclass?class_id=${this.$route.query.id}`);
-        if (res.meta.status !== 200) {
-          return this.$message.error(res.meta.message);
-        }
-        this.form = res.data;
-        this.loading = false
-    },
-    reviseclass() {
-      this.$refs.form.validate(async (valid) => {
-        if (!valid) return;
-        this.form.class_id = this.$route.query.id;
+    async addclass() {
         const { data: res } = await this.$http.post(
-          "class/update_class",
+          "discussion/create_topic",
           this.form
         );
+        console.log(res);
         if (res.meta.status !== 200) {
           return this.$message.error(res.meta.message);
         }
         this.$message.success(res.meta.message);
-        this.$router.push("/class");
-      });
+        this.$router.push("/discuss");
     },
   },
 };

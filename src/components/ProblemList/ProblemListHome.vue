@@ -29,12 +29,7 @@
 </script>
 <style scoped>
 .box1 {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 10%;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 </style>

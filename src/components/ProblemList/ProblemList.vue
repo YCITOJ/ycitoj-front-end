@@ -138,13 +138,8 @@ export default {
 
 <style scoped>
 .topicbox {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .problemlist {
   margin-top: 20px;

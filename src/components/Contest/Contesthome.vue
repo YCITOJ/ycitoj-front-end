@@ -330,13 +330,8 @@ export default {
 </script>
 <style scoped>
 .box {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 10%;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .header_title {
   width: 80%;

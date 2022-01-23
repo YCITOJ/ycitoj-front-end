@@ -148,23 +148,16 @@ export default {
 
 <style scoped>
 .main_box {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .card1 {
   float: left;
-  margin-top: 30px;
   margin-left: 10%;
   width: 51%;
 }
 .card2 {
   float: right;
-  margin-top: 30px;
   margin-right: 8%;
   width: 30%;
 }

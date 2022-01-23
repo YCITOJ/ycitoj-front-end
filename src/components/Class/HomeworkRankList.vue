@@ -6,7 +6,6 @@
     element-loading-spinner="el-icon-loading"
     element-loading-background="#ffffff"
   >
-    <el-header></el-header>
     <el-main>
       <button @click="exportExcel">点击导出</button>
       <el-table :data="rank_list" center id="out-table">
@@ -108,13 +107,8 @@ export default {
 </script>
 <style scoped>
 .box {
-  position: absolute;
   width: 80%;
-  top: 40px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 </style>
 <style scoped>

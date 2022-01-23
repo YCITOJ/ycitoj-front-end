@@ -15,7 +15,7 @@
       </el-row>
     </el-header>
     <el-main>
-      <el-table :data="rank_list" :cell-style="cellStyle" center>
+      <el-table :data="rank_list" :row-class-name="tableRowClassName" center>
         <el-table-column
           fixed
           prop="rank"
@@ -202,7 +202,7 @@ export default {
       this.getRankList();
     },
     // 设置表格行格式
-    cellStyle({ row, rowIndex }) {
+    tableRowClassName({ row, rowIndex }) {
       if (rowIndex == 0&&this.attend==true) {
         return 'success-row'
       }
@@ -216,13 +216,7 @@ export default {
 </script>
 <style scoped>
 .box {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 10%;
-  right: 0;
-  margin: auto;
-  color: red;
+  margin: 20px auto;
 }
 </style>

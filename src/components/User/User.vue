@@ -276,13 +276,8 @@ export default {
 </script>
 <style scoped>
 .box {
-  position: absolute;
   width: 80%;
-  top: 100px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .box_container {
   padding-left: 10%;

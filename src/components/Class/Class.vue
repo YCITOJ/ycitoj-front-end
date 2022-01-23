@@ -212,13 +212,8 @@ export default {
 </script>
 <style scoped>
 .box {
-  position: absolute;
   width: 80%;
-  top: 80px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  margin: 20px auto;
 }
 .classlist {
   margin-top: 40px;

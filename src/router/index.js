@@ -46,6 +46,11 @@ import ProblemListHomeInfo from "../components/ProblemList/ProblemListHomeInfo.v
 import ProblemListHomeList from "../components/ProblemList/ProblemListHomeList.vue";
 import ReviseProblemList from "../components/ProblemList/ReviseProblemList.vue";
 
+/* 讨论 */
+import Discuss from "../components/Discuss/Discuss.vue"
+import Adddiscuss from "../components/Discuss/Adddiscuss.vue"
+import DiscussContent from "../components/Discuss/Discusscontent.vue"
+import ReviseDiscuss from "../components/Discuss/Revisediscuss.vue"
 /* 后台 */
 import Admin from "../components/Admin/Admin.vue"
 import JudgeServer from "../components/Admin/JudgeServer.vue"
@@ -55,6 +60,7 @@ import AuthTab from "../components/Admin/AuthTab.vue"
 import UserList from "../components/Admin/UserList.vue"
 import AuthedUserList from "../components/Admin/AuthedUserList.vue"
 import Tag from "../components/Admin/Tag.vue"
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -207,6 +213,11 @@ const routes = [
 				name: "homeworkranklist",
 				component: HomeworkRankList,
 			},
+			// 讨论界面
+			{ path: "/discuss", name: "discuss", component: Discuss },
+			{ path: "/adddiscuss", name: "adddiscuss", component: Adddiscuss },
+			{ path: "/discusscontent", name: "discusscontent", component: DiscussContent },
+			{ path: "/revisediscuss", name: "revisediscuss", component: ReviseDiscuss },
 		],
 	},
 ];
