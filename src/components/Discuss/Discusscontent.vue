@@ -35,19 +35,24 @@
             v-for="(item, index) in reviewfrom"
             :key="index"
           >
+            <el-button type="info" icon="el-icon-user-solid" circle></el-button>
             <div class="head">
-              <h4>{{item.username}} {{item.create_time}}</h4>
-              <el-link :underline="false">举报</el-link>
-              <el-link :underline="false">回复</el-link>
+              <h4>{{ item.username }}</h4>
+              <div class="right">
+                <span>{{ item.create_time }}</span>
+                <el-link :underline="false">举报</el-link>
+                <el-link :underline="false">回复</el-link>
+              </div>
             </div>
             <mavon-editor
-              class="md"
+              class="review-md"
               v-model="item.content"
               :subfield="false"
               :defaultOpen="'preview'"
               :toolbarsFlag="false"
               :editable="false"
               :scrollStyle="true"
+              :boxShadow="false"
               :ishljs="true"
             />
           </div>
@@ -85,7 +90,28 @@ export default {
       // 总计多少条
       total: 0,
       discussfrom: [],
-      reviewfrom: [],
+      reviewfrom: [
+        {
+          username: "admin",
+          create_time: "2022-1-24 15:29",
+          content: "123",
+        },
+        {
+          username: "admin",
+          create_time: "2022-1-24 15:29",
+          content: "123",
+        },
+        {
+          username: "admin",
+          create_time: "2022-1-24 15:29",
+          content: "123",
+        },
+        {
+          username: "admin",
+          create_time: "2022-1-24 15:29",
+          content:"34235",
+        },
+      ],
       create_reviewfrom: "",
     };
   },
@@ -135,9 +161,11 @@ export default {
     },
     // 题目个数以及每页题目数量
     async getPageinfo() {
-      const { data: res } = await this.$http.get("discussion/review_count",{params: {
+      const { data: res } = await this.$http.get("discussion/review_count", {
+        params: {
           topic_id: this.$route.query.id,
-        }});
+        },
+      });
       if (res.meta.status !== 200) {
         return this.$message.error("获取题目列表失败！");
       }
@@ -164,6 +192,10 @@ export default {
   width: 80%;
   margin: 20px auto;
 }
+.md {
+  width: 100%;
+  min-height: auto;
+}
 .left-button {
   position: absolute;
   left: 6%;
@@ -178,28 +210,44 @@ export default {
   margin-bottom: 30px;
 }
 .box-discuss .dicuss-content {
-    margin-bottom: 20px;
+  position: relative;
+  margin-bottom: 20px;
+}
+.box-discuss .dicuss-content .el-button {
+  position: absolute;
+  top: -3px;
 }
 .box-discuss .dicuss-content .head {
   height: 30px;
   line-height: 30px;
-  background-color: #f8f8f8;
+  margin-left: 50px;
 }
 .box-discuss .dicuss-content .head h4 {
-    float: left;
-    margin: 0;
+  float: left;
+  margin: 0;
+  font-size: 12px;
+  color: #9999a5;
 }
-.box-discuss .dicuss-content .head .el-link {
+.box-discuss .dicuss-content .head .right {
   float: right;
   color: #9999a5;
-  margin-left: 5px;
+}
+.box-discuss .dicuss-content .head span {
+  font-size: 12px;
+  color: #9999a5;
+  margin-right: 10px;
+}
+.box-discuss .dicuss-content .head .el-link {
+  color: #9999a5;
+  margin-right: 10px;
 }
 .box-discuss .dicuss-content .head .el-link:hover {
   color: #0056c2;
 }
-.md {
-  width: 100%;
+.review-md {
+  width: 95%;
   min-height: auto;
+  margin-left: 50px;
 }
 .box-footer {
   margin-top: 20px;

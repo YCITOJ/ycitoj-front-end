@@ -114,9 +114,10 @@ export default {
 <style scoped>
 .box {
   width: 80%;
-  margin: 20px auto;
+  margin: auto;
 }
 .addRacebutton {
   float: right;
+  margin-top: 20px;
 }
 </style>
