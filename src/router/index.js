@@ -60,6 +60,7 @@ import AuthTab from "../components/Admin/AuthTab.vue"
 import UserList from "../components/Admin/UserList.vue"
 import AuthedUserList from "../components/Admin/AuthedUserList.vue"
 import Tag from "../components/Admin/Tag.vue"
+import UploadProblem from "../components/Admin/UploadProblem.vue"
 
 Vue.use(VueRouter);
 
@@ -84,6 +85,8 @@ const routes = [
 		{ path: "/autheduserlist", name: "autheduserlist", component: AuthedUserList },
 		//标签页面
 		{ path: "/tag", name: "tag", component: Tag },
+		// 上传题目
+		{ path: "/uploadproblem", name: "uploadproblem", component: UploadProblem }
 		]
 	},
 	{

@@ -48,6 +48,10 @@
             <i class="el-icon-price-tag"></i>
             <span slot="title">管理Tag</span>
           </el-menu-item>
+          <el-menu-item index="uploadproblem">
+            <i class="el-icon-price-tag"></i>
+            <span slot="title">上传题目</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>

@@ -279,6 +279,7 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.problemslist = res.data;
+      console.log(this.problemslist)
       for (var i = 0; i < res.data.length; i++) {
         var data1, data2;
         data1 = res.data[i].ac_cnt;

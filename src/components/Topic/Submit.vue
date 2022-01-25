@@ -26,6 +26,12 @@
         <el-menu-item
           index="5"
           v-if="is_admin"
+          @click="downloadPackage()"
+          >下载题目包</el-menu-item
+        >
+        <el-menu-item
+          index="6"
+          v-if="is_admin"
           @click="dialogVisible_tag = true"
           >编辑标签</el-menu-item
         >
@@ -215,6 +221,8 @@ import "codemirror/mode/clike/clike.js";
 // theme css
 import "codemirror/theme/base16-dark.css";
 import "codemirror/theme/eclipse.css";
+
+import config from '../../../config.js'
 export default {
   components: {
     codemirror,
@@ -319,7 +327,7 @@ export default {
       const { data: res } = await this.$http.get(
         "problems/read_problem?num=" + this.num
       );
-      //console.log(res);
+      console.log(res);
       this.value = res.data;
       this.info = res.info;
       //console.log(this.info.title.length);
@@ -459,6 +467,22 @@ export default {
       this.get_file_form();
     },
 
+    // 下载题目包
+    async downloadPackage() {
+      await this.$http.get(`backup/download_problem?prob_id=${this.info.id}`,{responseType:'blob'})
+      .then(res => {
+        let blob = new Blob([res.data],{
+          type:'application/zip'
+        });
+        var downloadA = document.createElement('a');
+        downloadA.href = window.URL.createObjectURL(blob);
+        downloadA.download = `${this.info.num}题目包`;//文件名
+        downloadA.click();
+        window.URL.revokeObjectURL(downloadA.href);
+        // let objectUrl = URL.createObjectURL(blob);
+        // window.location.href = objectUrl;
+      })
+    },
     //添加标签
     async addTag() {
       const { data: res } = await this.$http.post("tag/add_prob_tag", {

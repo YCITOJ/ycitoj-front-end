@@ -6,7 +6,7 @@
       <el-button
         icon="el-icon-chat-dot-square"
         circle
-        @click="findFooter"
+        @click="findFooter(reply_button_flag=false)"
       ></el-button>
       <el-button icon="el-icon-orange" circle></el-button>
     </div>
@@ -41,7 +41,8 @@
               <div class="right">
                 <span>{{ item.create_time }}</span>
                 <el-link :underline="false">举报</el-link>
-                <el-link :underline="false">回复</el-link>
+                <el-link :underline="false" @click="replyReview(item.id)">回复</el-link>
+                <el-link :underline="false" @click="deleReview(item.id)">删除</el-link>
               </div>
             </div>
             <mavon-editor
@@ -70,7 +71,8 @@
       <!-- 添加评论区域Start -->
       <div class="box-footer" id="box-footer">
         <mavon-editor v-model="create_reviewfrom" />
-        <el-button type="danger" @click="createReview()">发表评论</el-button>
+        <el-button type="danger" @click="createReview()" v-if="reply_button_flag==false">发表评论</el-button>
+        <el-button type="danger" @click="pushReplyReview()" v-if="reply_button_flag==true">回复评论</el-button>
       </div>
       <!-- 添加评论区域end -->
     </div>
@@ -90,29 +92,11 @@ export default {
       // 总计多少条
       total: 0,
       discussfrom: [],
-      reviewfrom: [
-        {
-          username: "admin",
-          create_time: "2022-1-24 15:29",
-          content: "123",
-        },
-        {
-          username: "admin",
-          create_time: "2022-1-24 15:29",
-          content: "123",
-        },
-        {
-          username: "admin",
-          create_time: "2022-1-24 15:29",
-          content: "123",
-        },
-        {
-          username: "admin",
-          create_time: "2022-1-24 15:29",
-          content:"34235",
-        },
-      ],
+      reviewfrom: [],
       create_reviewfrom: "",
+      //判断发布评论和回复评论按钮
+      reply_button_flag: false,
+      reply_id: ''
     };
   },
   created() {
@@ -142,6 +126,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
+      console.log(res);
       this.reviewfrom = res.data;
     },
     // 发布评论
@@ -157,6 +142,39 @@ export default {
         return this.$message.error(res.meta.message);
       }
       this.$message.success(res.meta.message);
+      this.getReview();
+    },
+    // 回复评论
+    replyReview(id) {
+      this.reply_id=id;
+      this.reply_button_flag=true;
+      this.findFooter();
+    },
+    async pushReplyReview() {
+      const { data: res } = await this.$http.post("discussion/create_review", {
+        topic_id: this.$route.query.id,
+        reply_to: this.reply_id,
+        content: this.create_reviewfrom,
+      });
+      console.log(this.create_reviewfrom)
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success(res.meta.message);
+      this.getReview();
+    },
+    // 删除评论
+    async deleReview(id) {
+      const { data: res } = await this.$http.post("discussion/delete_review", {
+        topic_id: this.$route.query.id,
+        review_id: id,
+      });
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.message);
+      }
+      this.$message.success(res.meta.message);
+      this.reply_button_flag=false;
+      this.getPageinfo();
       this.getReview();
     },
     // 题目个数以及每页题目数量
