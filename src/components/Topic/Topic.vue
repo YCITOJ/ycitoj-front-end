@@ -42,7 +42,7 @@
     <div class="tag_box" v-if="tag_box_show">
       <div class="search">
         <span>搜索条件:</span>
-        <button
+        <!-- <button
           size="mini"
           :style="{ '--backgroundcolor': item.color }"
           class="tag_button"
@@ -50,7 +50,16 @@
           :key="index"
           >{{ item.name }}&nbsp;&nbsp;
           <el-button size="mini" type="text" icon="el-icon-close" class="close_button" @click="removeTag(index)"></el-button
-        ></button>
+        ></button> -->
+        <el-tag
+          closable
+          :style="{ '--backgroundcolor': item.color }"
+          class="tag_button"
+          @close="removeTag(index)"
+          v-for="(item, index) of search_tag_box"
+          :key="index"
+          >{{ item.name }}&nbsp;&nbsp;
+        </el-tag>
       </div>
       <div class="show_tag">
         <el-button
@@ -524,30 +533,17 @@ export default {
 }
 .tag_box .search {
   width: 100%;
-  margin-bottom: 10px;
-}
-.tag_box .search button {
-  border: 0;
-  border-radius: 8px;
-  margin-left: 10px;
-  padding-left: 15px;
-}
-.tag_box .search button .el-button {
-  margin-left: 0;
-  padding-left: 0;
-  color: #000;
+  height: 30px;
 }
 .tag_box .search span {
   font-weight: 700;
-}
-.tag_box .show_tag {
-  width: 100%;
+  line-height: 30px;
 }
 .tag_button {
   background-color: var(--backgroundcolor);
   color: #fff;
   font-weight: 700;
   font-size: 14px;
-  margin-bottom: 5px;
+  border-radius: 10px;
 }
 </style>
