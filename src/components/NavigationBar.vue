@@ -9,11 +9,8 @@
           mode="horizontal"
           @select="handleSelect"
           router
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
         >
-          <el-menu-item disabled index="1" class="log">YCITOJ</el-menu-item>
+          <el-menu-item disabled class="log" style="color: red;">YCITOJ</el-menu-item>
           <el-menu-item index="home">首页</el-menu-item>
           <el-menu-item index="topic">题库</el-menu-item>
           <el-menu-item index="problemlist">题单</el-menu-item>
@@ -25,7 +22,7 @@
           <el-menu-item class="signin" index="login" v-show="loginname === 'in'">登录|注册</el-menu-item>
           <el-menu-item class="signin" index="user" v-show="loginname === 'out'">
             <i class="el-icon-user-solid"></i>
-            {{username}}
+            <!-- {{username}} -->
           </el-menu-item>
         </el-menu>
         <!-- 导航栏End -->
@@ -92,11 +89,17 @@ export default {
 .box .el-container {
   height: 100%;
 }
+.box .el-main {
+  height: 100%;
+  background-color: #F7F8F9;
+}
 .el-menu--horizontal > .el-menu-item.signin {
   float: right;
+  margin-right: 200px;
 }
 .log {
-  padding-right: 180px;
-  font-size: 30px;
+  padding-right: 80px;
+  padding-left: 100px;
+  font-size: 40px;
 }
 </style>

@@ -2,18 +2,18 @@
   <div class="discusscontent_box">
     <!-- 按钮区域Start -->
     <div class="left-button">
-      <el-button icon="el-icon-thumb" circle></el-button>
       <el-button
         icon="el-icon-chat-dot-square"
         circle
         @click="findFooter(reply_button_flag=false)"
       ></el-button>
-      <el-button icon="el-icon-orange" circle></el-button>
     </div>
     <!-- 按钮区域end -->
     <div class="main-box">
       <div class="box-content">
         <h1>{{ discussfrom.title }}</h1>
+        <span>上传者: {{discussfrom.username}}</span>
+        <span>发布于：{{discussfrom.create_time}}</span>
         <mavon-editor
           class="md"
           v-model="discussfrom.content"
@@ -37,11 +37,11 @@
           >
             <el-button type="info" icon="el-icon-user-solid" circle></el-button>
             <div class="head">
-              <h4>{{ item.username }}</h4>
+              <h4 v-if="item.reply_to">{{ item.username }} 回复:@{{item.reply_name}}</h4>
+              <h4 v-else>{{ item.username }}</h4>
               <div class="right">
                 <span>{{ item.create_time }}</span>
-                <el-link :underline="false">举报</el-link>
-                <el-link :underline="false" @click="replyReview(item.id)">回复</el-link>
+                <el-link :underline="false" @click="replyReview(item)">回复</el-link>
                 <el-link :underline="false" @click="deleReview(item.id)">删除</el-link>
               </div>
             </div>
@@ -72,7 +72,7 @@
       <div class="box-footer" id="box-footer">
         <mavon-editor v-model="create_reviewfrom" />
         <el-button type="danger" @click="createReview()" v-if="reply_button_flag==false">发表评论</el-button>
-        <el-button type="danger" @click="pushReplyReview()" v-if="reply_button_flag==true">回复评论</el-button>
+        <el-button type="danger" @click="pushReplyReview()" v-if="reply_button_flag==true">回复:@{{reply_name}}</el-button>
       </div>
       <!-- 添加评论区域end -->
     </div>
@@ -96,7 +96,8 @@ export default {
       create_reviewfrom: "",
       //判断发布评论和回复评论按钮
       reply_button_flag: false,
-      reply_id: ''
+      reply_id: '',
+      reply_name: ''
     };
   },
   created() {
@@ -113,6 +114,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
+      console.log(res);
       this.discussfrom = res.data;
     },
     // 获取评论
@@ -143,28 +145,50 @@ export default {
       }
       this.$message.success(res.meta.message);
       this.getReview();
+      this.create_reviewfrom = '';
     },
     // 回复评论
-    replyReview(id) {
-      this.reply_id=id;
+    replyReview(item) {
+      this.reply_id=item.id;
+      this.reply_name = item.username;
       this.reply_button_flag=true;
       this.findFooter();
     },
     async pushReplyReview() {
+      if (this.create_reviewfrom == "") {
+        return this.$message.error("评论为空！");
+      }
       const { data: res } = await this.$http.post("discussion/create_review", {
         topic_id: this.$route.query.id,
-        reply_to: this.reply_id,
+        reply_to: window.localStorage.getItem("userid"),
         content: this.create_reviewfrom,
       });
-      console.log(this.create_reviewfrom)
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
       }
-      this.$message.success(res.meta.message);
       this.getReview();
+      this.create_reviewfrom = '';
+      this.$message.success(res.meta.message);
+      this.reply_button_flag=false;
     },
     // 删除评论
     async deleReview(id) {
+      // 弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该评论, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+
+      // 如果用户确认删除，则返回值为字符串 confirm
+      // 如果用户取消了删除，则返回值为字符串 cancel
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
       const { data: res } = await this.$http.post("discussion/delete_review", {
         topic_id: this.$route.query.id,
         review_id: id,
@@ -227,6 +251,16 @@ export default {
 .box-content {
   margin-bottom: 30px;
 }
+.box-content h1 {
+  margin-bottom: 10px;
+}
+.box-content span {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  color: #9999a5;
+  margin-bottom: 5px;
+}
 .box-discuss .dicuss-content {
   position: relative;
   margin-bottom: 20px;
@@ -269,5 +303,8 @@ export default {
 }
 .box-footer {
   margin-top: 20px;
+}
+.box-footer .el-button {
+  margin-top: 10px;
 }
 </style>

@@ -331,10 +331,12 @@ export default {
 <style scoped>
 .box {
   width: 80%;
-  margin: 20px auto;
+  margin: auto;
+}
+.el-container {
+  margin: auto;
 }
 .header_title {
-  width: 80%;
   background-color: black;
 }
 
@@ -348,9 +350,6 @@ export default {
   height: 550px;
 }
 
-.main_card {
-  width: 80%;
-}
 .el-table {
   margin-top: 30px;
 }

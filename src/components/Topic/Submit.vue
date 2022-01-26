@@ -4,11 +4,7 @@
       <el-menu
         class="el-menu-demo1"
         mode="horizontal"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
       >
-        <el-menu-item disabled index="1" class="log">YCITOJ</el-menu-item>
         <el-menu-item
           index="1"
           class="el-icon-house"
@@ -539,6 +535,9 @@ export default {
 };
 </script>
 <style scoped>
+.el-container {
+  background-color: #F7F8F9;
+}
 .el-menu-demo1 {
   position: relative;
   width: 100%;

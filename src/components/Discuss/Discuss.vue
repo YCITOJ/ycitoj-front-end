@@ -17,9 +17,6 @@
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </el-col>
-      <el-col :span="1">
-        <el-button icon="el-icon-user-solid" circle></el-button>
-      </el-col>
       <el-col :span="4">
         <el-button icon="el-icon-plus" circle @click="addDiscusse"></el-button>
       </el-col>
@@ -28,8 +25,7 @@
     <!-- 表格区域Start -->
     <el-table :data="discuss_list" style="width: 100%" @row-click="gotoDiscussContent">
       <el-table-column prop="title" label="标题" :show-overflow-tooltip="true"> </el-table-column>
-      <el-table-column prop="catagory" label="发布者" width="100"> </el-table-column>
-      <el-table-column prop="name" label="回复数量" width="80"> </el-table-column>
+      <el-table-column prop="username" label="上传者" width="100" align="center"> </el-table-column>
       <el-table-column prop="create_time" label="更新时间" width="180"> </el-table-column>
        <el-table-column label="操作" width="180">
         <template slot-scope="scope">
@@ -78,9 +74,9 @@ export default {
         // 当前的页数
         pagenum: 1,
         // 当前每页显示多少条数据
-        pagesize: 2,
+        pagesize: 0,
       },
-      total: 20,
+      total: 0,
       loading: false,
       // 讨论数量
       discuss_list:[],
@@ -90,7 +86,7 @@ export default {
     this.getPageinfo();
   },
   methods: {
-    // 获取讨论接口
+    // 获取讨论
     async  getDiscussList() {
       const { data: res } = await this.$http.get(`discussion/list?page_no=${this.queryInfo.pagenum}`);
       if (res.meta.status !== 200) {
@@ -123,6 +119,22 @@ export default {
     },
     // 删除帖子
     async  removeDiscussById(id) {
+      // 弹框询问用户是否删除数据
+      const confirmResult = await this.$confirm(
+        "此操作将永久删除该帖子, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((err) => err);
+
+      // 如果用户确认删除，则返回值为字符串 confirm
+      // 如果用户取消了删除，则返回值为字符串 cancel
+      if (confirmResult !== "confirm") {
+        return this.$message.info("已取消删除");
+      }
       const { data: res } = await this.$http.post("discussion/delete_topic",{topic_id:id});
       if (res.meta.status !== 200) {
         return this.$message.error(res.meta.message);
@@ -151,5 +163,8 @@ export default {
 .discussbox {
   width: 80%;
   margin: 20px auto;
+}
+.el-table {
+  margin-top: 20px;
 }
 </style>
